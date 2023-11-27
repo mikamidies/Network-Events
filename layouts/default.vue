@@ -1,11 +1,23 @@
 <template>
-  <main class="main">
-    <nuxt />
-  </main>
+  <div>
+    <main class="main">
+      <nuxt />
+    </main>
+    <BottomBar />
+  </div>
 </template>
 
 <script>
-export default {};
+import BottomBar from "@/components/BottomBar.vue";
+export default {
+  components: {
+    BottomBar,
+  },
+};
 </script>
 
-<style></style>
+<style scoped>
+.main {
+  padding-bottom: 84px;
+}
+</style>
