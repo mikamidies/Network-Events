@@ -65,26 +65,43 @@
         </div>
         <h4 class="name">Закладки дизайнера: детальное пособие для джунов</h4>
         <div class="tabs">
-          <button
-            @click="(mainHandle = true), (guestsHandle = false)"
-            class="active"
-          >
+          <button @click="tabHandle = 'info'" :class="{ active: tabHandle == 'info' }">
             Ma'lumot
           </button>
-          <button @click="(guestsHandle = true), (mainHandle = false)">
+          <button
+            @click="tabHandle = 'speakers'"
+            :class="{ active: tabHandle == 'speakers' }"
+          >
             Spikerlar
           </button>
-          <button>Ishtirokchilar</button>
-          <button>Tadbir rejasi</button>
-          <button>Fayllar</button>
-          <button>Aloqa uchun</button>
+          <button
+            @click="tabHandle = 'participants'"
+            :class="{ active: tabHandle == 'participants' }"
+          >
+            Ishtirokchilar
+          </button>
+          <button @click="tabHandle = 'plan'" :class="{ active: tabHandle == 'plan' }">
+            Tadbir rejasi
+          </button>
+          <button @click="tabHandle = 'files'" :class="{ active: tabHandle == 'files' }">
+            Fayllar
+          </button>
+          <button
+            @click="tabHandle = 'contact'"
+            :class="{ active: tabHandle == 'contact' }"
+          >
+            Aloqa uchun
+          </button>
         </div>
         <div class="body">
-          <div v-show="mainHandle == true" class="main">
-            <EventMain />
-          </div>
-          <div v-show="guestsHandle == true" class="guests">
-            <EventGuests />
+          <div
+            v-show="tabHandle == tabItem.key"
+            v-for="(tabItem, index) in tabList"
+            :key="index"
+            :class="tabItem.class"
+            :propObj="tabItem.propItem"
+          >
+            <component :is="tabItem.name" />
           </div>
         </div>
       </div>
@@ -96,18 +113,62 @@
 import SiteTop from "@/components/SiteTop.vue";
 import EventMain from "@/components/EventPage/EventMain.vue";
 import EventGuests from "@/components/EventPage/EventGuests.vue";
-
+import EventPlan from "@/components/EventPage/EventPlan.vue";
+import EventFiles from "@/components/EventPage/EventFiles.vue";
+import EventsContact from "@/components/EventPage/EventsContact.vue";
+import EventParticipants from "@/components/EventPage/EventParticipants.vue";
 export default {
   components: {
     SiteTop,
     EventMain,
     EventGuests,
+    EventPlan,
+    EventFiles,
+    EventsContact,
+    EventParticipants
   },
 
   data() {
     return {
-      mainHandle: true,
-      guestsHandle: false,
+      tabHandle: "info",
+      tabList: [
+        {
+          name: "EventMain",
+          class: "main",
+          key: "info",
+          propItem: {},
+        },
+        {
+          name: "EventGuests",
+          class: "guests",
+          key: "speakers",
+          propItem: {},
+        },
+        {
+          name: "EventPlan",
+          class: "plan",
+          key: "plan",
+          propItem: {},
+        },
+        {
+          name: "EventFiles",
+          class: "files",
+          key: "files",
+          propItem: {},
+        },
+        {
+          name: "EventsContact",
+          class: "contact",
+          key: "contact",
+          propItem: {},
+        },
+        {
+          name: "EventParticipants",
+          class: "participants guests",
+          key: "participants",
+          propItem: {},
+        },
+      ],
     };
   },
 };
