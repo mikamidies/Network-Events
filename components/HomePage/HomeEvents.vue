@@ -3,7 +3,7 @@
     <div class="current">
       <h4 class="title">Siz ishtirok etmoqdasiz</h4>
       <div class="item">
-        <NuxtLink to="/">
+        <NuxtLink to="/event/slug">
           <img src="@/assets/img/event.jpg" alt="" class="pic" />
           <div class="content">
             <div class="badge">Siz ishtirokdasz</div>
@@ -16,7 +16,7 @@
     <div class="others">
       <div class="header">
         <h4 class="title">Boshqa tadbirlar</h4>
-        <NuxtLink to="/">
+        <NuxtLink to="/event/slug">
           Barchasi
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@
       </div>
       <div class="items">
         <div class="item">
-          <NuxtLink to="/">
+          <NuxtLink to="/event/slug">
             <div class="img">
               <p class="date">07 мая 2023, 15:24</p>
               <img src="@/assets/img/event-1.jpg" alt="" class="pic" />
@@ -48,7 +48,7 @@
           </NuxtLink>
         </div>
         <div class="item">
-          <NuxtLink to="/">
+          <NuxtLink to="/event/slug">
             <div class="img">
               <p class="date">07 мая 2023, 15:24</p>
               <img src="@/assets/img/event-2.jpg" alt="" class="pic" />
@@ -59,7 +59,7 @@
           </NuxtLink>
         </div>
         <div class="item">
-          <NuxtLink to="/">
+          <NuxtLink to="/event/slug">
             <div class="img">
               <p class="date">07 мая 2023, 15:24</p>
               <img src="@/assets/img/event-3.jpg" alt="" class="pic" />
@@ -165,7 +165,7 @@ export default {
 /* =========================================================================================================== */
 
 .others {
-  padding: 34px 0;
+  padding: 34px 0 0 0;
 }
 .others .title {
   margin: 0;

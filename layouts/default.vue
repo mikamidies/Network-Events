@@ -18,6 +18,6 @@ export default {
 
 <style scoped>
 .main {
-  padding-bottom: 84px;
+  padding-bottom: 108px;
 }
 </style>
