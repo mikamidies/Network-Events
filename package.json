@@ -16,6 +16,8 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "ant-design-vue": "^1.7.8",
     "core-js": "^3.25.3",
+    "less": "^4.2.0",
+    "less-loader": "^7.3.0",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",

@@ -1,3 +1,7 @@
+/* @import "./custom.less"; */
+@import "ant-design-vue/dist/antd.css";
+/* @import "./custom.less"; */
+
 @font-face {
   font-family: "Interfaces";
   src: url(../fonts/TTINTERFACES-REGULAR.TTF);

@@ -1,5 +1,6 @@
 <template>
   <div class="master">
+  <a-button  type="primary">Btn</a-button>
     <div class="container">
       <div class="search__wrap">
         <div class="search">
