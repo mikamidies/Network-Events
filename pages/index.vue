@@ -29,8 +29,14 @@
 
 <script>
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
-
+import getList from "@/api/getList";
 export default {
+  async mounted() {
+    try {
+      const data = await getList.getUser();
+      console.log(data);
+    } catch (e) {}
+  },
   components: {
     HomeEvents,
   },

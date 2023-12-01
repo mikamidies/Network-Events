@@ -15,10 +15,13 @@ export default {
 
   css: ["ant-design-vue/dist/antd.css", "@/assets/css/main.css"],
 
-  plugins: ["@/plugins/antd-ui"],
+  plugins: ["@/plugins/antd-ui", "~/plugins/axios", "~/plugins/axios-instance"],
 
   components: true,
-
+  // server: {
+  //   host: "localhost",
+  //   port: 8000,
+  // },
   buildModules: [],
 
   modules: ["@nuxtjs/axios"],
