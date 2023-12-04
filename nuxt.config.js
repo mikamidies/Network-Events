@@ -13,8 +13,9 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  css: ["@/assets/css/main.css"],
-  plugins: ["@/plugins/antd-ui", "~/plugins/axios", "~/plugins/axios-instance"],
+  css: ["@/assets/css/main.css"], plugins: ["@/plugins/antd-ui", "~/plugins/axios", "~/plugins/axios-instance", {
+    src: "~plugins/vue-otp-input.js", ssr: false
+  },],
 
   components: true,
   // server: {
@@ -23,7 +24,7 @@ export default {
   // },
   buildModules: [],
 
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
 
   axios: {
     baseURL: "/",

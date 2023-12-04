@@ -1,6 +1,7 @@
 export default function ({ $axios, redirect, error }, inject) {
+  console.log(process.env.BASE_URL)
   const axios = $axios.create({
-    baseURL: process.env.API_BASE_URL || "https://admin.ishonch.uz/api",
+    baseURL: process.env.BASE_URL || "localhost:3000",
   });
   axios.setHeader("Content-Type", "application/json");
 

@@ -1,6 +1,6 @@
 export default ({ $axios, redirect, error }, inject) => {
   const axiosInstance = $axios.create({
-    baseURL: process.env.API_BASE_URL || "localhost:3000",
+    baseURL: process.env.BASE_URL || "localhost:3000",
   });
   axiosInstance.setHeader("Content-Type", "application/json");
 

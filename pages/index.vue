@@ -1,6 +1,5 @@
 <template>
   <div class="master">
-  <a-button  type="primary">Btn</a-button>
     <div class="container">
       <div class="search__wrap">
         <div class="search">
@@ -30,13 +29,9 @@
 
 <script>
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
-import getList from "@/api/getList";
 export default {
   async mounted() {
-    try {
-      const data = await getList.getUser();
-      console.log(data);
-    } catch (e) {}
+
   },
   components: {
     HomeEvents,

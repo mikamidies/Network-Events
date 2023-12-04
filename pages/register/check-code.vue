@@ -29,11 +29,20 @@
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
             <a-form-model-item class="form-item mb-0">
               <p class="sub">Telefon raqami orqali kiring</p>
-              <input
-                type="text"
-                v-model="form.phone_number"
-                placeholder="+998 (__) ___ __ __"
-              /> </a-form-model-item
+              <div class="code-input">
+                <v-otp-input
+                  ref="otpInput"
+                  input-classes="otp-input"
+                  :num-inputs="6"
+                  separator=""
+                  :should-auto-focus="true"
+                  placeholder="*"
+                  :is-input-num="true"
+                  @on-change="handleOnChange"
+                  @on-complete="handleOnComplete"
+                />
+              </div>
+             </a-form-model-item
           ></a-form-model>
         </div>
       </div>
@@ -50,7 +59,8 @@ export default {
   data() {
     return {
       form: {
-        phone_number: "",
+        phone_number: "998997301499",
+        sms_code: ""
       },
 
       rules: {
@@ -64,26 +74,64 @@ export default {
       },
     };
   },
+  mounted() {
+    this.setInputPlaceholder()
+  },
   methods: {
     submit() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.__SEND_NUMBER(this.form)
+          this.__SEND_CODE(this.form)
         }
       })
     },
-    async __SEND_NUMBER(form) {
+    async __SEND_CODE(form) {
       try {
-        const data = await sendNUmberApi.sendNumber(form);
-        await this.$router.push('/register/check-code')
+        const data = await sendNUmberApi.sendCode(form);
+        console.log(data)
       } catch (e) {
       }
-    }
-
+    },
+    handleOnComplete(value) {
+      console.log("OTP completed: ", value);
+    },
+    handleOnChange(value) {
+      console.log("OTP changed: ", value);
+      this.form.sms_code = value;
+    },
+    setInputPlaceholder() {
+      this.$refs.otpInput.$el
+        .querySelectorAll("input")
+        .forEach((input) => (input.placeholder = "*"));
+    },
   }
 };
 </script>
 <style lang="css" scoped>
+:deep(.otp-input) {
+  width: 24px;
+  height: 24px;
+  padding: 5px;
+  color: #020105;
+  text-align: center;
+  font-family: var(--medium);
+  font-size: 16px;
+  font-style: normal;
+  line-height: 150%;
+  border: none;
+}
+:deep(.otp-input:focus) {
+  outline: none;
+}
+.code-input {
+  border-radius: 8px;
+  border: 1px solid  #E0E0ED;
+  background: #FFF;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
 .image {
   display: flex;
   justify-content: center;
