@@ -18,10 +18,10 @@ export default {
   },],
 
   components: true,
-  // server: {
-  //   host: "localhost",
-  //   port: 8000,
-  // },
+  server: {
+    host: "localhost",
+    port: 8000
+  },
   buildModules: [],
 
   modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
