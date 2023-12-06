@@ -174,5 +174,12 @@ export default {
   justify-content: center;
   align-items: center;
   border: none;
+  position: fixed;
+  bottom: 28px;
+  max-width: 468px;
+}
+.btns {
+  display: flex;
+  justify-content: center;
 }
 </style>

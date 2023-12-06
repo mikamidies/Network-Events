@@ -3,7 +3,7 @@
     <main class="main">
       <nuxt />
     </main>
-    <loader v-if="loader"/>
+    <loader v-if="loader" />
     <BottomBar />
   </div>
 </template>
@@ -19,13 +19,12 @@ export default {
   },
   data() {
     return {
-      loader: false,
+      loader: true,
     };
   },
   async mounted() {
     if (!localStorage.getItem("accessToken")) this.$router.push("/register");
     try {
-      this.loader = true;
       const data = await authApi.getInfo();
       this.$store.commit("getProfile", data?.data);
     } catch (e) {
