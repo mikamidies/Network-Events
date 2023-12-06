@@ -31,6 +31,7 @@
               <p class="sub">Telefon raqami orqali kiring</p>
               <input
                 type="text"
+                v-mask="'+998 ## ### ## ##'"
                 v-model="form.phone_number"
                 placeholder="+998 (__) ___ __ __"
               /> </a-form-model-item
@@ -44,7 +45,7 @@
   </div>
 </template>
 <script>
-import sendNUmberApi from "@/api/authApi"
+import sendNUmberApi from "@/api/authApi";
 export default {
   layout: "empty",
   data() {
@@ -64,23 +65,28 @@ export default {
       },
     };
   },
+  mounted() {
+    if (localStorage.getItem("accessToken")) this.$router.push("/");
+  },
   methods: {
     submit() {
+      const data = {
+        phone_number: this.form.phone_number.replaceAll(" ", "").replace("+", ""),
+      };
+      localStorage.setItem("phone_number", data.phone_number);
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.__SEND_NUMBER(this.form)
+          this.__SEND_NUMBER(data);
         }
-      })
+      });
     },
     async __SEND_NUMBER(form) {
       try {
         const data = await sendNUmberApi.sendNumber(form);
-        await this.$router.push('/register/check-code')
-      } catch (e) {
-      }
-    }
-
-  }
+        await this.$router.push("/register/check-code");
+      } catch (e) {}
+    },
+  },
 };
 </script>
 <style lang="css" scoped>

@@ -6,18 +6,21 @@
       <div class="participant-profile">
         <div class="personal-card">
           <div class="image">
-            <img src="@/assets/img/person.jpg" alt="" />
+            <img
+              v-if="$store.state.profile?.client?.image"
+              :src="$store.state.profile?.client?.image"
+              alt=""
+            />
+            <img v-else src="@/assets/img/user.png" alt="" />
           </div>
-          <h4 class="name">Muhammadullo Egamberdiyev</h4>
-          <p class="position">Texnicheksiy direktor</p>
-          <span class="company">National Development Community</span>
+          <h4 class="name">{{ $store.state.profile["full_name"] }}</h4>
+          <p class="position">{{ $store.state.profile?.client?.job_title }}</p>
+          <span class="company">{{ $store.state.profile?.client?.company_name }}</span>
         </div>
         <div class="about">
           <h4 class="about-title">Men haqimda</h4>
           <p class="about-desc">
-            Специальный гость для предстоящего PizzaPitch: Фируз Аллаев – основатель
-            проекта Asaxiy расскажет о своем опыте создания успешных проектов и даст
-            ценные советы стартапам!
+            {{ $store.state.profile?.client?.info }}
           </p>
         </div>
         <SocialBlock />

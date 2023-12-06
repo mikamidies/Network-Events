@@ -14,14 +14,14 @@ export default function ({ $axios, redirect, error }, inject) {
   });
 
   axios.onError((err) => {
-    const errors = [404, 500];
-    if (errors.includes(err.response.status)) {
-      error({
-        statusCode: err.response.status,
-        message: "This page could not be found",
-        layout: "error",
-      });
-    }
+    // const errors = [404, 500];
+    // if (errors.includes(err.response.status)) {
+    //   error({
+    //     statusCode: err.response.status,
+    //     message: "This page could not be found",
+    //     layout: "error",
+    //   });
+    // }
     return Promise.reject(err);
   });
   inject("axios", axios);

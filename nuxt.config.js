@@ -13,15 +13,26 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  css: ["@/assets/css/main.css"], plugins: ["@/plugins/antd-ui", "~/plugins/axios", "~/plugins/axios-instance", {
-    src: "~plugins/vue-otp-input.js", ssr: false
-  },],
+  css: ["@/assets/css/main.css"],
+  plugins: [
+    "@/plugins/antd-ui",
+    "~/plugins/axios",
+    "~/plugins/axios-instance",
+    {
+      src: "~plugins/vue-otp-input.js",
+      ssr: false,
+    },
+    {
+      src: "~plugins/v-mask.js",
+      ssr: false,
+    },
+  ],
 
   components: true,
-  server: {
-    host: "localhost",
-    port: 8000
-  },
+  // server: {
+  //   host: "localhost",
+  //   port: 8000
+  // },
   buildModules: [],
 
   modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
