@@ -33,6 +33,7 @@
                 type="text"
                 v-mask="'+998 ## ### ## ##'"
                 v-model="form.phone_number"
+                @keyup.enter="submit"
                 placeholder="+998 (__) ___ __ __"
               /> </a-form-model-item
           ></a-form-model>

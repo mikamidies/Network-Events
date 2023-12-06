@@ -1,7 +1,7 @@
 export default function ({ $axios, redirect, error }, inject) {
   console.log(process.env.BASE_URL)
   const axios = $axios.create({
-    baseURL: process.env.BASE_URL || "localhost:3000",
+    baseURL: process.env.BASE_URL || "https://networking.pythonanywhere.com/api",
   });
   axios.setHeader("Content-Type", "application/json");
 
