@@ -28,6 +28,7 @@ export default {
       const data = await authApi.getInfo();
       this.$store.commit("getProfile", data?.data);
     } catch (e) {
+      console.log(e);
       if (e.response.status == 401) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

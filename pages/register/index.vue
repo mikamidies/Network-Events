@@ -95,6 +95,9 @@ export default {
   display: flex;
   justify-content: center;
 }
+.image img {
+  max-height: 345px;
+}
 .master {
   display: flex;
   flex-direction: column;
@@ -175,12 +178,6 @@ export default {
   justify-content: center;
   align-items: center;
   border: none;
-  position: fixed;
-  bottom: 28px;
-  max-width: 468px;
 }
-.btns {
-  display: flex;
-  justify-content: center;
-}
+
 </style>
