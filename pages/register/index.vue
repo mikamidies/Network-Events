@@ -102,8 +102,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  height: 90vh;
   padding-bottom: 28px;
+  overflow: hidden;
 }
 .register-page {
   display: flex;
