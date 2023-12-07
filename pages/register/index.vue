@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="master">
+   <div>
     <div>
       <div class="head container">
         <button>
@@ -43,6 +44,7 @@
     <div class="btns container">
       <button @click="submit">Davom etish</button>
     </div>
+   </div>
   </div>
 </template>
 <script>
@@ -104,7 +106,6 @@ export default {
   justify-content: space-between;
   height: 90vh;
   padding-bottom: 28px;
-  overflow: hidden;
 }
 .register-page {
   display: flex;

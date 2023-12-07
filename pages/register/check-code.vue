@@ -255,13 +255,16 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  height: 90vh;
   padding-bottom: 28px;
 }
 .register-page {
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+.image img {
+  max-height: 345px;
 }
 .head h3 {
   color: #020105;
@@ -331,5 +334,9 @@ export default {
   justify-content: center;
   align-items: center;
   border: none;
+}
+.btns {
+  padding-top: 28px;
+  padding-bottom: 28px;
 }
 </style>
