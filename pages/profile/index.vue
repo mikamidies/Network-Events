@@ -65,12 +65,30 @@
   </div>
 </template>
 <script>
+import authApi from "@/api/authApi";
 import ProfileTop from "../../components/ProfileTop.vue";
 import SocialBlock from "../../components/profile/SocialBlock.vue";
 export default {
   components: {
     ProfileTop,
     SocialBlock,
+  },
+  mounted() {
+    this.__GET_INFO();
+  },
+  methods: {
+    async __GET_INFO() {
+      try {
+        const data = await authApi.getInfo();
+        this.$store.commit("getProfile", data?.data);
+      } catch (e) {
+        if (e.response.status == 401) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          this.$router.push("/register");
+        }
+      }
+    },
   },
 };
 </script>

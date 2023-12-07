@@ -6,23 +6,29 @@
         <h4 class="page-title">Asosiy malumot</h4>
         <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
           <div class="list">
-            <a-form-model-item class="form-item mb-0">
+            <a-form-model-item prop="full_name" class="form-item mb-0 required">
               <p class="sub">Isim va Familya</p>
-              <input type="text" v-model="form.name" placeholder="Ism" />
+              <input type="text" v-model="form.full_name" placeholder="Ism" />
             </a-form-model-item>
-            <a-form-model-item prop="name" class="form-item required mb-0">
+            <a-form-model-item
+              prop="client_data.company_name"
+              class="form-item required mb-0"
+            >
               <p class="sub">Korxona nomi</p>
               <input
                 type="text"
-                v-model="form.name"
+                v-model="form.client_data.company_name"
                 placeholder="Korxona nomi / Freelancer"
               />
             </a-form-model-item>
-            <a-form-model-item prop="name" class="form-item required mb-0">
+            <a-form-model-item
+              prop="client_data.job_title"
+              class="form-item required mb-0"
+            >
               <p class="sub">Lavozimingiz / Mutahasisligingiz</p>
               <input
                 type="text"
-                v-model="form.name"
+                v-model="form.client_data.job_title"
                 placeholder="CEO / Dizayner / Developer ..."
               />
             </a-form-model-item>
@@ -33,19 +39,34 @@
               Qoshimcha malumotlarni keynchalik profilingizdan kiritishingiz mumkin
             </p>
             <div class="upload-card">
-              <div class="image"><img src="@/assets/img/user.png" alt="" /></div>
+              <div class="image">
+                <img v-if="image" :src="image" alt="" /><img
+                  v-else
+                  src="@/assets/img/user.png"
+                  alt=""
+                />
+                <span v-if="imgLoad"
+                  ><a-spin>
+                    <a-icon
+                      slot="indicator"
+                      type="loading"
+                      style="font-size: 24px"
+                      spin
+                    /> </a-spin
+                ></span>
+              </div>
               <div class="body">
                 <div class="text">
                   <h5>Profil rasmingiz</h5>
                   <p>2 MB oshmaslik kerak</p>
                 </div>
                 <a-upload
+                  :action="`${base_url}/upload_image`"
                   :fileList="fileList"
-                  :headers="headers"
                   @change="handleChange"
-                  @remove="handleRemove"
+                  @preview="handlePreview"
                 >
-                  <button class="upload-btn">
+                  <button class="upload-btn" v-if="fileList.length == 0">
                     <svg
                       width="25"
                       height="25"
@@ -70,80 +91,238 @@
                     </svg>
                   </button>
                 </a-upload>
+                <button
+                  class="delete-btn"
+                  v-if="fileList.length != 0"
+                  @click="handleRemove"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="svg-icon"
+                    style="
+                      width: 25px;
+                      height: 25px;
+                      vertical-align: middle;
+                      fill: currentColor;
+                      overflow: hidden;
+                    "
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                  >
+                    <path
+                      d="M307.799 890.624c-43.284 0-78.495-35.215-78.495-78.495V270.397a26.081 26.081 0 0 1 26.05-26.05 26.076 26.076 0 0 1 26.051 26.05v529.485c0 26.107 12.524 38.64 38.63 38.64h383.883c26.102 0 38.63-12.533 38.63-38.64V270.397a26.086 26.086 0 0 1 26.061-26.05 26.086 26.086 0 0 1 26.056 26.05V812.57c0 20.807-8.125 40.412-22.881 55.157a77.527 77.527 0 0 1-55.163 22.897H307.799z"
+                      fill="#fff"
+                    />
+                    <path
+                      d="M386.033 726.287a23.311 23.311 0 0 1-23.296-23.29V418.523c0-12.84 10.45-23.29 23.29-23.29s23.291 10.45 23.291 23.29v284.478a23.153 23.153 0 0 1-6.82 16.47 23.148 23.148 0 0 1-16.465 6.815z m125.967 0a23.316 23.316 0 0 1-23.29-23.29V418.523a23.316 23.316 0 0 1 23.295-23.296 23.322 23.322 0 0 1 23.291 23.296v284.478A23.327 23.327 0 0 1 512 726.287z m125.967 0a23.332 23.332 0 0 1-23.3-23.3V418.518a23.322 23.322 0 0 1 23.3-23.29 23.311 23.311 0 0 1 23.291 23.29v284.477a23.316 23.316 0 0 1-23.29 23.291zM156.605 287.718a26.081 26.081 0 0 1-26.05-26.05 26.081 26.081 0 0 1 26.05-26.05h170V189.88c0-31.16 25.36-56.514 56.525-56.514h259.169c31.165 0 56.514 25.354 56.514 56.514v45.737h168.571a26.076 26.076 0 0 1 26.05 26.05 26.081 26.081 0 0 1-26.05 26.051H156.605z m222.106-52.096h268.006v-50.145H378.711v50.145z"
+                      fill="#fff"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
           <div class="list">
-            <a-form-model-item class="form-item mb-0">
+            <a-form-model-item prop="client_data.info" class="form-item mb-0">
               <p class="sub">Ozingiz haqingizda qoshimcha</p>
-              <textarea rows="5" v-model="form.name" placeholder="Ma’lumot kiriting" />
+              <textarea
+                rows="5"
+                v-model="form.client_data.info"
+                placeholder="Ma’lumot kiriting"
+              />
             </a-form-model-item>
-            <a-form-model-item prop="name" class="form-item required mb-0">
+            <a-form-model-item class="form-item mb-0">
               <p class="sub">Biznes saytingiz</p>
-              <input type="text" v-model="form.name" placeholder="www." />
+              <input type="text" v-model="form.client_data.site" placeholder="www." />
             </a-form-model-item>
-            <a-form-model-item prop="name" class="form-item required mb-0">
+            <a-form-model-item class="form-item mb-0">
               <p class="sub">Instagram</p>
-              <input type="text" v-model="form.name" placeholder="@nickname" />
+              <input
+                type="text"
+                v-model="form.client_data.instagram"
+                placeholder="@nickname"
+              />
             </a-form-model-item>
-            <a-form-model-item prop="name" class="form-item required mb-0">
+            <a-form-model-item class="form-item mb-0">
               <p class="sub">Telegram</p>
-              <input type="text" v-model="form.name" placeholder="@nickname" />
+              <input
+                type="text"
+                v-model="form.client_data.telegram"
+                placeholder="@nickname"
+              />
             </a-form-model-item>
-            <a-form-model-item prop="name" class="form-item required mb-0">
+            <a-form-model-item class="form-item mb-0">
               <p class="sub">Linkedin</p>
-              <input type="text" v-model="form.name" placeholder="https://" />
+              <input
+                type="text"
+                v-model="form.client_data.linkedIn"
+                placeholder="https://"
+              />
             </a-form-model-item>
           </div>
         </a-form-model>
         <div class="btns">
-          <button class="send">Saqlash</button>
-          <button class="cancel">Bekor qilish</button>
+          <button class="send" @click="submit">Saqlash</button>
+          <button class="cancel" @click="$router.push('/profile')">Bekor qilish</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import authApi from "@/api/authApi";
 import EditTop from "../../components/EditTop.vue";
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
 export default {
   data() {
     return {
+      imgLoad: false,
+      previewVisible: false,
+      previewImage: "",
       form: {
-        name: "",
+        phone_number: "",
+        sms_code: null,
+        full_name: "",
+        client_data: {
+          image: "",
+          company_name: "",
+          job_title: "",
+          info: "",
+          site: "",
+          instagram: "",
+          telegram: "",
+          linkedIn: "",
+        },
       },
       headers: {
         authorization: "authorization-text",
       },
       fileList: [],
       rules: {
-        name: [
+        full_name: [
           {
             required: true,
             message: "This field is required",
             trigger: "change",
           },
         ],
+        client_data: {
+          job_title: [
+            {
+              required: true,
+              message: "This field is required",
+              trigger: "change",
+            },
+          ],
+          company_name: [
+            {
+              required: true,
+              message: "This field is required",
+              trigger: "change",
+            },
+          ],
+          info: [
+            {
+              required: true,
+              message: "This field is required",
+              trigger: "change",
+            },
+          ],
+        },
       },
+      base_url: process.env.BASE_URL,
+      image: "",
     };
   },
+  mounted() {
+    this.__GET_INFO();
+  },
   methods: {
-    handleRemove(file) {
-      // Implement your custom logic for removing files here
-
-      // For example, you can use the following to remove the file from the fileList
-      this.fileList = this.fileList.filter((item) => item.uid !== file.uid);
-      message.success(`${file.name} file removed`);
-    },
-    handleChange(info) {
-      console.log(info);
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+    submit() {
+      const data = {
+        ...this.form,
+        client_data: {
+          ...this.form.client_data,
+          telegram: !this.form.client_data.telegram.includes("@")
+            ? `@${this.form.client_data.telegram}`
+            : this.form.client_data.telegram,
+          instagram: !this.form.client_data.instagram.includes("@")
+            ? `@${this.form.client_data.instagram}`
+            : this.form.client_data.instagram,
+        },
+      };
+      if (data.client_data.linkedIn) {
+        data.client_data.linkedIn = !this.form.client_data.linkedIn.includes("https://")
+          ? `https://${this.form.client_data.linkedIn}`
+          : this.form.client_data.linkedIn;
+        data.client_data.linkedIn = !data.client_data.linkedIn.includes(".ru")
+          ? `${data.client_data.linkedIn}.ru`
+          : data.client_data.linkedIn;
       }
-      if (info.file.status === "done") {
-        this.$message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        this.$message.error(`${info.file.name} file upload failed.`);
+      this.$refs.ruleForm.validate((valid) => valid && this.__PUT_PROFILE(data));
+    },
+    handleRemove() {
+      this.fileList = [];
+      this.image = "";
+    },
+
+    async __PUT_PROFILE(form) {
+      try {
+        const data = await authApi.putProfile(form);
+        this.$nuxt.refresh();
+        this.$router.push("/profile");
+      } catch (e) {}
+    },
+    async handlePreview(file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      this.previewImage = file.url || file.preview;
+      this.previewVisible = true;
+    },
+    handleChange({ fileList }) {
+      this.imgLoad = true;
+      this.fileList = fileList;
+      if (fileList[0]?.response?.upload_url) {
+        this.form.client_data.image = fileList[0]?.response?.upload_url;
+        this.image = fileList[0]?.response?.show_url;
+        this.imgLoad = false;
+        console.log(this.form.client_data);
+      }
+    },
+    async __GET_INFO() {
+      try {
+        const data = await authApi.getInfo();
+        this.form = {
+          phone_number: data?.data.phone_number,
+          full_name: data?.data.full_name,
+          client_data: {
+            ...data?.data.client,
+          },
+        };
+        this.image = data?.data.client?.image;
+        this.fileList = [
+          {
+            uid: `-1`,
+            name: "image.png",
+            status: "done",
+            oldImg: true,
+            url: data?.data.client?.image,
+          },
+        ];
+      } catch (e) {
+        if (e.response.status == 401) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          this.$router.push("/register");
+        }
       }
     },
   },
@@ -153,6 +332,9 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+:deep(.ant-upload-list-item-list-type-text) {
+  display: none;
+}
 .container {
   padding-top: 24px;
   padding-top: 24px;
@@ -280,6 +462,20 @@ export default {
   height: 55px;
   border-radius: 8px;
   overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-card .image > span {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .upload-card .image img {
   width: 100%;
@@ -317,7 +513,8 @@ export default {
   flex-direction: column;
   gap: 4px;
 }
-.upload-btn {
+.upload-btn,
+.delete-btn {
   display: flex;
   width: 55px;
   height: 55px;
@@ -325,7 +522,12 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   border-radius: 8px;
-  background: #1878f3;
   border: none;
+}
+.upload-btn {
+  background: #1878f3;
+}
+.delete-btn {
+  background-color: red;
 }
 </style>
