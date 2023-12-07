@@ -34,7 +34,7 @@
           </svg>
         </button>
         <div class="stick"></div>
-        <button class="save">
+        <button class="save" @click="logout">
           <svg
             width="24"
             height="24"
@@ -54,7 +54,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logout() {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <style scoped>
