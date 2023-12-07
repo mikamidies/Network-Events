@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="wrap">
-    <EditTop @back="$router.push('/profile')"/>
+    <EditTop @back="$router.push('/profile')" />
     <div class="container">
       <div class="edit-page">
         <h4 class="page-title">Asosiy malumot</h4>
@@ -154,7 +154,8 @@ export default {
 </script>
 <style lang="css" scoped>
 .container {
-  padding: 24px 0;
+  padding-top: 24px;
+  padding-top: 24px;
 }
 .page-title {
   color: #020105;

@@ -64,6 +64,15 @@
                   src="@/assets/img/user.png"
                   alt=""
                 />
+                <span v-if="imgLoad"
+                  ><a-spin>
+                    <a-icon
+                      slot="indicator"
+                      type="loading"
+                      style="font-size: 24px"
+                      spin
+                    /> </a-spin
+                ></span>
               </div>
               <div class="body">
                 <div class="text">
@@ -76,7 +85,7 @@
                   @change="handleChange"
                   @preview="handlePreview"
                 >
-                  <button class="upload-btn">
+                  <button class="upload-btn" v-if="fileList.length == 0">
                     <svg
                       width="25"
                       height="25"
@@ -101,6 +110,34 @@
                     </svg>
                   </button>
                 </a-upload>
+                <button
+                  class="delete-btn"
+                  v-if="fileList.length != 0"
+                  @click="handleRemove"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="svg-icon"
+                    style="
+                      width: 25px;
+                      height: 25px;
+                      vertical-align: middle;
+                      fill: currentColor;
+                      overflow: hidden;
+                    "
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                  >
+                    <path
+                      d="M307.799 890.624c-43.284 0-78.495-35.215-78.495-78.495V270.397a26.081 26.081 0 0 1 26.05-26.05 26.076 26.076 0 0 1 26.051 26.05v529.485c0 26.107 12.524 38.64 38.63 38.64h383.883c26.102 0 38.63-12.533 38.63-38.64V270.397a26.086 26.086 0 0 1 26.061-26.05 26.086 26.086 0 0 1 26.056 26.05V812.57c0 20.807-8.125 40.412-22.881 55.157a77.527 77.527 0 0 1-55.163 22.897H307.799z"
+                      fill="#fff"
+                    />
+                    <path
+                      d="M386.033 726.287a23.311 23.311 0 0 1-23.296-23.29V418.523c0-12.84 10.45-23.29 23.29-23.29s23.291 10.45 23.291 23.29v284.478a23.153 23.153 0 0 1-6.82 16.47 23.148 23.148 0 0 1-16.465 6.815z m125.967 0a23.316 23.316 0 0 1-23.29-23.29V418.523a23.316 23.316 0 0 1 23.295-23.296 23.322 23.322 0 0 1 23.291 23.296v284.478A23.327 23.327 0 0 1 512 726.287z m125.967 0a23.332 23.332 0 0 1-23.3-23.3V418.518a23.322 23.322 0 0 1 23.3-23.29 23.311 23.311 0 0 1 23.291 23.29v284.477a23.316 23.316 0 0 1-23.29 23.291zM156.605 287.718a26.081 26.081 0 0 1-26.05-26.05 26.081 26.081 0 0 1 26.05-26.05h170V189.88c0-31.16 25.36-56.514 56.525-56.514h259.169c31.165 0 56.514 25.354 56.514 56.514v45.737h168.571a26.076 26.076 0 0 1 26.05 26.05 26.081 26.081 0 0 1-26.05 26.051H156.605z m222.106-52.096h268.006v-50.145H378.711v50.145z"
+                      fill="#fff"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -167,6 +204,7 @@ export default {
 
   data() {
     return {
+      imgLoad: false,
       previewVisible: false,
       previewImage: "",
       form: {
@@ -230,9 +268,9 @@ export default {
       this.form.phone_number = localStorage.getItem("phone_number");
       this.$refs.ruleForm.validate((valid) => valid && this.__SEND_INFO(this.form));
     },
-    handleRemove(file) {
-      this.fileList = this.fileList.filter((item) => item.uid !== file.uid);
-      message.success(`${file.name} file removed`);
+    handleRemove() {
+      this.fileList = [];
+      this.image = "";
     },
     async __SEND_INFO(form) {
       try {
@@ -244,6 +282,12 @@ export default {
         await this.$router.push("/");
       } catch (e) {}
     },
+    // handleRemove(file) {
+    //   const index = this.fileList.indexOf(file);
+    //   const newFileList = this.fileList.slice();
+    //   newFileList.splice(index, 1);
+    //   this.fileList = newFileList;
+    // },
     async handlePreview(file) {
       if (!file.url && !file.preview) {
         file.preview = await getBase64(file.originFileObj);
@@ -252,11 +296,13 @@ export default {
       this.previewVisible = true;
     },
     handleChange({ fileList }) {
+      this.imgLoad = true;
       this.fileList = fileList;
-      console.log(fileList);
+
       if (fileList[0]?.response?.upload_url) {
         this.form.client_data.image = fileList[0]?.response?.upload_url;
         this.image = fileList[0]?.response?.show_url;
+        this.imgLoad = false;
       }
     },
   },
@@ -291,7 +337,8 @@ export default {
   justify-content: center;
 }
 .container {
-  padding: 24px 0;
+  padding-top: 24px;
+  padding-top: 24px;
 }
 .page-title {
   color: #020105;
@@ -416,6 +463,20 @@ export default {
   height: 55px;
   border-radius: 8px;
   overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-card .image > span {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .upload-card .image img {
   width: 100%;
@@ -453,7 +514,8 @@ export default {
   flex-direction: column;
   gap: 4px;
 }
-.upload-btn {
+.upload-btn,
+.delete-btn {
   display: flex;
   width: 55px;
   height: 55px;
@@ -461,7 +523,12 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   border-radius: 8px;
-  background: #1878f3;
   border: none;
+}
+.upload-btn {
+  background: #1878f3;
+}
+.delete-btn {
+  background-color: red;
 }
 </style>
