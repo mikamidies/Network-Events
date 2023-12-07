@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="master">
-   <div>
+   <div class="d-flex flex-column justify-beween h-100">
     <div>
       <div class="head container">
         <button>

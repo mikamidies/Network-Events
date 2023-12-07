@@ -30,7 +30,7 @@
             +{{
               form.phone_number &&
               `${form.phone_number}`
-                .match(/(\d{3})(\d{2})(\d{3})(\d{4})/)
+                .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
                 .filter((item, index) => index != 0)
                 .join(" ")
             }}
