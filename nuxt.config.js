@@ -34,7 +34,8 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
 
   axios: {
-    baseURL: process.env.BASE_URL,
+    baseURL:
+      process.env.BASE_URL || "https://networking.pythonanywhere.com/api",
   },
 
   build: {},
