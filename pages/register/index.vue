@@ -1,50 +1,50 @@
 <template lang="html">
   <div class="master">
-   <div class="d-flex flex-column justify-beween h-100">
-    <div>
-      <div class="head container">
-        <button>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 16L6 12M6 12L10 8M6 12L18 12"
-              stroke="#020105"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-        <h3>Hush kelibsiz</h3>
+    <div class="d-flex flex-column justify-beween h-100">
+      <div>
+        <div class="head container">
+          <button>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 16L6 12M6 12L10 8M6 12L18 12"
+                stroke="#020105"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <h3>Hush kelibsiz</h3>
+        </div>
+        <div class="register-page">
+          <div class="image container">
+            <img src="../../assets/img/register.png" alt="" />
+          </div>
+          <div class="container">
+            <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
+              <a-form-model-item class="form-item mb-0">
+                <p class="sub">Telefon raqami orqali kiring</p>
+                <input
+                  type="text"
+                  v-mask="'+998 ## ### ## ##'"
+                  v-model="form.phone_number"
+                  @keyup.enter="submit"
+                  placeholder="+998 (__) ___ __ __"
+                /> </a-form-model-item
+            ></a-form-model>
+          </div>
+        </div>
       </div>
-      <div class="register-page">
-        <div class="image container">
-          <img src="../../assets/img/register.png" alt="" />
-        </div>
-        <div class="container">
-          <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
-            <a-form-model-item class="form-item mb-0">
-              <p class="sub">Telefon raqami orqali kiring</p>
-              <input
-                type="text"
-                v-mask="'+998 ## ### ## ##'"
-                v-model="form.phone_number"
-                @keyup.enter="submit"
-                placeholder="+998 (__) ___ __ __"
-              /> </a-form-model-item
-          ></a-form-model>
-        </div>
+      <div class="btns container">
+        <button @click="submit">Davom etish</button>
       </div>
     </div>
-    <div class="btns container">
-      <button @click="submit">Davom etish</button>
-    </div>
-   </div>
   </div>
 </template>
 <script>
@@ -85,7 +85,7 @@ export default {
     },
     async __SEND_NUMBER(form) {
       try {
-        const data = await sendNUmberApi.sendNumber(form);
+        const data = await sendNUmberApi.sendNumber(this.$axios, form);
         await this.$router.push("/register/check-code");
       } catch (e) {}
     },
@@ -181,5 +181,4 @@ export default {
   align-items: center;
   border: none;
 }
-
 </style>

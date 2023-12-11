@@ -5,10 +5,17 @@
     <div class="container">
       <div class="top">
         <div class="img">
-          <img src="@/assets/img/event-1.jpg" alt="" class="pic" />
+          <!-- <img src="@/assets/img/event-1.jpg" alt="" class="pic" /> -->
+          <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+          <img
+            v-else
+            src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+            alt=""
+            class="pic"
+          />
         </div>
         <div class="info">
-          <p>07 мая 2023, 15:24</p>
+          <p>{{ moment(event?.start_date).format("DD MMM YYYY, HH:mm") }}</p>
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +70,7 @@
             300
           </p>
         </div>
-        <h4 class="name">Закладки дизайнера: детальное пособие для джунов</h4>
+        <h4 class="name">{{ event?.title }}</h4>
         <div class="tabs">
           <button @click="tabHandle = 'info'" :class="{ active: tabHandle == 'info' }">
             Ma'lumot
@@ -117,6 +124,8 @@ import EventPlan from "@/components/EventPage/EventPlan.vue";
 import EventFiles from "@/components/EventPage/EventFiles.vue";
 import EventsContact from "@/components/EventPage/EventsContact.vue";
 import EventParticipants from "@/components/EventPage/EventParticipants.vue";
+import eventsApi from "@/api/eventsApi";
+import moment from "moment";
 export default {
   components: {
     SiteTop,
@@ -125,7 +134,7 @@ export default {
     EventPlan,
     EventFiles,
     EventsContact,
-    EventParticipants
+    EventParticipants,
   },
 
   data() {
@@ -170,6 +179,17 @@ export default {
         },
       ],
     };
+  },
+
+  async asyncData({ $axios, params }) {
+    const eventsData = await eventsApi.getEventsById($axios, { id: params.id });
+    const event = eventsData?.data;
+    return {
+      event,
+    };
+  },
+  methods: {
+    moment,
   },
 };
 </script>

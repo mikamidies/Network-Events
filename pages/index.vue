@@ -22,16 +22,38 @@
         </div>
       </div>
 
-      <HomeEvents />
+      <HomeEvents :events="events" :myEvents="myEvents" />
     </div>
   </div>
 </template>
 
 <script>
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
-export default {
-  async mounted() {
+import eventsApi from "../api/eventsApi";
 
+export default {
+  data() {
+    return {
+      myEvents: [],
+    };
+  },
+  async asyncData({ $axios }) {
+    const [eventsData] = await Promise.all([eventsApi.getEvents($axios)]);
+    const events = eventsData?.data?.results;
+    return {
+      events,
+    };
+  },
+  async mounted() {
+    this.__GET_MY_EVENTS();
+  },
+  methods: {
+    async __GET_MY_EVENTS() {
+      try {
+        const data = await eventsApi.getMyEvents();
+        this.myEvents = data?.data?.results;
+      } catch (e) {}
+    },
   },
   components: {
     HomeEvents,

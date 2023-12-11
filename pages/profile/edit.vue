@@ -275,7 +275,7 @@ export default {
 
     async __PUT_PROFILE(form) {
       try {
-        const data = await authApi.putProfile(form);
+        const data = await authApi.putProfile(this.$axios, form);
         this.$nuxt.refresh();
         this.$router.push("/profile");
       } catch (e) {}
@@ -299,7 +299,7 @@ export default {
     },
     async __GET_INFO() {
       try {
-        const data = await authApi.getInfo();
+        const data = await authApi.getInfo(this.$axios);
         this.form = {
           phone_number: data?.data.phone_number,
           full_name: data?.data.full_name,

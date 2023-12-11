@@ -1,17 +1,23 @@
 export default {
-  async getEvents(config = {}) {
-    return await $nuxt.$axios.get("/events", config);
+  async getEvents(axios, config = {}) {
+    return await axios.get("/events", config);
   },
-  async getEventsById(config = {}) {
-    return await $nuxt.$axios.get(`/events/${config.id}`, config);
+  async getEventsById(axios, config = {}) {
+    return await axios.get(
+      `https://networking.pythonanywhere.com/api/events/${config.id}`,
+      config.payload
+    );
   },
-  async getMembers(config = {}) {
-    return await $nuxt.$axios.get(`/events/${config.id}/members`, config);
+  async getMembers(axios, config = {}) {
+    return await axios.get(`/events/${config.id}/members`, config);
   },
   async postEvent(config = {}) {
-    return await $nuxt.$axios.post(
-      "/events/d9cc654d-5001-4aa9-8a8f-e1241703d864/join",
-      config
+    return await $nuxt.$axiosInstance.post(
+      `/events/${config.id}/join`,
+      config.payload
     );
+  },
+  async getMyEvents(config = {}) {
+    return await $nuxt.$axiosInstance.get("/events/my", config);
   },
 };

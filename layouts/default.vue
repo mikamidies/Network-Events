@@ -25,7 +25,7 @@ export default {
   async mounted() {
     if (!localStorage.getItem("accessToken")) this.$router.push("/register");
     try {
-      const data = await authApi.getInfo();
+      const data = await authApi.getInfo(this.$axios);
       this.$store.commit("getProfile", data?.data);
     } catch (e) {
       console.log(e);

@@ -29,16 +29,12 @@ export default {
   ],
 
   components: true,
-  // server: {
-  //   host: "localhost",
-  //   port: 8000
-  // },
   buildModules: [],
 
   modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
 
   axios: {
-    baseURL: "/",
+    baseURL: process.env.BASE_URL,
   },
 
   build: {},

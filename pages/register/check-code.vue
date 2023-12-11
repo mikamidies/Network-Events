@@ -124,7 +124,7 @@ export default {
     },
     async __SEND_CODE(form) {
       try {
-        const data = await sendNUmberApi.sendCode(form);
+        const data = await sendNUmberApi.sendCode(this.$axios, form);
 
         if (data?.data?.code_valid) {
           this.$router.push("/register/info");

@@ -2,12 +2,18 @@
   <div class="wrap">
     <div class="current">
       <h4 class="title">Siz ishtirok etmoqdasiz</h4>
-      <div class="item">
-        <NuxtLink to="/event/slug">
-          <img src="@/assets/img/event.jpg" alt="" class="pic" />
+      <div class="item" v-for="event in myEvents">
+        <NuxtLink :to="`/event/${event?.id}`">
+          <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+          <img
+            v-else
+            src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+            alt=""
+            class="pic"
+          />
           <div class="content">
             <div class="badge">Siz ishtirokdasz</div>
-            <p class="name">Закладки дизайнера: детальное пособие для джунов</p>
+            <p class="name">{{ event?.title }}</p>
           </div>
         </NuxtLink>
       </div>
@@ -36,36 +42,22 @@
         </NuxtLink>
       </div>
       <div class="items">
-        <div class="item">
-          <NuxtLink to="/event/slug">
+        <div class="item" v-for="event in events">
+          <NuxtLink :to="`/event/${event?.id}`">
             <div class="img">
-              <p class="date">07 мая 2023, 15:24</p>
-              <img src="@/assets/img/event-1.jpg" alt="" class="pic" />
+              <p class="date">
+                {{ moment(event?.start_date).format("DD MMM YYYY, HH:mm") }}
+              </p>
+              <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+              <img
+                v-else
+                src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+                alt=""
+                class="pic"
+              />
             </div>
             <p class="name">
-              Закладки дизайнера: детальное пособие для джунов (и не только)
-            </p>
-          </NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/event/slug">
-            <div class="img">
-              <p class="date">07 мая 2023, 15:24</p>
-              <img src="@/assets/img/event-2.jpg" alt="" class="pic" />
-            </div>
-            <p class="name">
-              Закладки дизайнера: детальное пособие для джунов (и не только)
-            </p>
-          </NuxtLink>
-        </div>
-        <div class="item">
-          <NuxtLink to="/event/slug">
-            <div class="img">
-              <p class="date">07 мая 2023, 15:24</p>
-              <img src="@/assets/img/event-3.jpg" alt="" class="pic" />
-            </div>
-            <p class="name">
-              Закладки дизайнера: детальное пособие для джунов (и не только)
+              {{ event?.title }}
             </p>
           </NuxtLink>
         </div>
@@ -75,8 +67,13 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
+  props: ["events", "myEvents"],
   name: "HomeEvents",
+  methods: {
+    moment,
+  },
 };
 </script>
 
@@ -105,11 +102,7 @@ export default {
 }
 .current .item::after {
   border-radius: 0px 0px 16px 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.72) 100%
-  );
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 100%);
   content: "";
   position: absolute;
   bottom: 0;

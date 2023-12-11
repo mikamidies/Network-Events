@@ -274,7 +274,7 @@ export default {
     },
     async __SEND_INFO(form) {
       try {
-        const data = await sendNUmberApi.sendInfo(form);
+        const data = await sendNUmberApi.sendInfo(this.$axios, form);
         localStorage.setItem("accessToken", data?.data?.access);
         localStorage.setItem("refreshToken", data?.data?.refresh);
         localStorage.removeItem("phone_number");

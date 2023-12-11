@@ -79,7 +79,7 @@ export default {
   methods: {
     async __GET_INFO() {
       try {
-        const data = await authApi.getInfo();
+        const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
       } catch (e) {
         if (e.response.status == 401) {
