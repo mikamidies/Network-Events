@@ -1,16 +1,10 @@
 <template lang="html">
-  <div class="event-plan">
-    <ul class="list">
-      <li>12:00 — «Кукла».Стоимость: 350 000 сумов;</li>
-      <li>12:00 — «Картины».Стоимость: 280 000 сумов; </li>
-      <li>13:00 — «Гвоздетерапия».Стоимость: 200 000 сумов; </li>
-      <li>16:00 — «Урок самомассажа лица».Стоимость: 200 000 сумов; </li>
-      <li>17:00 — «Букет с флористом».Стоимость: 280 000 сумов.</li>
-    </ul>
-  </div>
+  <div class="event-plan" v-html="event?.plan"></div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["event"],
+};
 </script>
 <style lang="css" scoped>
 .list {

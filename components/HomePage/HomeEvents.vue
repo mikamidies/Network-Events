@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="current">
       <h4 class="title">Siz ishtirok etmoqdasiz</h4>
-      <div class="item" v-for="event in myEvents">
+      <div class="item" v-for="event in myEvents" :key="event?.id">
         <NuxtLink :to="`/event/${event?.id}`">
           <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
           <img
@@ -42,7 +42,7 @@
         </NuxtLink>
       </div>
       <div class="items">
-        <div class="item" v-for="event in events">
+        <div class="item" v-for="event in events" :key="event?.id">
           <NuxtLink :to="`/event/${event?.id}`">
             <div class="img">
               <p class="date">

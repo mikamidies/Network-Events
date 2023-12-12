@@ -1,16 +1,32 @@
 <template lang="html">
   <div class="file-card">
     <div class="img">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-  <path opacity="0.4" d="M4.88379 27L4.88379 9C4.88379 5.68629 7.512 3 10.7541 3L19.5595 3L31.3 15V27C31.3 30.3137 28.6718 33 25.4297 33H10.7541C7.512 33 4.88379 30.3137 4.88379 27Z" fill="#1878F3"/>
-  <path d="M19.5596 9L19.5596 3L31.3001 15L25.4298 15C22.1878 15 19.5596 12.3137 19.5596 9Z" fill="#1878F3"/>
-  <path d="M15.1567 26.6085V18.3915C15.1567 17.5882 16.056 17.1128 16.7198 17.5651L22.7494 21.6736C23.3319 22.0705 23.3319 22.9295 22.7494 23.3264L16.7198 27.4349C16.056 27.8872 15.1567 27.4118 15.1567 26.6085Z" fill="#1878F3"/>
-</svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="36"
+        height="36"
+        viewBox="0 0 36 36"
+        fill="none"
+      >
+        <path
+          opacity="0.4"
+          d="M4.88379 27L4.88379 9C4.88379 5.68629 7.512 3 10.7541 3L19.5595 3L31.3 15V27C31.3 30.3137 28.6718 33 25.4297 33H10.7541C7.512 33 4.88379 30.3137 4.88379 27Z"
+          fill="#1878F3"
+        />
+        <path
+          d="M19.5596 9L19.5596 3L31.3001 15L25.4298 15C22.1878 15 19.5596 12.3137 19.5596 9Z"
+          fill="#1878F3"
+        />
+        <path
+          d="M15.1567 26.6085V18.3915C15.1567 17.5882 16.056 17.1128 16.7198 17.5651L22.7494 21.6736C23.3319 22.0705 23.3319 22.9295 22.7494 23.3264L16.7198 27.4349C16.056 27.8872 15.1567 27.4118 15.1567 26.6085Z"
+          fill="#1878F3"
+        />
+      </svg>
     </div>
     <div class="body">
-      <h4 class="title">Bu file da siz takoy narsa topishingiz mumkin</h4>
-      <a href=""
-        >Yuklab olish
+      <h4 class="title">{{ file?.name }}</h4>
+      <a :href="file?.file" download
+        >Yuklab olish 123
         <svg
           width="21"
           height="20"
@@ -35,7 +51,24 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["file"],
+  methods: {
+    downloadItem(url) {
+      this.$axios
+        .$get(url, { responseType: "blob" })
+        .then((response) => {
+          const blob = new Blob([response.data], { type: "application/pdf" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "Safar park ticket";
+          link.click();
+          URL.revokeObjectURL(link.href);
+        })
+        .catch((err) => {});
+    },
+  },
+};
 </script>
 <style lang="css" scoped>
 .file-card {
@@ -50,6 +83,7 @@ export default {};
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-width: 100%;
 }
 .body .title {
   color: #020105;
@@ -58,6 +92,11 @@ export default {};
   font-style: normal;
   line-height: 120%;
   letter-spacing: -0.28px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .body a {
   color: #1878f3;

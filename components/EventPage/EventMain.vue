@@ -1,6 +1,7 @@
 <template>
   <div class="wrap">
-    <div class="desc">
+    <div class="desc" v-html="event?.desc"></div>
+    <!-- <div class="desc">
       <p>Мы уже соскучились, а вы?😉</p>
       <p>
         Друзья, спешим к вам с радостной новостью о нашем PizzaPitch, который
@@ -17,7 +18,7 @@
         платное): https://forms.gle/arp1r6RMxyCrq6mW6
       </p>
       <p>Мы ждем вас, будет очень полезно и вкусно 😋</p>
-    </div>
+    </div> -->
     <div class="map">
       <div>
         <iframe
@@ -33,8 +34,7 @@
       <div>
         <p class="sup">Manzil</p>
         <p class="value">
-          ЖК "Boulevard, Toshkent sh., Shayhontoxur tumani, City Boulevard,
-          Furkat Street, Tashkent, Узбекистан
+          {{ event?.adress }}
         </p>
       </div>
     </div>
@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="link">
-        <NuxtLink to="/">
+        <button @click="$emit('tabChange', 'participants')">
           Barchasi
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,26 +97,30 @@
               fill="#1878F3"
             />
           </svg>
-        </NuxtLink>
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["event"],
+};
 </script>
 
 <style scoped>
-.desc p {
+.desc :deep(p) {
   display: flex;
-  margin-bottom: 24px;
   color: var(--Black, #020105);
   font-family: var(--medium);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 140%; /* 19.6px */
+}
+.desc {
+  margin-bottom: 24px;
 }
 .map {
   margin-bottom: 40px;
@@ -167,7 +171,7 @@ export default {};
   display: flex;
   justify-content: center;
 }
-.link a {
+.link button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,6 +186,7 @@ export default {};
   background: var(--Apple-Grey, #f5f5f7);
   min-width: 182px;
   padding: 12px;
+  border: none;
 }
 .guests .name {
   color: var(--Black, #020105);

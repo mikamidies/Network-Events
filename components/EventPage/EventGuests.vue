@@ -20,24 +20,19 @@
       </button>
     </div>
     <div class="items">
-      <div class="item">
+      <div class="item" v-for="speaker in event?.speakers" :key="speaker?.id">
         <div class="person">
-          <img src="@/assets/img/person.jpg" alt="" />
+          <img v-if="speaker?.image" :src="speaker?.image" alt="" />
+          <img
+            v-else
+            src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+            alt=""
+          />
         </div>
         <div class="content">
-          <p class="name">Muhammadullo Egamberdiyev</p>
-          <p class="status">Texnicheksiy direktor</p>
-          <p class="company">MimSoft</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="person">
-          <img src="@/assets/img/person.jpg" alt="" />
-        </div>
-        <div class="content">
-          <p class="name">Muhammadullo Egamberdiyev</p>
-          <p class="status">Texnicheksiy direktor</p>
-          <p class="company">MimSoft</p>
+          <p class="name">{{ speaker?.name }}</p>
+          <p class="status">{{ speaker?.job_title }}</p>
+          <p class="company">{{ speaker?.company }}</p>
         </div>
       </div>
     </div>
@@ -46,6 +41,7 @@
 
 <script>
 export default {
+  props: ["event"],
   data() {
     return {};
   },

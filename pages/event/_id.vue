@@ -108,7 +108,7 @@
             :class="tabItem.class"
             :propObj="tabItem.propItem"
           >
-            <component :is="tabItem.name" />
+            <component :is="tabItem.name" :event="event" @tabChange="tabChange" />
           </div>
         </div>
       </div>
@@ -188,8 +188,25 @@ export default {
       event,
     };
   },
+  async mounted() {
+    const eventsData = await eventsApi.getEventsById(this.$axios, {
+      id: this.$route.params.id,
+    });
+    this.__GET_MEMBERS();
+  },
   methods: {
+    tabChange(name) {
+      this.tabHandle = name;
+    },
     moment,
+    async __GET_MEMBERS() {
+      try {
+        const data = await eventsApi.getMembers({
+          id: this.$route.params.id,
+          payload: {},
+        });
+      } catch (e) {}
+    },
   },
 };
 </script>

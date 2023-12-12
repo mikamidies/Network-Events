@@ -8,8 +8,11 @@ export default {
       config.payload
     );
   },
-  async getMembers(axios, config = {}) {
-    return await axios.get(`/events/${config.id}/members`, config);
+  async getMembers(config = {}) {
+    return await $nuxt.$axiosInstance.get(
+      `/events/${config.id}/members`,
+      config.payload
+    );
   },
   async postEvent(config = {}) {
     return await $nuxt.$axiosInstance.post(
