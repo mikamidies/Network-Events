@@ -4,7 +4,13 @@
       <div class="search__wrap">
         <div class="search">
           <label for="search"></label>
-          <input type="text" id="search" placeholder="Tadbirni qidirish" />
+          <input
+            type="text"
+            id="search"
+            v-model="search"
+            @input="onSearch"
+            placeholder="Tadbirni qidirish"
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -22,7 +28,7 @@
         </div>
       </div>
 
-      <HomeEvents :events="events" :myEvents="myEvents" />
+      <HomeEvents :events="events" :myEvents="myEvents" :loading="loading" />
     </div>
   </div>
 </template>
@@ -35,10 +41,18 @@ export default {
   data() {
     return {
       myEvents: [],
+      search: "",
+      loading: false,
     };
   },
-  async asyncData({ $axios }) {
-    const [eventsData] = await Promise.all([eventsApi.getEvents($axios)]);
+  async asyncData({ $axios, query }) {
+    const [eventsData] = await Promise.all([
+      eventsApi.getEvents($axios, {
+        params: {
+          ...query,
+        },
+      }),
+    ]);
     const events = eventsData?.data?.results;
     return {
       events,
@@ -46,6 +60,7 @@ export default {
   },
   async mounted() {
     this.__GET_MY_EVENTS();
+    this.search = this.$route.query?.search ? this.$route.query?.search : "";
   },
   methods: {
     async __GET_MY_EVENTS() {
@@ -53,6 +68,40 @@ export default {
         const data = await eventsApi.getMyEvents();
         this.myEvents = data?.data?.results;
       } catch (e) {}
+    },
+    async __GET_EVENTS() {
+      try {
+        this.loading = true;
+        const data = await eventsApi.getEvents(this.$axios, {
+          params: {
+            ...this.$route.query,
+          },
+        });
+        this.events = data?.data?.results;
+      } catch (e) {
+      } finally {
+        this.loading = false;
+      }
+    },
+    async onSearch(e) {
+      if (this.$route.query?.search != e.target.value && e.target.value.length > 2) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...this.$route.query, page: 1, search: e.target.value },
+        });
+        this.__GET_EVENTS();
+      }
+    },
+  },
+  watch: {
+    async search(val) {
+      if (val.length == 0 && this.$route.query?.search) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: {},
+        });
+        this.__GET_EVENTS();
+      }
     },
   },
   components: {

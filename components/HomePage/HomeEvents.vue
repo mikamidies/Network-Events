@@ -5,12 +5,7 @@
       <div class="item" v-for="event in myEvents" :key="event?.id">
         <NuxtLink :to="`/event/${event?.id}`">
           <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
-          <img
-            v-else
-            src="@/assets/img/image.png"
-            alt=""
-            class="pic"
-          />
+          <img v-else src="@/assets/img/image.png" alt="" class="pic" />
           <div class="content">
             <div class="badge">Siz ishtirokdasz</div>
             <p class="name">{{ event?.title }}</p>
@@ -41,7 +36,7 @@
           </svg>
         </NuxtLink>
       </div>
-      <div class="items">
+      <div class="items" v-if="!loading">
         <div class="item" v-for="event in events" :key="event?.id">
           <NuxtLink :to="`/event/${event?.id}`">
             <div class="img">
@@ -49,18 +44,21 @@
                 {{ moment(event?.start_date).format("DD MMM YYYY, HH:mm") }}
               </p>
               <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
-              <img
-                v-else
-                src="@/assets/img/image.png"
-                alt=""
-                class="pic"
-              />
+              <img v-else src="@/assets/img/image.png" alt="" class="pic" />
             </div>
             <p class="name">
               {{ event?.title }}
             </p>
           </NuxtLink>
         </div>
+      </div>
+      <div class="items" v-if="loading">
+        <a-skeleton
+          :paragraph="false"
+          class="loading-card"
+          v-for="elem in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+          :key="elem"
+        />
       </div>
     </div>
   </div>
@@ -69,7 +67,7 @@
 <script>
 import moment from "moment";
 export default {
-  props: ["events", "myEvents"],
+  props: ["events", "myEvents", "loading"],
   name: "HomeEvents",
   methods: {
     moment,
@@ -224,5 +222,11 @@ export default {
   font-style: normal;
   font-weight: 500;
   line-height: 140%; /* 22.4px */
+}
+.loading-card :deep(.ant-skeleton-title) {
+  height: 230px;
+  border-radius: 30px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 </style>
