@@ -2,15 +2,17 @@
   <div class="wrap">
     <div class="current">
       <h4 class="title">Siz ishtirok etmoqdasiz</h4>
-      <div class="item" v-for="event in myEvents" :key="event?.id">
-        <NuxtLink :to="`/event/${event?.id}`">
-          <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
-          <img v-else src="@/assets/img/image.png" alt="" class="pic" />
-          <div class="content">
-            <div class="badge">Siz ishtirokdasz</div>
-            <p class="name">{{ event?.title }}</p>
-          </div>
-        </NuxtLink>
+      <div class="items">
+        <div class="item" v-for="event in myEvents" :key="event?.id">
+          <NuxtLink :to="`/event/${event?.id}`">
+            <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+            <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+            <div class="content">
+              <div class="badge">Siz ishtirokdasz</div>
+              <p class="name">{{ event?.title }}</p>
+            </div>
+          </NuxtLink>
+        </div>
       </div>
     </div>
 
