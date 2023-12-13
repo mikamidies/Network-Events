@@ -24,19 +24,36 @@ export default {
   },
   async mounted() {
     if (!localStorage.getItem("accessToken")) this.$router.push("/register");
-    try {
-      const data = await authApi.getInfo(this.$axios);
-      this.$store.commit("getProfile", data?.data);
-    } catch (e) {
-      console.log(e);
-      if (e.response.status == 401) {
+    this.getProfileInfo();
+  },
+  methods: {
+    async refreshToken() {
+      try {
+        const tokens = await authApi.postRefreshToken(this.$axios, {
+          refresh: localStorage.getItem("refreshToken"),
+        });
+        console.log(tokens);
+        await localStorage.setItem("accessToken", tokens?.data?.access);
+        await localStorage.setItem("refreshToken", tokens?.data?.refresh);
+        this.getProfileInfo();
+      } catch (e) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         this.$router.push("/register");
       }
-    } finally {
-      this.loader = false;
-    }
+    },
+    async getProfileInfo() {
+      try {
+        const data = await authApi.getInfo(this.$axios);
+        this.$store.commit("getProfile", data?.data);
+      } catch (e) {
+        if (e.response.status == 401) {
+          this.refreshToken();
+        }
+      } finally {
+        this.loader = false;
+      }
+    },
   },
 };
 </script>

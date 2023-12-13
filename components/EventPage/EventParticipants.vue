@@ -20,44 +20,15 @@
       </button>
     </div>
     <div class="items">
-      <div class="item">
+      <div class="item" v-for="member in members" :key="member?.id">
         <div class="person">
-          <img src="@/assets/img/person.jpg" alt="" />
+          <img v-if="member?.image" :src="member?.image" alt="" />
+          <img v-else src="@/assets/img/image.png" alt="" />
         </div>
         <div class="content">
-          <p class="name">Muhammadullo Egamberdiyev</p>
-          <p class="status">Texnicheksiy direktor</p>
-          <p class="company">MimSoft</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="person">
-          <img src="@/assets/img/person.jpg" alt="" />
-        </div>
-        <div class="content">
-          <p class="name">Muhammadullo Egamberdiyev</p>
-          <p class="status">Texnicheksiy direktor</p>
-          <p class="company">MimSoft</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="person">
-          <img src="@/assets/img/person.jpg" alt="" />
-        </div>
-        <div class="content">
-          <p class="name">Muhammadullo Egamberdiyev</p>
-          <p class="status">Texnicheksiy direktor</p>
-          <p class="company">MimSoft</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="person">
-          <img src="@/assets/img/person.jpg" alt="" />
-        </div>
-        <div class="content">
-          <p class="name">Muhammadullo Egamberdiyev</p>
-          <p class="status">Texnicheksiy direktor</p>
-          <p class="company">MimSoft</p>
+          <p class="name">{{ member?.user?.full_name }}</p>
+          <p class="status">{{ member?.job_title }}</p>
+          <p class="company">{{ member?.company_name }}</p>
         </div>
       </div>
     </div>
@@ -66,6 +37,7 @@
 
 <script>
 export default {
+  props: ["members"],
   data() {
     return {};
   },

@@ -1,35 +1,19 @@
 <template>
   <div class="wrap">
     <div class="desc" v-html="event?.desc"></div>
-    <!-- <div class="desc">
-      <p>Мы уже соскучились, а вы?😉</p>
-      <p>
-        Друзья, спешим к вам с радостной новостью о нашем PizzaPitch, который
-        состоится совсем скоро 🍕🍕🍕🤩 Уже 18 ноября в 10:00 пройдет #7 по
-        счету PizzaPitch во всем знакомом C-Space Yunusabad 🔊
-      </p>
-      <p>
-        Специальный гость для предстоящего PizzaPitch: Фируз Аллаев – основатель
-        проекта Asaxiy расскажет о своем опыте создания успешных проектов и даст
-        ценные советы стартапам!
-      </p>
-      <p>
-        ➡️ Для подачи заявки перейдите по ссылке (участие на ивенте бесплатное и
-        платное): https://forms.gle/arp1r6RMxyCrq6mW6
-      </p>
-      <p>Мы ждем вас, будет очень полезно и вкусно 😋</p>
-    </div> -->
     <div class="map">
       <div>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2998.6189142440057!2d69.22735537656192!3d41.27363270304267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b465f71d1c7%3A0x93fdb36e9a66a649!2z0YjQutC-0LvQsCDQvdCw0YDRg9GC0L4!5e0!3m2!1sru!2s!4v1701088951787!5m2!1sru!2s"
-          width="600"
-          height="450"
-          style="border: 0"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+        <client-only>
+          <l-map
+            style="min-height: 184px; margin-bottom: 8px"
+            :zoom="13"
+            v-if="coords?.length > 0"
+            :center="coords"
+          >
+            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+            <l-marker :lat-lng="coords"></l-marker>
+          </l-map>
+        </client-only>
       </div>
       <div>
         <p class="sup">Manzil</p>
@@ -59,24 +43,15 @@
         </button>
       </div>
       <div class="items">
-        <div class="item">
+        <div class="item" v-for="member in members" :key="member?.id">
           <div class="person">
-            <img src="@/assets/img/person.jpg" alt="" />
+            <img v-if="member?.image" :src="member?.image" alt="" />
+            <img v-else src="@/assets/img/user.png" alt="" />
           </div>
           <div class="content">
-            <p class="name">Muhammadullo Egamberdiyev</p>
-            <p class="status">Texnicheksiy direktor</p>
-            <p class="company">MimSoft</p>
-          </div>
-        </div>
-        <div class="item">
-          <div class="person">
-            <img src="@/assets/img/person.jpg" alt="" />
-          </div>
-          <div class="content">
-            <p class="name">Muhammadullo Egamberdiyev</p>
-            <p class="status">Texnicheksiy direktor</p>
-            <p class="company">MimSoft</p>
+            <p class="name">{{ member?.user?.full_name }}</p>
+            <p class="status">{{ member?.job_title }}</p>
+            <p class="company">{{ member?.company_name }}</p>
           </div>
         </div>
       </div>
@@ -105,7 +80,7 @@
 
 <script>
 export default {
-  props: ["event"],
+  props: ["event", "members", "coords"],
 };
 </script>
 
@@ -124,6 +99,7 @@ export default {
 }
 .map {
   margin-bottom: 40px;
+  /* height: 148px; */
 }
 .sup {
   margin-bottom: 4px;

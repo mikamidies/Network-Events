@@ -19,13 +19,14 @@
         </svg>
       </button>
     </div>
+
     <div class="items">
       <div class="item" v-for="speaker in event?.speakers" :key="speaker?.id">
         <div class="person">
           <img v-if="speaker?.image" :src="speaker?.image" alt="" />
           <img
             v-else
-            src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+            src="@/assets/img/image.png"
             alt=""
           />
         </div>

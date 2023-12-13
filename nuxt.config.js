@@ -31,7 +31,7 @@ export default {
   components: true,
   buildModules: [],
 
-  modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/dotenv", "nuxt-leaflet"],
 
   axios: {
     baseURL:

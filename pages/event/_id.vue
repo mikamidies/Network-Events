@@ -7,12 +7,7 @@
         <div class="img">
           <!-- <img src="@/assets/img/event-1.jpg" alt="" class="pic" /> -->
           <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
-          <img
-            v-else
-            src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
-            alt=""
-            class="pic"
-          />
+          <img v-else src="@/assets/img/image.png" alt="" class="pic" />
         </div>
         <div class="info">
           <p>{{ moment(event?.start_date).format("DD MMM YYYY, HH:mm") }}</p>
@@ -67,7 +62,7 @@
                 fill="#9A999B"
               />
             </svg>
-            300
+            {{ members?.length }}
           </p>
         </div>
         <h4 class="name">{{ event?.title }}</h4>
@@ -108,7 +103,13 @@
             :class="tabItem.class"
             :propObj="tabItem.propItem"
           >
-            <component :is="tabItem.name" :event="event" @tabChange="tabChange" />
+            <component
+              :is="tabItem.name"
+              :event="event"
+              @tabChange="tabChange"
+              :members="members"
+              :coords="coords"
+            />
           </div>
         </div>
       </div>
@@ -140,6 +141,7 @@ export default {
   data() {
     return {
       tabHandle: "info",
+      members: [],
       tabList: [
         {
           name: "EventMain",
@@ -184,8 +186,10 @@ export default {
   async asyncData({ $axios, params }) {
     const eventsData = await eventsApi.getEventsById($axios, { id: params.id });
     const event = eventsData?.data;
+    const coords = [Number(eventsData?.data?.lat), Number(eventsData?.data?.lon)];
     return {
       event,
+      coords,
     };
   },
   async mounted() {
@@ -205,6 +209,8 @@ export default {
           id: this.$route.params.id,
           payload: {},
         });
+        console.log(data);
+        this.members = data?.data?.results;
       } catch (e) {}
     },
   },

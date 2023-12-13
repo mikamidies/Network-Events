@@ -7,7 +7,7 @@
           <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
           <img
             v-else
-            src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+            src="@/assets/img/image.png"
             alt=""
             class="pic"
           />
@@ -51,7 +51,7 @@
               <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
               <img
                 v-else
-                src="@/assets/img/Hero-Banner-Placeholder-Light-1024x480-1.png"
+                src="@/assets/img/image.png"
                 alt=""
                 class="pic"
               />
