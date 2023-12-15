@@ -14,6 +14,9 @@
           </NuxtLink>
         </div>
       </div>
+      <div v-if="!loading && myEvents.length == 0">
+        <a-empty />
+      </div>
     </div>
 
     <div class="others">
@@ -61,6 +64,9 @@
           v-for="elem in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
           :key="elem"
         />
+      </div>
+      <div v-if="!loading && events.length == 0">
+        <a-empty />
       </div>
     </div>
   </div>
