@@ -266,7 +266,19 @@ export default {
     submit() {
       this.form.sms_code = localStorage.getItem("accessCode");
       this.form.phone_number = localStorage.getItem("phone_number");
-      this.$refs.ruleForm.validate((valid) => valid && this.__SEND_INFO(this.form));
+      const data = {
+        ...this.form,
+        client_data: {
+          ...this.form.client_data,
+          telegram: !this.form.client_data.telegram.includes("@")
+            ? `@${this.form.client_data.telegram}`
+            : this.form.client_data.telegram,
+          instagram: !this.form.client_data.instagram.includes("@")
+            ? `@${this.form.client_data.instagram}`
+            : this.form.client_data.instagram,
+        },
+      };
+      this.$refs.ruleForm.validate((valid) => valid && this.__SEND_INFO(data));
     },
     handleRemove() {
       this.fileList = [];

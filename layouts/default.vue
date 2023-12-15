@@ -23,8 +23,11 @@ export default {
     };
   },
   async mounted() {
-    if (!localStorage.getItem("accessToken")) this.$router.push("/register");
-    this.getProfileInfo();
+    if (!localStorage.getItem("accessToken")) {
+      this.$router.push("/register");
+    } else {
+      this.getProfileInfo();
+    }
   },
   methods: {
     async refreshToken() {
@@ -47,8 +50,12 @@ export default {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
       } catch (e) {
-        if (e.response.status == 401) {
+        if (e.response.status == 401 && localStorage.getItem("refreshToken")) {
           this.refreshToken();
+        } else {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          this.$router.push("/register");
         }
       } finally {
         this.loader = false;

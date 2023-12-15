@@ -59,8 +59,13 @@ export default {
     };
   },
   async mounted() {
-    this.__GET_MY_EVENTS();
+    if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
+  },
+  computed: {
+    handleUser() {
+      return Object.keys(this.$store.state.profile)?.length;
+    },
   },
   methods: {
     async __GET_MY_EVENTS() {
@@ -94,6 +99,11 @@ export default {
     },
   },
   watch: {
+    handleUser(val) {
+      if (val > 0) {
+        this.__GET_MY_EVENTS();
+      }
+    },
     async search(val) {
       if (val.length == 0 && this.$route.query?.search) {
         await this.$router.replace({
