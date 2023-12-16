@@ -30,13 +30,16 @@
             <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
               <a-form-model-item class="form-item mb-0">
                 <p class="sub">Telefon raqami orqali kiring</p>
-                <input
-                  type="text"
-                  v-mask="'+998 ## ### ## ##'"
-                  v-model="form.phone_number"
-                  @keyup.enter="submit"
-                  placeholder="+998 (__) ___ __ __"
-                /> </a-form-model-item
+                <div class="input-context">
+                  <span>+998</span>
+                  <input
+                    type="text"
+                    v-mask="'## ### ## ##'"
+                    v-model="form.phone_number"
+                    @keyup.enter="submit"
+                    placeholder="(__) ___ __ __"
+                  />
+                </div> </a-form-model-item
             ></a-form-model>
           </div>
         </div>
@@ -74,7 +77,7 @@ export default {
   methods: {
     submit() {
       const data = {
-        phone_number: this.form.phone_number.replaceAll(" ", "").replace("+", ""),
+        phone_number: `998${this.form.phone_number}`.replaceAll(" ", ""),
       };
       localStorage.setItem("phone_number", data.phone_number);
       this.$refs.ruleForm.validate((valid) => {
@@ -133,7 +136,10 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.form-item input {
+.form-item .input-context {
+  display: flex;
+  gap: 4px;
+  align-items: center;
   border-radius: 8px;
   background: #fff;
   border-radius: 8px;
@@ -149,6 +155,17 @@ export default {
   line-height: 150%;
 }
 
+.form-item input {
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #020105;
+  font-family: var(--medium);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
 .form-item input:focus {
   outline: none;
 }
