@@ -34,9 +34,12 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/dotenv", "nuxt-leaflet"],
 
   axios: {
-    baseURL:
-      process.env.BASE_URL || "https://networking.pythonanywhere.com/api",
+    baseURL: process.env.BASE_URL,
   },
-
+  target: "server",
+  server: {
+    port: 8451,
+    host: "0.0.0.0",
+  },
   build: {},
 };

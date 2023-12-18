@@ -3,10 +3,7 @@ export default {
     return await axios.get("/events", config);
   },
   async getEventsById(axios, config = {}) {
-    return await axios.get(
-      `https://networking.pythonanywhere.com/api/events/${config.id}`,
-      config.payload
-    );
+    return await axios.get(`/events/${config.id}`, config.payload);
   },
   async getMembers(config = {}) {
     return await $nuxt.$axiosInstance.get(

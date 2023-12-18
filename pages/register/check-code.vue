@@ -102,6 +102,13 @@ export default {
     };
   },
   mounted() {
+    let inputs = document.querySelectorAll(".otp-input");
+    console.log(inputs,"asdasdas");
+    inputs.forEach((item, index) => {
+      if (index != 0 && !inputs[index - 1].value) {
+        item.classList.add("disabledItem");
+      }
+    });
     this.setInputPlaceholder();
     if (localStorage.getItem("phone_number"))
       this.form.phone_number = localStorage.getItem("phone_number");
@@ -161,6 +168,9 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+:deep(.disabledItem) {
+  pointer-events: none;
+}
 .disabled {
   pointer-events: none;
   opacity: 0.6;
