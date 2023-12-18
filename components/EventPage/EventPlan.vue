@@ -22,4 +22,11 @@ export default {
   line-height: 150%;
   list-style: disc;
 }
+.event-plan :deep(ul) {
+  list-style: unset;
+  margin-left: 16px;
+}
+.event-plan :deep(ul li) {
+  line-height: initial;
+}
 </style>

@@ -86,12 +86,12 @@ export default {
 
 <style scoped>
 .desc :deep(p) {
-  display: flex;
+  /* display: flex; */
   color: var(--Black, #020105);
-  font-family: var(--medium);
+  /* font-family: var(--medium);
   font-size: 14px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 500; */
   line-height: 140%; /* 19.6px */
 }
 .desc {
