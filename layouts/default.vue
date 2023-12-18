@@ -35,7 +35,6 @@ export default {
         const tokens = await authApi.postRefreshToken(this.$axios, {
           refresh: localStorage.getItem("refreshToken"),
         });
-        console.log(tokens);
         await localStorage.setItem("accessToken", tokens?.data?.access);
         await localStorage.setItem("refreshToken", tokens?.data?.refresh);
         this.getProfileInfo();

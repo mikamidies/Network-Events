@@ -270,10 +270,10 @@ export default {
         ...this.form,
         client_data: {
           ...this.form.client_data,
-          telegram: !this.form.client_data.telegram.includes("@")
+          telegram: !this.form.client_data.telegram?.includes("@")
             ? `@${this.form.client_data.telegram}`
             : this.form.client_data.telegram,
-          instagram: !this.form.client_data.instagram.includes("@")
+          instagram: !this.form.client_data.instagram?.includes("@")
             ? `@${this.form.client_data.instagram}`
             : this.form.client_data.instagram,
         },
