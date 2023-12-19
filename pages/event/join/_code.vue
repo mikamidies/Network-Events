@@ -9,14 +9,11 @@ import eventApi from "../../../api/eventsApi";
 export default {
   async mounted() {
     try {
-      const data = await eventApi.postEvent({ id: this.$route.params.code, payload: {} });
-      if (localStorage.getItem("accessToken")) {
-        this.$router.push(`/event/${data?.data?.id}`);
-      } else {
-        localStorage.setItem("qr_code", data?.data?.id);
-      }
+      const code = this.$route.params.code || localStorage.getItem("qr_code");
+      const data = await eventApi.postEvent({ id: code, payload: {} });
+      this.$router.push(`/event/${data?.data?.id}`);
     } catch (e) {
-      this.$router.push("/");
+      if (e.response.status == 401) this.$router.push("/");
     }
   },
   components: {

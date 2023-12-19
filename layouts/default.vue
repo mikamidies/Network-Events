@@ -30,6 +30,10 @@ export default {
     }
   },
   methods: {
+    removeTokens() {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    },
     async refreshToken() {
       try {
         const tokens = await authApi.postRefreshToken(this.$axios, {
@@ -39,21 +43,24 @@ export default {
         await localStorage.setItem("refreshToken", tokens?.data?.refresh);
         this.getProfileInfo();
       } catch (e) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        this.removeTokens();
         this.$router.push("/register");
       }
     },
     async getProfileInfo() {
+      const code = localStorage.getItem("qr_code");
+
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
+        if (localStorage.getItem("qr_code")) this.$router.push(`/event/join${code}`);
       } catch (e) {
+        if (this.$route.params?.code)
+          localStorage.setItem("qr_code", this.$route.params?.code);
         if (e.response.status == 401 && localStorage.getItem("refreshToken")) {
           this.refreshToken();
         } else {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
+          this.removeTokens();
           this.$router.push("/register");
         }
       } finally {
