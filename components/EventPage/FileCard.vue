@@ -25,7 +25,7 @@
     </div>
     <div class="body">
       <h4 class="title">{{ file?.name }}</h4>
-      <a :href="file?.file" download
+      <a :href="file?.file" download target="_blank"
         >Yuklab olish 123
         <svg
           width="21"
