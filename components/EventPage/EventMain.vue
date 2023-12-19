@@ -84,7 +84,7 @@
         </h5>
         <p>Ishtirokchilar faqat tadbir ishtokchilarga ko‘rinadi</p>
       </div>
-      <div class="link" v-if="memberStatus">
+      <div class="link" v-if="memberStatus && members?.length > 5">
         <button @click="$emit('tabChange', 'participants')">
           Barchasi
           <svg

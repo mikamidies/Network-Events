@@ -143,7 +143,7 @@ export default {
     return {
       tabHandle: "info",
       members: [],
-      memberStatus: true,
+      memberStatus: false,
       tabList: [
         {
           name: "EventMain",
@@ -198,6 +198,7 @@ export default {
     const eventsData = await eventsApi.getEventsById(this.$axios, {
       id: this.$route.params.id,
     });
+    localStorage.removeItem("qr_code");
     this.__GET_MEMBERS();
   },
   methods: {

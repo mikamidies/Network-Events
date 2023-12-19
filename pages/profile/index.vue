@@ -72,9 +72,16 @@ export default {
     SocialBlock,
   },
   mounted() {
+    this.redirectQrCode();
     this.__GET_INFO();
   },
   methods: {
+    redirectQrCode() {
+      if (localStorage.getItem("qr_code")) {
+        let code = localStorage.getItem("qr_code");
+        this.$router.push(`/event/${code}`);
+      }
+    },
     async __GET_INFO() {
       try {
         const data = await authApi.getInfo(this.$axios);

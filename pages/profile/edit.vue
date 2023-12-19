@@ -298,7 +298,6 @@ export default {
         this.form.client_data.image = fileList[0]?.response?.upload_url;
         this.image = fileList[0]?.response?.show_url;
         this.imgLoad = false;
-        console.log(this.form.client_data);
       }
     },
     async __GET_INFO() {
@@ -312,15 +311,17 @@ export default {
           },
         };
         this.image = data?.data.client?.image;
-        this.fileList = [
-          {
-            uid: `-1`,
-            name: "image.png",
-            status: "done",
-            oldImg: true,
-            url: data?.data.client?.image,
-          },
-        ];
+        if (this.image) {
+          this.fileList = [
+            {
+              uid: `-1`,
+              name: "image.png",
+              status: "done",
+              oldImg: true,
+              url: data?.data.client?.image,
+            },
+          ];
+        }
       } catch (e) {
         if (e.response.status == 401) {
           localStorage.removeItem("accessToken");
