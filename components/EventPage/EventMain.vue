@@ -24,7 +24,7 @@
     </div>
     <div class="guests">
       <div class="header">
-        <h4>Ishtirokchilar</h4>
+        <h4>Ishtirokchilar ({{ members?.length }})</h4>
         <button>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@
           </svg>
         </button>
       </div>
-      <div class="items">
+      <div class="items" v-if="memberStatus">
         <div class="item" v-for="member in members" :key="member?.id">
           <div class="person">
             <img v-if="member?.image" :src="member?.image" alt="" />
@@ -55,7 +55,36 @@
           </div>
         </div>
       </div>
-      <div class="link">
+      <div v-else class="members-locked">
+        <h5>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M8.75 7C8.75 5.20507 10.2051 3.75 12 3.75C13.7949 3.75 15.25 5.20507 15.25 7H16C16.2563 7 16.5071 7.02411 16.75 7.0702V7C16.75 4.37665 14.6234 2.25 12 2.25C9.37665 2.25 7.25 4.37665 7.25 7V7.0702C7.49294 7.02411 7.74365 7 8 7H8.75Z"
+              fill="#28303F"
+            />
+            <path
+              opacity="0.4"
+              d="M4 11C4 8.79086 5.79086 7 8 7L16 7C18.2091 7 20 8.79086 20 11V17C20 19.2091 18.2091 21 16 21H8C5.79086 21 4 19.2091 4 17V11Z"
+              fill="#28303F"
+            />
+            <path
+              d="M14 14C14 15.1046 13.1046 16 12 16C10.8954 16 10 15.1046 10 14C10 12.8954 10.8954 12 12 12C13.1046 12 14 12.8954 14 14Z"
+              fill="#28303F"
+            />
+          </svg>
+          Yopiq
+        </h5>
+        <p>Ishtirokchilar faqat tadbir ishtokchilarga ko‘rinadi</p>
+      </div>
+      <div class="link" v-if="memberStatus">
         <button @click="$emit('tabChange', 'participants')">
           Barchasi
           <svg
@@ -80,11 +109,41 @@
 
 <script>
 export default {
-  props: ["event", "members", "coords"],
+  props: ["event", "members", "coords", "memberStatus"],
 };
 </script>
 
 <style scoped>
+.members-locked {
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff9e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.members-locked p {
+  color: #020105;
+  text-align: center;
+  font-family: var(--regular);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+.members-locked h5 {
+  color: #020105;
+  text-align: center;
+  font-family: var(--decor-md);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+  letter-spacing: -0.28px;
+  display: flex;
+  align-items: center;
+}
 .desc :deep(p) {
   /* display: flex; */
   color: var(--Black, #020105);

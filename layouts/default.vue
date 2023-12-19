@@ -37,7 +37,7 @@ export default {
         });
         await localStorage.setItem("accessToken", tokens?.data?.access);
         await localStorage.setItem("refreshToken", tokens?.data?.refresh);
-        // this.getProfileInfo();
+        this.getProfileInfo();
       } catch (e) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

@@ -38,8 +38,8 @@ export default {
   },
   target: "server",
   server: {
-    port: 8451,
-    host: "0.0.0.0",
+    // port: 8451,
+    // host: "0.0.0.0",
   },
   build: {},
 };

@@ -250,11 +250,15 @@ export default {
         ...this.form,
         client_data: {
           ...this.form.client_data,
-          telegram: !this.form.client_data.telegram.includes("@")
-            ? `@${this.form.client_data.telegram}`
+          telegram: this.form.client_data.telegram
+            ? !this.form.client_data.telegram?.includes("@")
+              ? `@${this.form.client_data.telegram}`
+              : this.form.client_data.telegram
             : this.form.client_data.telegram,
-          instagram: !this.form.client_data.instagram.includes("@")
-            ? `@${this.form.client_data.instagram}`
+          instagram: this.form.client_data.instagram
+            ? !this.form.client_data.instagram?.includes("@")
+              ? `@${this.form.client_data.instagram}`
+              : this.form.client_data.instagram
             : this.form.client_data.instagram,
         },
       };
@@ -275,7 +279,7 @@ export default {
 
     async __PUT_PROFILE(form) {
       try {
-        const data = await authApi.putProfile(this.$axios, form);
+        const data = await authApi.putProfile(form);
         this.$nuxt.refresh();
         this.$router.push("/profile");
       } catch (e) {}

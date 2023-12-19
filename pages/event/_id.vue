@@ -109,6 +109,7 @@
               @tabChange="tabChange"
               :members="members"
               :coords="coords"
+              :memberStatus="memberStatus"
             />
           </div>
         </div>
@@ -142,6 +143,7 @@ export default {
     return {
       tabHandle: "info",
       members: [],
+      memberStatus: true,
       tabList: [
         {
           name: "EventMain",
@@ -209,9 +211,13 @@ export default {
           id: this.$route.params.id,
           payload: {},
         });
-        console.log(data);
         this.members = data?.data?.results;
-      } catch (e) {}
+        this.memberStatus = true;
+      } catch (e) {
+        if (e.response.status == 401) {
+          this.memberStatus = false;
+        }
+      }
     },
   },
 };

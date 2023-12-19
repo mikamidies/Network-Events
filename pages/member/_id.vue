@@ -4,9 +4,11 @@
 
     <div class="container">
       <div class="participant-profile">
-        <div class="personal-card">
-          <div class="image">
-            <img src="@/assets/img/person.jpg" alt="" />
+        <div class="personal-card"   :style="{
+            backgroundImage: `url(https://networking.pythonanywhere.com/media/images/all/2023/12/13/17024549317570534.jfif.1200x1200_q85.webp)`,
+          }">
+          <div class="bottom-shadow">
+        
           </div>
           <h4 class="name">Muhammadullo Egamberdiyev</h4>
           <p class="position">Texnicheksiy direktor</p>
@@ -48,6 +50,10 @@ export default {
     SiteTop,
     SocialBlock,
   },
+  async asyncData({ $axios, params }) {
+    // const clientData = await eventsApi.getClientById($axios, { id: params.id });
+    return {};
+  },
 };
 </script>
 <style lang="css" scoped>
@@ -56,14 +62,27 @@ export default {
   overflow: hidden;
 }
 .personal-card {
-  padding-top: 22px;
-  padding-bottom: 24px;
+  padding: 22px 16px 24px 16px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   border-radius: 24px;
   background: #f5f5f7;
+  height: 391px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+.bottom-shadow {
+  height: 141px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(180deg, rgba(60, 75, 220, 0) 0%, #3c4bdc 59.13%);
 }
 .image {
   width: 122px;
@@ -77,34 +96,41 @@ export default {
   object-fit: cover;
 }
 .personal-card .name {
-  color: #020105;
+  color: #fff;
   font-family: var(--decor-md);
   font-size: 18px;
   font-style: normal;
   line-height: 120%;
   letter-spacing: -0.36px;
   margin-top: 16px;
+  position: relative;
+  z-index: 10;
 }
 .personal-card .position {
-  color: #1878f3;
+  color: #fff;
   text-align: center;
   font-family: var(--medium);
   font-size: 16px;
   font-style: normal;
   line-height: 150%;
   margin-top: 6px;
+  position: relative;
+  z-index: 10;
 }
 .personal-card .company {
   padding-left: 12px;
   padding-right: 12px;
   border-radius: 2px;
-  background: #1878f3;
-  color: #fff;
+  background: #fff;
+  color: #020105;
   font-family: var(--medium);
   font-size: 16px;
   font-style: normal;
   line-height: 150%;
   margin-top: 4px;
+  position: relative;
+  z-index: 10;
+  border-radius: 6px;
 }
 .about {
   margin-top: 16px;
