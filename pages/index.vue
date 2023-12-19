@@ -29,6 +29,14 @@
       </div>
 
       <HomeEvents :events="events" :myEvents="myEvents" :loading="loading" />
+      <div class="pag-block">
+        <VPagination
+          :load="true"
+          class="xl:hidden"
+          :totalPage="totalPage"
+          @getData="__GET_EVENTS"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +44,7 @@
 <script>
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
 import eventsApi from "../api/eventsApi";
+import VPagination from "~/components/VPagination.vue";
 
 export default {
   data() {
@@ -50,12 +59,15 @@ export default {
       eventsApi.getEvents($axios, {
         params: {
           ...query,
+          page_size: query?.page_size ? query?.page_size : 10,
         },
       }),
     ]);
     const events = eventsData?.data?.results;
+    const totalPage = eventsData?.data?.count;
     return {
       events,
+      totalPage,
     };
   },
   async mounted() {
@@ -83,6 +95,7 @@ export default {
           },
         });
         this.events = data?.data?.results;
+        this.totalPage = data?.data?.count;
       } catch (e) {
       } finally {
         this.loading = false;
@@ -106,9 +119,10 @@ export default {
     },
     async search(val) {
       if (val.length == 0 && this.$route.query?.search) {
+        const { search, ...query } = this.$route.query;
         await this.$router.replace({
           path: this.$route.path,
-          query: {},
+          query: { ...query },
         });
         this.__GET_EVENTS();
       }
@@ -116,11 +130,15 @@ export default {
   },
   components: {
     HomeEvents,
+    VPagination,
   },
 };
 </script>
 
 <style scoped>
+.pag-block {
+  margin-top: 24px;
+}
 .search__wrap {
   padding: 12px 0;
   border-bottom: 1px solid var(--grey-8, #ebebeb);

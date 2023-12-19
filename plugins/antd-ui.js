@@ -8,6 +8,7 @@ import {
   Input,
   Spin,
   Pagination,
+  Skeleton,
   Empty,
   FormModel,
   message,
@@ -18,6 +19,7 @@ const { info, success, error, warning, confirm } = Modal;
 Vue.prototype.$notification = notification;
 Vue.prototype.$message = message;
 Vue.prototype.$confirm = confirm;
+Vue.use(Skeleton);
 Vue.use(Progress);
 Vue.use(FormModel);
 Vue.use(Empty);

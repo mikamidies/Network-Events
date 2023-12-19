@@ -38,6 +38,16 @@
   --decor: "Halvar";
   --decor-md: "Halvar-medium";
   --decor-bd: "Halvar-bold";
+  
+  --grey-8: #ebebeb;
+  --grey-24: #c2c2c3;
+  --grey-40: #9a999b;
+  --grey-80: #353437;
+  --grey-light: #e7edfb;
+  --bg-grey: #f8f9ff;
+  --blue: #5c46e5;
+  --black: #020105;
+
 }
 
 body {

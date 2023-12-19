@@ -83,7 +83,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .current {
   padding-top: 24px;
 }
