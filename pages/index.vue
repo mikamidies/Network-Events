@@ -37,12 +37,6 @@
           @getData="__GET_EVENTS"
         />
       </div>
-      <input
-        type="tel"
-        id="phoneNumber"
-        v-model="phoneNumber"
-        @input="formatPhoneNumber"
-      />{{formattedPhoneNumber}}
     </div>
   </div>
 </template>
@@ -58,7 +52,7 @@ export default {
       search: "",
       loading: false,
       phoneNumber: "",
-      formattedPhoneNumber: ""
+      formattedPhoneNumber: "",
     };
   },
   async asyncData({ $axios, query }) {
@@ -83,27 +77,11 @@ export default {
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
   },
   computed: {
-
     handleUser() {
       return Object.keys(this.$store.state.profile)?.length;
     },
   },
   methods: {
-    formatPhoneNumber() {
-      // Remove non-digit characters from the input
-      const cleaned = this.phoneNumber.replace(/\D/g, '');
-
-      // Define a regex pattern for phone number formatting
-      const regex = /^(\d{3})(\d{3})(\d{4})$/;
-
-      // Apply formatting if the cleaned number matches the pattern
-      if (regex.test(cleaned)) {
-        this.formattedPhoneNumber = cleaned.replace(regex, '($1) $2-$3');
-      } else {
-        // Handle invalid input or incomplete phone numbers
-        this.formattedPhoneNumber = cleaned;
-      }
-    },
     async __GET_MY_EVENTS() {
       try {
         const data = await eventsApi.getMyEvents();
