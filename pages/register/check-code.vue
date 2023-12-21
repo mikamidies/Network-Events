@@ -43,9 +43,11 @@
                 <v-otp-input
                   ref="otpInput"
                   input-classes="otp-input"
+                  class="code-inner"
                   :num-inputs="6"
                   separator=""
                   :should-auto-focus="true"
+                  :autofocus="true"
                   placeholder="*"
                   :is-input-num="true"
                   @on-change="handleOnChange"
@@ -103,10 +105,11 @@ export default {
   },
   mounted() {
     let inputs = document.querySelectorAll(".otp-input");
-    console.log(inputs,"asdasdas");
     inputs.forEach((item, index) => {
       if (index != 0 && !inputs[index - 1].value) {
         item.classList.add("disabledItem");
+      } else {
+        item.classList.remove("disabledItem");
       }
     });
     this.setInputPlaceholder();
@@ -155,9 +158,19 @@ export default {
     handleOnComplete(value) {
       console.log("OTP completed: ", value);
     },
-    handleOnChange(value) {
-      console.log("OTP changed: ", value);
-      this.form.sms_code = value;
+    handleOnChange(val) {
+      let inputs = document.querySelectorAll(".otp-input");
+      inputs.forEach((item, index) => {
+        if (index != 0 && !inputs[index - 1].value) {
+          item.classList.add("disabledItem");
+        } else {
+          item.classList.remove("disabledItem");
+        }
+        if (val.length + 1 < inputs.length) {
+          inputs[val.length + 1].classList.add("disabledItem");
+        }
+      });
+      this.form.sms_code = val;
     },
     setInputPlaceholder() {
       this.$refs.otpInput.$el
@@ -170,6 +183,9 @@ export default {
 <style lang="css" scoped>
 :deep(.disabledItem) {
   pointer-events: none;
+}
+:deep(.code-inner) {
+  display: flex !important;
 }
 .disabled {
   pointer-events: none;

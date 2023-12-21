@@ -7,7 +7,7 @@
         <div
           class="personal-card"
           :style="{
-            backgroundImage: `url(https://networking.pythonanywhere.com/media/images/all/2023/12/13/17024549317570534.jfif.1200x1200_q85.webp)`,
+            backgroundImage: `url(${$store.state.profile?.client?.image})`,
           }"
         >
           <div class="bottom-shadow"></div>

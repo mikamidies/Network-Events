@@ -77,6 +77,7 @@
             Spikerlar
           </button>
           <button
+          v-if="memberStatus"
             @click="tabHandle = 'participants'"
             :class="{ active: tabHandle == 'participants' }"
           >
