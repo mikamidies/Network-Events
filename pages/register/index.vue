@@ -90,7 +90,14 @@ export default {
       try {
         const data = await sendNUmberApi.sendNumber(this.$axios, form);
         await this.$router.push("/register/check-code");
-      } catch (e) {}
+      } catch (e) {
+        if (e.response.status == 403) {
+          this.$notification["error"]({
+            message: "Error",
+            description: "Код для этого телефона уже отправлен",
+          });
+        }
+      }
     },
   },
 };
