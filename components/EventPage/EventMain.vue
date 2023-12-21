@@ -6,7 +6,7 @@
         <client-only>
           <l-map
             style="min-height: 184px; margin-bottom: 8px"
-            :zoom="13"
+            :zoom="yMapZoom"
             v-if="coords?.length > 0"
             :center="coords"
           >
@@ -45,7 +45,7 @@
       <div class="items" v-if="memberStatus">
         <div class="item" v-for="member in members" :key="member?.id">
           <div class="person">
-            <img v-if="member?.image" :src="member?.image" alt="" />
+            <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
             <img v-else src="@/assets/img/user.png" alt="" />
           </div>
           <div class="content">
@@ -84,7 +84,7 @@
         </h5>
         <p>Ishtirokchilar faqat tadbir ishtokchilarga ko‘rinadi</p>
       </div>
-      <div class="link" v-if="memberStatus && members?.length > 5">
+      <div class="link" v-if="memberStatus && members?.length > membersLength">
         <button @click="$emit('tabChange', 'participants')">
           Barchasi
           <svg
@@ -108,8 +108,16 @@
 </template>
 
 <script>
+const MEMBERS_LENGTH = 5;
+const Y_MAP_ZOOM = 10;
 export default {
   props: ["event", "members", "coords", "memberStatus"],
+  data() {
+    return {
+      membersLength: MEMBERS_LENGTH,
+      yMapZoom: Y_MAP_ZOOM,
+    };
+  },
 };
 </script>
 

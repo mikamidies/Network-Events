@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <h4>Ishtirokchilar</h4>
+      <h4>Spikerlar</h4>
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -23,10 +23,10 @@
     <div class="items">
       <div class="item" v-for="speaker in event?.speakers" :key="speaker?.id">
         <div class="person">
-          <img v-if="speaker?.image" :src="speaker?.image" alt="" />
+          <img loading="lazy" v-if="speaker?.image" :src="speaker?.image" alt="" />
           <img
             v-else
-            src="@/assets/img/image.png"
+            src="@/assets/img/user.png"
             alt=""
           />
         </div>

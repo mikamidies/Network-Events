@@ -5,7 +5,13 @@
       <div class="items">
         <div class="item" v-for="event in myEvents" :key="event?.id">
           <NuxtLink :to="`/event/${event?.id}`">
-            <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+            <img
+              loading="lazy"
+              v-if="event?.image"
+              :src="event?.image"
+              alt=""
+              class="pic"
+            />
             <img v-else src="@/assets/img/image.png" alt="" class="pic" />
             <div class="content">
               <div class="badge">Siz ishtirokdasz</div>
@@ -46,9 +52,15 @@
           <NuxtLink :to="`/event/${event?.id}`">
             <div class="img">
               <p class="date">
-                {{ moment(event?.start_date).format("DD MMM YYYY, HH:mm") }}
+                {{ moment(event?.start_date).format(dateFormat) }}
               </p>
-              <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+              <img
+                loading="lazy"
+                v-if="event?.image"
+                :src="event?.image"
+                alt=""
+                class="pic"
+              />
               <img v-else src="@/assets/img/image.png" alt="" class="pic" />
             </div>
             <p class="name">
@@ -61,7 +73,7 @@
         <a-skeleton
           :paragraph="false"
           class="loading-card"
-          v-for="elem in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+          v-for="elem in emptyList"
           :key="elem"
         />
       </div>
@@ -74,9 +86,17 @@
 
 <script>
 import moment from "moment";
+const DATE_FORMAT = "DD MMM YYYY, HH:mm";
+
 export default {
   props: ["events", "myEvents", "loading"],
   name: "HomeEvents",
+  data() {
+    return {
+      emptyList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      dateFormat: DATE_FORMAT,
+    };
+  },
   methods: {
     moment,
   },

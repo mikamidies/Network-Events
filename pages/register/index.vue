@@ -24,7 +24,7 @@
         </div>
         <div class="register-page">
           <div class="image container">
-            <img src="../../assets/img/register.png" alt="" />
+            <img  src="../../assets/img/register.png" alt="" />
           </div>
           <div class="container">
             <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">

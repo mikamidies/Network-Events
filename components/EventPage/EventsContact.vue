@@ -79,6 +79,7 @@
 <script>
 export default {
   props: ["event"],
+
 };
 </script>
 <style lang="css" scoped>

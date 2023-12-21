@@ -6,11 +6,17 @@
       <div class="top">
         <div class="img">
           <!-- <img src="@/assets/img/event-1.jpg" alt="" class="pic" /> -->
-          <img v-if="event?.image" :src="event?.image" alt="" class="pic" />
+          <img
+            loading="lazy"
+            v-if="event?.image"
+            :src="event?.image"
+            alt=""
+            class="pic"
+          />
           <img v-else src="@/assets/img/image.png" alt="" class="pic" />
         </div>
         <div class="info">
-          <p>{{ moment(event?.start_date).format("DD MMM YYYY, HH:mm") }}</p>
+          <p>{{ moment(event?.start_date).format(dateFormat) }}</p>
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +83,7 @@
             Spikerlar
           </button>
           <button
-          v-if="memberStatus"
+            v-if="memberStatus"
             @click="tabHandle = 'participants'"
             :class="{ active: tabHandle == 'participants' }"
           >
@@ -129,6 +135,7 @@ import EventsContact from "@/components/EventPage/EventsContact.vue";
 import EventParticipants from "@/components/EventPage/EventParticipants.vue";
 import eventsApi from "@/api/eventsApi";
 import moment from "moment";
+const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 export default {
   components: {
     SiteTop,
@@ -145,6 +152,7 @@ export default {
       tabHandle: "info",
       members: [],
       memberStatus: false,
+      dateFormat: DATE_FORMAT,
       tabList: [
         {
           name: "EventMain",
@@ -208,6 +216,7 @@ export default {
     },
     moment,
     async __GET_MEMBERS() {
+      const AUTH_STATUS = 401;
       try {
         const data = await eventsApi.getMembers({
           id: this.$route.params.id,
@@ -216,7 +225,7 @@ export default {
         this.members = data?.data?.results;
         this.memberStatus = true;
       } catch (e) {
-        if (e.response.status == 401) {
+        if (e.response.status == AUTH_STATUS) {
           this.memberStatus = false;
         }
       }

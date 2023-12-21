@@ -23,7 +23,7 @@
           </p>
         </div>
         <SocialBlock />
-        <div class="tags">
+        <!-- <div class="tags">
           <h4 class="about-title">Mutahasisliklar</h4>
           <div class="list-tags">
             <ul>
@@ -37,7 +37,7 @@
               <li>Biznes</li>
             </ul>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

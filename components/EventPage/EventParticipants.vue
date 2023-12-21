@@ -22,7 +22,7 @@
     <div class="items">
       <div class="item" v-for="member in members" :key="member?.id">
         <div class="person">
-          <img v-if="member?.image" :src="member?.image" alt="" />
+          <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
           <img v-else src="@/assets/img/user.png" alt="" />
         </div>
         <div class="content">

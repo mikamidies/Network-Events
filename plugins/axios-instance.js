@@ -1,13 +1,13 @@
 export default ({ $axios, redirect, error }, inject) => {
   const axiosInstance = $axios.create({
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL,
   });
   // axiosInstance.setHeader("Content-Type", "application/json");
 
   axiosInstance.onRequest((config) => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers.common["Authorization"] = `Bearer ${token}`;
+    const ACCESS_TOKEN = localStorage.getItem("accessToken");
+    if (ACCESS_TOKEN) {
+      config.headers.common["Authorization"] = `Bearer ${ACCESS_TOKEN}`;
     }
     return config;
   });

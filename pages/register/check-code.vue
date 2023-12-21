@@ -23,7 +23,7 @@
       </div>
       <div class="register-page">
         <div class="image container">
-          <img src="../../assets/img/register.png" alt="" />
+          <img loading="lazy" src="../../assets/img/register.png" alt="" />
         </div>
         <div class="container">
           <p class="text">
@@ -40,7 +40,7 @@
             <a-form-model-item class="form-item mb-0">
               <p class="sub">Tasdiqlash kodini kiriting</p>
               <div class="code-input position-relative">
-                <v-otp-input
+                <!-- <v-otp-input
                   ref="otpInput"
                   input-classes="otp-input"
                   class="code-inner"
@@ -52,6 +52,13 @@
                   :is-input-num="true"
                   @on-change="handleOnChange"
                   @on-complete="handleOnComplete"
+                /> -->
+                <input
+                  type="number"
+                  pattern="/^-?\d+\.?\d*$/"
+                  v-model="form.sms_code"
+                  onKeyPress="if(this.value.length==6) return false;"
+                  placeholder="******"
                 />
                 <div class="time-line">
                   <span
@@ -104,15 +111,15 @@ export default {
     };
   },
   mounted() {
-    let inputs = document.querySelectorAll(".otp-input");
-    inputs.forEach((item, index) => {
-      if (index != 0 && !inputs[index - 1].value) {
-        item.classList.add("disabledItem");
-      } else {
-        item.classList.remove("disabledItem");
-      }
-    });
-    this.setInputPlaceholder();
+    // let inputs = document.querySelectorAll(".otp-input");
+    // inputs.forEach((item, index) => {
+    //   if (index != 0 && !inputs[index - 1].value) {
+    //     item.classList.add("disabledItem");
+    //   } else {
+    //     item.classList.remove("disabledItem");
+    //   }
+    // });
+    // this.setInputPlaceholder();
     if (localStorage.getItem("phone_number"))
       this.form.phone_number = localStorage.getItem("phone_number");
     setInterval(() => {
@@ -154,28 +161,28 @@ export default {
         });
       }
     },
-    handleOnComplete(value) {
-      console.log("OTP completed: ", value);
-    },
-    handleOnChange(val) {
-      let inputs = document.querySelectorAll(".otp-input");
-      inputs.forEach((item, index) => {
-        if (index != 0 && !inputs[index - 1].value) {
-          item.classList.add("disabledItem");
-        } else {
-          item.classList.remove("disabledItem");
-        }
-        if (val.length + 1 < inputs.length) {
-          inputs[val.length + 1].classList.add("disabledItem");
-        }
-      });
-      this.form.sms_code = val;
-    },
-    setInputPlaceholder() {
-      this.$refs.otpInput.$el
-        .querySelectorAll("input")
-        .forEach((input) => (input.placeholder = "*"));
-    },
+    // handleOnComplete(value) {
+    //   console.log("OTP completed: ", value);
+    // },
+    // handleOnChange(val) {
+    //   let inputs = document.querySelectorAll(".otp-input");
+    //   inputs.forEach((item, index) => {
+    //     if (index != 0 && !inputs[index - 1].value) {
+    //       item.classList.add("disabledItem");
+    //     } else {
+    //       item.classList.remove("disabledItem");
+    //     }
+    //     if (val.length + 1 < inputs.length) {
+    //       inputs[val.length + 1].classList.add("disabledItem");
+    //     }
+    //   });
+    //   this.form.sms_code = val;
+    // },
+    // setInputPlaceholder() {
+    // this.$refs.otpInput.$el
+    //   .querySelectorAll("input")
+    //   .forEach((input) => (input.placeholder = "*"));
+    // },
   },
 };
 </script>
@@ -316,15 +323,16 @@ export default {
   border-radius: 8px;
   background: #fff;
   border-radius: 8px;
-  border: 1px solid #ebebeb;
+  border: none;
   background: #fff;
   width: 100%;
   padding: 0 16px;
   color: #020105;
   font-family: var(--medium);
-  font-size: 16px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 500;
+  letter-spacing: 20px;
   line-height: 150%;
 }
 

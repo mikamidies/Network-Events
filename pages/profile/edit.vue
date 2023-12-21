@@ -40,7 +40,7 @@
             </p>
             <div class="upload-card">
               <div class="image">
-                <img v-if="image" :src="image" alt="" /><img
+                <img loading="lazy" v-if="image" :src="image" alt="" /><img
                   v-else
                   src="@/assets/img/user.png"
                   alt=""

@@ -12,6 +12,7 @@
 import loader from "~/components/loader.vue";
 import BottomBar from "@/components/BottomBar.vue";
 import authApi from "@/api/authApi";
+import translationsApi from "~/api/translationsApi";
 export default {
   components: {
     BottomBar,
@@ -22,8 +23,15 @@ export default {
       loader: true,
     };
   },
+  // async fetch() {
+  //   const [translationsData] = await Promise.all([
+  //     translationsApi.getTranslations(this.$axios),
+  //   ]);
+  //   this.$store.commit("handleTranslations", translationsData);
+  // },
   async mounted() {
-    if (!localStorage.getItem("accessToken")) {
+    const ACCESS_TOKEN = localStorage.getItem("refreshToken");
+    if (!ACCESS_TOKEN) {
       this.$router.push("/register");
     } else {
       this.getProfileInfo();
@@ -34,10 +42,13 @@ export default {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     },
+
     async refreshToken() {
+      const REFRESH_TOKEN = localStorage.getItem("refreshToken");
+
       try {
         const tokens = await authApi.postRefreshToken(this.$axios, {
-          refresh: localStorage.getItem("refreshToken"),
+          refresh: REFRESH_TOKEN,
         });
         await localStorage.setItem("accessToken", tokens?.data?.access);
         await localStorage.setItem("refreshToken", tokens?.data?.refresh);
@@ -48,16 +59,18 @@ export default {
       }
     },
     async getProfileInfo() {
-      const code = localStorage.getItem("qr_code");
+      const QR_CODE = localStorage.getItem("qr_code");
+      const REFRESH_TOKEN = localStorage.getItem("refreshToken");
+      const AUTH_STATUS = 401;
+      const PARAMS_CODE = this.$route.params?.code;
 
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
-        if (localStorage.getItem("qr_code")) this.$router.push(`/event/join${code}`);
+        if (QR_CODE) this.$router.push(`/event/join${QR_CODE}`);
       } catch (e) {
-        if (this.$route.params?.code)
-          localStorage.setItem("qr_code", this.$route.params?.code);
-        if (e.response.status == 401 && localStorage.getItem("refreshToken")) {
+        if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
+        if (e.response.status == AUTH_STATUS && REFRESH_TOKEN) {
           this.refreshToken();
         } else {
           this.removeTokens();

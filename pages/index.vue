@@ -37,6 +37,12 @@
           @getData="__GET_EVENTS"
         />
       </div>
+      <input
+        type="tel"
+        id="phoneNumber"
+        v-model="phoneNumber"
+        @input="formatPhoneNumber"
+      />{{formattedPhoneNumber}}
     </div>
   </div>
 </template>
@@ -45,21 +51,23 @@
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
 import eventsApi from "../api/eventsApi";
 import VPagination from "~/components/VPagination.vue";
-
 export default {
   data() {
     return {
       myEvents: [],
       search: "",
       loading: false,
+      phoneNumber: "",
+      formattedPhoneNumber: ""
     };
   },
   async asyncData({ $axios, query }) {
+    const MAX_PAGE_SIZE = 10;
     const [eventsData] = await Promise.all([
       eventsApi.getEvents($axios, {
         params: {
           ...query,
-          page_size: query?.page_size ? query?.page_size : 10,
+          page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
         },
       }),
     ]);
@@ -75,11 +83,27 @@ export default {
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
   },
   computed: {
+
     handleUser() {
       return Object.keys(this.$store.state.profile)?.length;
     },
   },
   methods: {
+    formatPhoneNumber() {
+      // Remove non-digit characters from the input
+      const cleaned = this.phoneNumber.replace(/\D/g, '');
+
+      // Define a regex pattern for phone number formatting
+      const regex = /^(\d{3})(\d{3})(\d{4})$/;
+
+      // Apply formatting if the cleaned number matches the pattern
+      if (regex.test(cleaned)) {
+        this.formattedPhoneNumber = cleaned.replace(regex, '($1) $2-$3');
+      } else {
+        // Handle invalid input or incomplete phone numbers
+        this.formattedPhoneNumber = cleaned;
+      }
+    },
     async __GET_MY_EVENTS() {
       try {
         const data = await eventsApi.getMyEvents();
@@ -102,7 +126,11 @@ export default {
       }
     },
     async onSearch(e) {
-      if (this.$route.query?.search != e.target.value && e.target.value.length > 2) {
+      const MIN_TEXT_LENGTH = 2;
+      if (
+        this.$route.query?.search != e.target.value &&
+        e.target.value.length > MIN_TEXT_LENGTH
+      ) {
         await this.$router.replace({
           path: this.$route.path,
           query: { ...this.$route.query, page: 1, search: e.target.value },

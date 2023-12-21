@@ -43,7 +43,7 @@
             </svg>
           </button>
         </div>
-        <div class="tags">
+        <!-- <div class="tags">
           <h4 class="about-title">Mutahasisliklar</h4>
           <div class="list-tags">
             <ul>
@@ -57,7 +57,7 @@
               <li>Biznes</li>
             </ul>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -83,11 +83,12 @@ export default {
       }
     },
     async __GET_INFO() {
+      const AUTH_STATUS = 401
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
       } catch (e) {
-        if (e.response.status == 401) {
+        if (e.response.status == AUTH_STATUS) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           this.$router.push("/register");
