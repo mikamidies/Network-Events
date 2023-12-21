@@ -1,11 +1,64 @@
 <template>
   <div class="wrap">
     <div class="desc" v-html="event?.desc"></div>
-    <div class="map">
+    <div class="map" :class="{ fullScreen: true, hideMap: !handleScreen }">
+      <button @click="handleScreen = !handleScreen" class="full_screen">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="svg-icon"
+          width="24"
+          height="24"
+          style="vertical-align: middle; fill: currentColor; overflow: hidden"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+        >
+          <path
+            d="M213.333333 213.333333h213.333334V128H170.666667a42.666667 42.666667 0 0 0-42.666667 42.666667v256h85.333333V213.333333zM170.666667 896h256v-85.333333H213.333333v-213.333334H128v256a42.666667 42.666667 0 0 0 42.666667 42.666667z m725.333333-42.666667v-256h-85.333333v213.333334h-213.333334v85.333333h256a42.666667 42.666667 0 0 0 42.666667-42.666667zM597.333333 213.333333h213.333334v213.333334h85.333333V170.666667a42.666667 42.666667 0 0 0-42.666667-42.666667h-256v85.333333z"
+            fill=""
+          />
+        </svg>
+      </button>
       <div>
         <client-only>
           <l-map
-            style="min-height: 184px; margin-bottom: 8px"
+            class="map-container"
+            :zoom="yMapZoom"
+            v-if="coords?.length > 0"
+            :center="coords"
+          >
+            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+            <l-marker :lat-lng="coords"></l-marker>
+          </l-map>
+        </client-only>
+      </div>
+      <div>
+        <p class="sup">Manzil</p>
+        <p class="value">
+          {{ event?.adress }}
+        </p>
+      </div>
+    </div>
+    <div class="map" :class="{ hideMap: handleScreen }">
+      <button @click="handleScreen = !handleScreen" class="full_screen">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="svg-icon"
+          width="24"
+          height="24"
+          style="vertical-align: middle; fill: currentColor; overflow: hidden"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+        >
+          <path
+            d="M213.333333 213.333333h213.333334V128H170.666667a42.666667 42.666667 0 0 0-42.666667 42.666667v256h85.333333V213.333333zM170.666667 896h256v-85.333333H213.333333v-213.333334H128v256a42.666667 42.666667 0 0 0 42.666667 42.666667z m725.333333-42.666667v-256h-85.333333v213.333334h-213.333334v85.333333h256a42.666667 42.666667 0 0 0 42.666667-42.666667zM597.333333 213.333333h213.333334v213.333334h85.333333V170.666667a42.666667 42.666667 0 0 0-42.666667-42.666667h-256v85.333333z"
+            fill=""
+          />
+        </svg>
+      </button>
+      <div>
+        <client-only>
+          <l-map
+            class="map-container mapSize"
             :zoom="yMapZoom"
             v-if="coords?.length > 0"
             :center="coords"
@@ -114,6 +167,7 @@ export default {
   props: ["event", "members", "coords", "memberStatus"],
   data() {
     return {
+      handleScreen: false,
       membersLength: MEMBERS_LENGTH,
       yMapZoom: Y_MAP_ZOOM,
     };
@@ -122,6 +176,19 @@ export default {
 </script>
 
 <style scoped>
+.hideMap {
+  opacity: 0;
+  z-index: -10;
+  pointer-events: none;
+}
+.mapSize {
+  min-height: 184px !important;
+  min-width: 100%;
+}
+.fullMap {
+  min-height: 100vh !important;
+  min-width: 100% !important;
+}
 .members-locked {
   padding: 16px;
   border-radius: 12px;
@@ -167,6 +234,36 @@ export default {
 .map {
   margin-bottom: 40px;
   /* height: 148px; */
+  position: relative;
+}
+.fullScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+}
+.fullScreen .map-container {
+  min-height: 100vh !important;
+  min-width: 100% !important;
+}
+.full_screen {
+  position: absolute;
+  background-color: white;
+  border: none;
+  outline: none;
+  right: 10px;
+  top: 10px;
+  z-index: 10000;
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
 .sup {
   margin-bottom: 4px;
