@@ -39,7 +39,7 @@
           />
         </svg>
       </a>
-      <a class="card" :href="event?.telegram">
+      <a class="card" :href="event?.telegram" v-if="event?.telegram">
         <span>
           <svg
             width="24"
@@ -79,7 +79,6 @@
 <script>
 export default {
   props: ["event"],
-
 };
 </script>
 <style lang="css" scoped>

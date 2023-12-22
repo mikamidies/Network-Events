@@ -68,7 +68,7 @@ export default {
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
-        if (QR_CODE) this.$router.push(`/event/join${QR_CODE}`);
+        if (QR_CODE) this.$router.push(`/event/join/${QR_CODE}`);
       } catch (e) {
         if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
         if (e.response.status == AUTH_STATUS && REFRESH_TOKEN) {

@@ -14,7 +14,9 @@ export default {
       const data = await eventApi.postEvent({ id: code, payload: {} });
       this.$router.push(`/event/${data?.data?.id}`);
     } catch (e) {
-      if (e.response.status == AUTH_STATUS) this.$router.push("/");
+      const PARAMS_CODE = this.$route.params?.code;
+      if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
+      if (e.response.status == AUTH_STATUS) this.$router.push("/register");
     }
   },
   components: {
