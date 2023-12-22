@@ -1,7 +1,6 @@
 <template lang="html">
   <div class="master">
     <ProfileTop />
-
     <div class="container">
       <div class="participant-profile">
         <div
@@ -16,15 +15,17 @@
           <span class="company">{{ $store.state.profile?.client?.company_name }}</span>
         </div>
         <div class="about">
-          <h4 class="about-title">Men haqimda</h4>
+          <h4 class="about-title">
+            {{ $store.state.translations["profile.personal_info"] }}
+          </h4>
           <p class="about-desc">
             {{ $store.state.profile?.client?.info }}
           </p>
         </div>
-        <SocialBlock />
+        <SocialBlock :profile="$store.state.profile"/>
         <div class="edit">
           <button class="edit-btn" @click="$router.push('/profile/edit')">
-            O’zgartirish
+            {{$store.state.translations['profile.edit']}}
             <svg
               width="20"
               height="20"
@@ -83,7 +84,7 @@ export default {
       }
     },
     async __GET_INFO() {
-      const AUTH_STATUS = 401
+      const AUTH_STATUS = 401;
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);

@@ -19,7 +19,7 @@
             />
           </svg>
         </button>
-        <h3>Hush kelibsiz</h3>
+        <h3>{{$store.state.translations["login.welcome"]}}</h3>
       </div>
       <div class="register-page">
         <div class="image container">
@@ -34,11 +34,11 @@
                 .filter((item, index) => index != 0)
                 .join(" ")
             }}
-            telefon raqamingizga tasdiqlash kodi yuborildi
+            {{$store.state.translations["login.number-text"]}}
           </p>
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">Tasdiqlash kodini kiriting</p>
+              <p class="sub">{{$store.state.translations["login.enter-code"]}}</p>
               <div class="code-input position-relative">
                 <!-- <v-otp-input
                   ref="otpInput"
@@ -76,14 +76,14 @@
           >
           <div>
             <button class="resend" :class="{ disabled: time != 0 }">
-              Qayta jonatish
+              {{$store.state.translations["login.resend"]}}
             </button>
           </div>
         </div>
       </div>
     </div>
     <div class="btns container">
-      <button @click="submit">Davom etish</button>
+      <button @click="submit">{{$store.state.translations["login.continue"]}}</button>
     </div>
   </div>
 </template>

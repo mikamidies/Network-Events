@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="wrap">
     <div class="header">
       <h4>Spikerlar</h4>

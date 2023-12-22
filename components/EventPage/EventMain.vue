@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="wrap">
     <div class="desc" v-html="event?.desc"></div>
     <div class="map" :class="{ fullScreen: true, hideMap: !handleScreen }">
@@ -139,7 +139,7 @@
       </div>
       <div class="link" v-if="memberStatus && members?.length > membersLength">
         <button @click="$emit('tabChange', 'participants')">
-          Barchasi
+          {{$store.state.translations['main.all']}}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="5"

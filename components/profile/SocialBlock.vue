@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="list">
-    <a class="card" :href="`tel:+${$store.state.profile?.phone_number}`">
+    <a class="card" :href="`tel:+${profile?.phone_number}`">
       <span>
         <svg
           width="24"
@@ -16,7 +16,7 @@
             stroke-linejoin="round"
           /></svg
         >+{{
-          `${$store.state.profile?.phone_number}`
+          `${profile?.phone_number}`
             .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
             ?.filter((item, index) => index != 0)
             .join(" ")
@@ -37,11 +37,7 @@
         />
       </svg>
     </a>
-    <a
-      class="card"
-      v-if="$store.state.profile?.client?.site"
-      :href="$store.state.profile?.client?.site"
-    >
+    <a class="card" v-if="profile?.client?.site" :href="profile?.client?.site">
       <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +52,7 @@
             stroke-width="1.5"
           />
         </svg>
-        {{ $store.state.profile?.client?.site }}</span
+        {{ profile?.client?.site }}</span
       ><svg
         width="24"
         height="24"
@@ -73,11 +69,7 @@
         />
       </svg>
     </a>
-    <a
-      class="card"
-      v-if="$store.state.profile?.client?.telegram"
-      :href="$store.state.profile?.client?.telegram"
-    >
+    <a class="card" v-if="profile?.client?.telegram" :href="profile?.client?.telegram">
       <span>
         <svg
           width="24"
@@ -95,7 +87,7 @@
           />
         </svg>
 
-        {{ $store.state.profile?.client?.telegram }}</span
+        {{ profile?.client?.telegram }}</span
       ><svg
         width="24"
         height="24"
@@ -112,11 +104,7 @@
         />
       </svg>
     </a>
-    <a
-      class="card"
-      v-if="$store.state.profile?.client?.instagram"
-      :href="$store.state.profile?.client?.instagram"
-    >
+    <a class="card" v-if="profile?.client?.instagram" :href="profile?.client?.instagram">
       <span>
         <svg
           width="24"
@@ -135,7 +123,7 @@
           />
         </svg>
 
-        {{ $store.state.profile?.client?.instagram }}</span
+        {{ profile?.client?.instagram }}</span
       ><svg
         width="24"
         height="24"
@@ -152,11 +140,7 @@
         />
       </svg>
     </a>
-    <a
-      class="card"
-      v-if="$store.state.profile?.client?.linkedIn"
-      :href="$store.state.profile?.client?.linkedIn"
-    >
+    <a class="card" v-if="profile?.client?.linkedIn" :href="profile?.client?.linkedIn">
       <span>
         <svg
           width="24"
@@ -175,7 +159,7 @@
           />
         </svg>
 
-        {{ $store.state.profile?.client?.linkedIn }}</span
+        {{ profile?.client?.linkedIn }}</span
       ><svg
         width="24"
         height="24"
@@ -195,7 +179,9 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["profile"],
+};
 </script>
 <style lang="css" scoped>
 .list {

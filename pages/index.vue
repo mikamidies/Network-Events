@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="master">
     <div class="container">
       <div class="search__wrap">
@@ -9,7 +9,7 @@
             id="search"
             v-model="search"
             @input="onSearch"
-            placeholder="Tadbirni qidirish"
+            :placeholder="$store.state.translations['main.search-event']"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

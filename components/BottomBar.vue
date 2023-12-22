@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="wrap">
     <div class="container">
       <div class="links">
@@ -17,7 +17,7 @@
               stroke="#5D5D5F"
             />
           </svg>
-          <p>Bosh sahifa</p>
+          <p>{{$store.state.translations['main.home']}}</p>
         </NuxtLink>
         <NuxtLink to="/">
           <svg
@@ -69,7 +69,7 @@
               fill="#5D5D5F"
             />
           </svg>
-          <p>Tadbirlar</p>
+          <p>{{$store.state.translations['main.events']}}</p>
         </NuxtLink>
         <NuxtLink to="/">
           <svg
@@ -84,7 +84,7 @@
               fill="#5D5D5F"
             />
           </svg>
-          <p>Xabar</p>
+          <p>{{$store.state.translations['main.message']}}</p>
         </NuxtLink>
         <NuxtLink to="/profile">
           <svg

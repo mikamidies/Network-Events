@@ -5,8 +5,11 @@ export default {
   async getEventsById(axios, config = {}) {
     return await axios.get(`/events/${config.id}`, config.payload);
   },
-  async getClientById(axios, config = {}) {
-    return await axios.get(`/client/${config.id}`, config.payload);
+  async getClientById(config = {}) {
+    return await $nuxt.$axiosInstance.get(
+      `/members/${config.id}`,
+      config.payload
+    );
   },
   async getMembers(config = {}) {
     return await $nuxt.$axiosInstance.get(

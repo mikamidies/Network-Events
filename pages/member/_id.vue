@@ -4,25 +4,32 @@
 
     <div class="container">
       <div class="participant-profile">
-        <div class="personal-card"   :style="{
-            backgroundImage: `url(https://networking.pythonanywhere.com/media/images/all/2023/12/13/17024549317570534.jfif.1200x1200_q85.webp)`,
-          }">
-          <div class="bottom-shadow">
-        
-          </div>
-          <h4 class="name">Muhammadullo Egamberdiyev</h4>
-          <p class="position">Texnicheksiy direktor</p>
-          <span class="company">National Development Community</span>
+        <div
+          class="personal-card"
+          :style="{
+            backgroundImage: `url(${client?.image})`,
+          }"
+        >
+          <div class="bottom-shadow"></div>
+          <h4 class="name">{{ client?.user?.full_name }}</h4>
+          <p class="position">{{ client?.job_title }}</p>
+          <span class="company">{{ client?.company_name }}</span>
         </div>
         <div class="about">
-          <h4 class="about-title">Men haqimda</h4>
+          <h4 class="about-title">
+            {{ $store.state.translations["profile.personal_info"] }}
+          </h4>
           <p class="about-desc">
-            Специальный гость для предстоящего PizzaPitch: Фируз Аллаев – основатель
-            проекта Asaxiy расскажет о своем опыте создания успешных проектов и даст
-            ценные советы стартапам!
+            {{ client?.info }}
           </p>
         </div>
-        <SocialBlock />
+        <SocialBlock
+          :profile="{
+            ...client,
+            ...client?.user,
+            client: { ...client, client: { ...client, ...client?.user } },
+          }"
+        />
         <!-- <div class="tags">
           <h4 class="about-title">Mutahasisliklar</h4>
           <div class="list-tags">
@@ -45,14 +52,22 @@
 <script>
 import SiteTop from "../../components/SiteTop.vue";
 import SocialBlock from "../../components/profile/SocialBlock.vue";
+import eventsApi from "@/api/eventsApi";
 export default {
   components: {
     SiteTop,
     SocialBlock,
   },
-  async asyncData({ $axios, params }) {
-    // const clientData = await eventsApi.getClientById($axios, { id: params.id });
-    return {};
+  data() {
+    return {
+      client: {},
+    };
+  },
+  async mounted() {
+    const clientData = await eventsApi.getClientById({
+      id: this.$route.params.id,
+    });
+    this.client = clientData?.data;
   },
 };
 </script>

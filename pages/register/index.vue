@@ -20,16 +20,16 @@
               />
             </svg>
           </button>
-          <h3>Hush kelibsiz</h3>
+          <h3>{{ $store.state.translations["login.welcome"] }}</h3>
         </div>
         <div class="register-page">
           <div class="image container">
-            <img  src="../../assets/img/register.png" alt="" />
+            <img src="../../assets/img/register.png" alt="" />
           </div>
           <div class="container">
             <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
               <a-form-model-item class="form-item mb-0">
-                <p class="sub">Telefon raqami orqali kiring</p>
+                <p class="sub">{{ $store.state.translations["login.enter-phone"] }}</p>
                 <div class="input-context">
                   <span>+998</span>
                   <input
@@ -41,11 +41,12 @@
                   />
                 </div> </a-form-model-item
             ></a-form-model>
+           
           </div>
         </div>
       </div>
       <div class="btns container">
-        <button @click="submit">Davom etish</button>
+        <button @click="submit">{{ $store.state.translations["login.continue"] }}</button>
       </div>
     </div>
   </div>
@@ -72,6 +73,7 @@ export default {
     };
   },
   mounted() {
+
     if (localStorage.getItem("accessToken")) this.$router.push("/");
   },
   methods: {

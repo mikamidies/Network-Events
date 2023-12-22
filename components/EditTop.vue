@@ -1,8 +1,8 @@
-<template>
+<template lang="html">
   <div class="wrap">
     <div class="container">
       <div class="left">
-        <h4 class="title">Settings</h4>
+        <h4 class="title">{{$store.state.translations['profile.settings']}}</h4>
       </div>
       <div class="right">
         <button class="save" @click="$emit('back')">

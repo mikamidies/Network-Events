@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="wrap">
     <div class="header">
       <h4>Ishtirokchilar</h4>
@@ -20,7 +20,12 @@
       </button>
     </div>
     <div class="items">
-      <div class="item" v-for="member in members" :key="member?.id">
+      <div
+        class="item"
+        v-for="member in members"
+        :key="member?.id"
+        @click="$router.push(`/member/${member?.id}`)"
+      >
         <div class="person">
           <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
           <img v-else src="@/assets/img/user.png" alt="" />
@@ -124,6 +129,7 @@ export default {
   display: grid;
   grid-template-columns: 2fr 8fr;
   gap: 16px;
+  cursor: pointer;
 }
 .person img {
   width: 72px;

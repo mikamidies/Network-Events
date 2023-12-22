@@ -3,40 +3,44 @@
     <EditTop @back="$router.push('/profile')" />
     <div class="container">
       <div class="edit-page">
-        <h4 class="page-title">Asosiy malumot</h4>
+        <h4 class="page-title">{{ $store.state.translations["login.info"] }}</h4>
         <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
           <div class="list">
             <a-form-model-item prop="full_name" class="form-item mb-0 required">
-              <p class="sub">Isim va Familya</p>
-              <input type="text" v-model="form.full_name" placeholder="Ism" />
+              <p class="sub">{{ $store.state.translations["login.full_name"] }}</p>
+              <input
+                type="text"
+                v-model="form.full_name"
+                :placeholder="$store.state.translations['login.full_name_place']"
+              />
             </a-form-model-item>
             <a-form-model-item
               prop="client_data.company_name"
               class="form-item required mb-0"
             >
-              <p class="sub">Korxona nomi</p>
+              <p class="sub">{{ $store.state.translations["login.company_name"] }}</p>
               <input
                 type="text"
                 v-model="form.client_data.company_name"
-                placeholder="Korxona nomi / Freelancer"
+                :placeholder="$store.state.translations['login.company_name_place']"
               />
             </a-form-model-item>
             <a-form-model-item
               prop="client_data.job_title"
               class="form-item required mb-0"
             >
-              <p class="sub">Lavozimingiz / Mutahasisligingiz</p>
+              <p class="sub">{{ $store.state.translations["login.position"] }}</p>
               <input
                 type="text"
                 v-model="form.client_data.job_title"
-                placeholder="CEO / Dizayner / Developer ..."
+                :placeholder="$store.state.translations['login.position_place']"
               />
             </a-form-model-item>
           </div>
           <div class="info">
-            <h5 class="info-title">Qoshimcha malumotlar</h5>
+            <h5 class="info-title">{{ $store.state.translations["login.add_info"] }}</h5>
             <p class="info-desc">
-              Qoshimcha malumotlarni keynchalik profilingizdan kiritishingiz mumkin
+              {{ $store.state.translations["login.login.add_info_text"] }}
             </p>
             <div class="upload-card">
               <div class="image">
@@ -57,8 +61,8 @@
               </div>
               <div class="body">
                 <div class="text">
-                  <h5>Profil rasmingiz</h5>
-                  <p>2 MB oshmaslik kerak</p>
+                  <h5>{{$store.state.translations['login.avatar_title']}}</h5>
+                  <p>{{ $store.state.translations["login.avatar_max"] }}</p>
                 </div>
                 <a-upload
                   :action="`${base_url}/upload_image`"
@@ -124,7 +128,7 @@
           </div>
           <div class="list">
             <a-form-model-item prop="client_data.info" class="form-item mb-0">
-              <p class="sub">Ozingiz haqingizda qoshimcha</p>
+              <p class="sub">{{ $store.state.translations["login.desc"] }}</p>
               <textarea
                 rows="5"
                 v-model="form.client_data.info"
@@ -132,11 +136,15 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">Biznes saytingiz</p>
-              <input type="text" v-model="form.client_data.site" placeholder="www." />
+              <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
+              <input
+                type="text"
+                v-model="form.client_data.site"
+                :placeholder="$store.state.translations['login.site_place']"
+              />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">Instagram</p>
+              <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
               <input
                 type="text"
                 v-model="form.client_data.instagram"
@@ -144,7 +152,7 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">Telegram</p>
+              <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
               <input
                 type="text"
                 v-model="form.client_data.telegram"
@@ -152,18 +160,22 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">Linkedin</p>
+              <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
               <input
                 type="text"
                 v-model="form.client_data.linkedIn"
-                placeholder="https://"
+                :placeholder="$store.state.translations['login.linkedin_place']"
               />
             </a-form-model-item>
           </div>
         </a-form-model>
         <div class="btns">
-          <button class="send" @click="submit">Saqlash</button>
-          <button class="cancel" @click="$router.push('/profile')">Bekor qilish</button>
+          <button class="send" @click="submit">
+            {{ $store.state.translations["login.save"] }}
+          </button>
+          <button class="cancel" @click="$router.push('/profile')">
+            {{ $store.state.translations["login.cancel"] }}
+          </button>
         </div>
       </div>
     </div>
@@ -263,8 +275,10 @@ export default {
         },
       };
       if (data.client_data.linkedIn) {
-        data.client_data.linkedIn = !this.form.client_data.linkedIn.includes("https://")
-          ? `https://${this.form.client_data.linkedIn}`
+        data.client_data.linkedIn = !this.form.client_data.linkedIn.includes(
+          "{{$store.state.translations['login.linkedin_place']}}"
+        )
+          ? `{{$store.state.translations['login.linkedin_place']}}${this.form.client_data.linkedIn}`
           : this.form.client_data.linkedIn;
         data.client_data.linkedIn = !data.client_data.linkedIn.includes(".ru")
           ? `${data.client_data.linkedIn}.ru`

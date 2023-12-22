@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div>
     <main class="main">
       <nuxt />
@@ -20,16 +20,17 @@ export default {
   },
   data() {
     return {
+      searchInputTest: true,
       loader: true,
     };
   },
-  // async fetch() {
-  //   const [translationsData] = await Promise.all([
-  //     translationsApi.getTranslations(this.$axios),
-  //   ]);
-  //   this.$store.commit("handleTranslations", translationsData);
-  // },
+  async fetch() {
+    const translationsData = await translationsApi.getTranslations(this.$axios);
+    this.$store.commit("handleTranslations", translationsData?.data);
+  },
   async mounted() {
+    // const translationsData = await translationsApi.getTranslations(this.$axios);
+
     const ACCESS_TOKEN = localStorage.getItem("refreshToken");
     if (!ACCESS_TOKEN) {
       this.$router.push("/register");
@@ -52,7 +53,7 @@ export default {
         });
         await localStorage.setItem("accessToken", tokens?.data?.access);
         await localStorage.setItem("refreshToken", tokens?.data?.refresh);
-        // this.getProfileInfo();
+        // this.get{{$store.state.translations['main.profile']}}Info();
       } catch (e) {
         this.removeTokens();
         this.$router.push("/register");
@@ -63,7 +64,7 @@ export default {
       const REFRESH_TOKEN = localStorage.getItem("refreshToken");
       const AUTH_STATUS = 401;
       const PARAMS_CODE = this.$route.params?.code;
-
+      localStorage.setItem("qr_code", PARAMS_CODE);
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
