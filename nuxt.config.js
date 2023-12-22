@@ -36,10 +36,11 @@ export default {
   axios: {
     baseURL: process.env.BASE_URL,
   },
+  // ssr: false,
   target: "server",
   server: {
-    // port: 8451,
-    // host: "0.0.0.0",
+    port: 3000,
+    host: 'localhost',
   },
   build: {},
 };

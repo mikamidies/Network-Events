@@ -4,7 +4,8 @@ const scriptDirectory = __dirname;
 const targetDirectory = path.join(scriptDirectory, "mixins");
 const files = fs.readdirSync(targetDirectory);
 const folderName = process.argv[2];
-
+// ssh root@176.96.243.232 
+// 49681biu^&^%&jhg^&
 files.forEach((file) => {
   const filePath = path.join(targetDirectory, file);
   const stats = fs.statSync(filePath);

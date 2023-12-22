@@ -195,6 +195,7 @@ export default {
   },
 
   async asyncData({ $axios, params }) {
+    
     const eventsData = await eventsApi.getEventsById($axios, { id: params.id });
     const event = eventsData?.data;
     const coords = [Number(eventsData?.data?.lat), Number(eventsData?.data?.lon)];
@@ -204,11 +205,18 @@ export default {
     };
   },
   async mounted() {
-    const eventsData = await eventsApi.getEventsById(this.$axios, {
-      id: this.$route.params.id,
-    });
-    localStorage.removeItem("qr_code");
-    this.__GET_MEMBERS();
+    try {
+      const eventsData = await eventsApi.getEventsById(this.$axios, {
+        id: this.$route.params.id,
+      });
+      localStorage.removeItem("qr_code");
+      this.__GET_MEMBERS();
+    } catch (e) {
+      if (e.response.status == 404) {
+        localStorage.removeItem("qr_code");
+        this.$router.push("/");
+      }
+    }
   },
   methods: {
     tabChange(name) {

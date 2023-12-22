@@ -7,6 +7,12 @@
 import Loader from "../../../components/loader.vue";
 import eventApi from "../../../api/eventsApi";
 export default {
+  asyncData({ params }) {
+    const paramsObj = params;
+    return {
+      paramsObj,
+    };
+  },
   async mounted() {
     const AUTH_STATUS = 401;
     try {
@@ -14,13 +20,11 @@ export default {
       const data = await eventApi.postEvent({ id: code, payload: {} });
       this.$router.push(`/event/${data?.data?.id}`);
     } catch (e) {
-      if (process.browser) {
-        const PARAMS_CODE = this.$route.params?.code;
-        console.log(this.$route.params, PARAMS_CODE);
-        if (PARAMS_CODE) {
-          console.log("inner");
-          localStorage.setItem("qr_code", PARAMS_CODE);
-        }
+      const PARAMS_CODE = this.paramsObj?.code;
+      console.log(this.$route.params, PARAMS_CODE);
+      if (PARAMS_CODE) {
+        console.log("inner");
+        localStorage.setItem("qr_code", PARAMS_CODE);
       }
       if (e.response.status == AUTH_STATUS) this.$router.push("/register");
     }
