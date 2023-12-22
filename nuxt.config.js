@@ -39,8 +39,8 @@ export default {
   // ssr: false,
   target: "server",
   server: {
-    // port: 3000,
-    // host: 'localhost',
+    port: 8451,
+    host: "0.0.0.0"
   },
   build: {},
 };
