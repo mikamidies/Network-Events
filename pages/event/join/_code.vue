@@ -15,7 +15,7 @@ export default {
       this.$router.push(`/event/${data?.data?.id}`);
     } catch (e) {
       const PARAMS_CODE = this.$route.params?.code;
-      console.log(PARAMS_CODE);
+      console.log(this.$route.params, PARAMS_CODE);
       if (PARAMS_CODE) {
         console.log("inner");
         localStorage.setItem("qr_code", PARAMS_CODE);
