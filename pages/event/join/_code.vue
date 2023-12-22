@@ -14,11 +14,13 @@ export default {
       const data = await eventApi.postEvent({ id: code, payload: {} });
       this.$router.push(`/event/${data?.data?.id}`);
     } catch (e) {
-      const PARAMS_CODE = this.$route.params?.code;
-      console.log(this.$route.params, PARAMS_CODE);
-      if (PARAMS_CODE) {
-        console.log("inner");
-        localStorage.setItem("qr_code", PARAMS_CODE);
+      if (process.browser) {
+        const PARAMS_CODE = this.$route.params?.code;
+        console.log(this.$route.params, PARAMS_CODE);
+        if (PARAMS_CODE) {
+          console.log("inner");
+          localStorage.setItem("qr_code", PARAMS_CODE);
+        }
       }
       if (e.response.status == AUTH_STATUS) this.$router.push("/register");
     }
