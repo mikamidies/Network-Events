@@ -64,7 +64,10 @@ export default {
       const REFRESH_TOKEN = localStorage.getItem("refreshToken");
       const AUTH_STATUS = 401;
       const PARAMS_CODE = this.$route.params?.code;
-      if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
+      if (PARAMS_CODE) {
+        console.log(PARAMS_CODE, "layoutqulbk");
+        localStorage.setItem("qr_code", PARAMS_CODE);
+      }
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);

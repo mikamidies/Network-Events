@@ -15,7 +15,11 @@ export default {
       this.$router.push(`/event/${data?.data?.id}`);
     } catch (e) {
       const PARAMS_CODE = this.$route.params?.code;
-      if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
+      console.log(PARAMS_CODE);
+      if (PARAMS_CODE) {
+        console.log("inner");
+        localStorage.setItem("qr_code", PARAMS_CODE);
+      }
       if (e.response.status == AUTH_STATUS) this.$router.push("/register");
     }
   },
