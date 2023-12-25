@@ -95,7 +95,7 @@
           </svg>
         </button>
       </div>
-      <div class="items" v-if="memberStatus">
+      <div class="items" v-if="event?.is_member">
         <div
           class="item"
           v-for="member in members"
