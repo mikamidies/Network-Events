@@ -113,7 +113,16 @@
         />
       </svg>
     </a>
-    <a class="card" v-if="profile?.client?.instagram" :href="profile?.client?.instagram">
+    <a
+      class="card"
+      v-if="profile?.client?.instagram"
+      :href="
+        profile?.client?.instagram.includes('https://')
+          ? profile?.client?.instagram
+          : `https://www.instagram.com/${profile?.client?.instagram}/`
+      "
+      target="_blank"
+    >
       <span>
         <svg
           width="24"

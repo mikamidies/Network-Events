@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="container">
       <div class="left">
-        <NuxtLink to="/">
+        <span @click="$router.go(-1)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -19,7 +19,7 @@
             />
           </svg>
           Ortga qaytish
-        </NuxtLink>
+        </span>
       </div>
       <div class="right">
         <button class="share">
@@ -83,6 +83,7 @@ export default {};
   justify-content: space-between;
   padding: 16px;
 }
+.left span,
 a {
   display: flex;
   align-items: center;
@@ -93,6 +94,7 @@ a {
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 24px */
+  cursor: pointer;
 }
 button {
   background: transparent;

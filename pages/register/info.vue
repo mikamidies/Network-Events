@@ -80,7 +80,7 @@
               </div>
               <div class="body">
                 <div class="text">
-                  <h5>{{$store.state.translations['login.avatar_title']}}</h5>
+                  <h5>{{ $store.state.translations["login.avatar_title"] }}</h5>
                   <p>{{ $store.state.translations["login.avatar_max"] }}</p>
                 </div>
                 <a-upload
@@ -280,12 +280,8 @@ export default {
         ...this.form,
         client_data: {
           ...this.form.client_data,
-          telegram: !this.form.client_data.telegram?.includes("@")
-            ? `@${this.form.client_data.telegram}`
-            : this.form.client_data.telegram,
-          instagram: !this.form.client_data.instagram?.includes("@")
-            ? `@${this.form.client_data.instagram}`
-            : this.form.client_data.instagram,
+          telegram: this.form.client_data.telegram,
+          instagram: this.form.client_data.instagram,
         },
       };
       this.$refs.ruleForm.validate((valid) => valid && this.__SEND_INFO(data));
