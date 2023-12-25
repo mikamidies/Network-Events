@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="wrap">
     <div class="current">
-      <h4 class="title">{{$store.state.translations['main.live-event-title']}}</h4>
+      <h4 class="title">{{ $store.state.translations["main.live-event-title"] }}</h4>
       <div class="items">
         <div class="item" v-for="event in myEvents" :key="event?.id">
           <NuxtLink :to="`/event/${event?.id}`">
@@ -27,9 +27,9 @@
 
     <div class="others">
       <div class="header">
-        <h4 class="title">{{$store.state.translations['main.other_events']}}</h4>
+        <h4 class="title">{{ $store.state.translations["main.other_events"] }}</h4>
         <NuxtLink to="/event/slug">
-          {{$store.state.translations['main.all']}}
+          {{ $store.state.translations["main.all"] }}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

@@ -77,7 +77,7 @@
     </div>
     <div class="guests">
       <div class="header">
-        <h4>Ishtirokchilar ({{ members?.length }})</h4>
+        <h4>Ishtirokchilar ({{ event?.members_count }})</h4>
         <button>
           <svg
             xmlns="http://www.w3.org/2000/svg"

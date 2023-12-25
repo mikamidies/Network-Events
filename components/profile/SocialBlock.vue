@@ -69,7 +69,16 @@
         />
       </svg>
     </a>
-    <a class="card" v-if="profile?.client?.telegram" :href="profile?.client?.telegram">
+    <a
+      class="card"
+      v-if="profile?.client?.telegram"
+      :href="
+        profile?.client?.telegram.includes('http://')
+          ? profile?.client?.telegram
+          : `http://t.me/${profile?.client?.telegram.replace('@', '')}`
+      "
+      target="_blank"
+    >
       <span>
         <svg
           width="24"

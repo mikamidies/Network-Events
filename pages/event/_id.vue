@@ -122,6 +122,7 @@
         </div>
       </div>
     </div>
+    <loader v-if="loading" />
   </div>
 </template>
 
@@ -134,6 +135,7 @@ import EventFiles from "@/components/EventPage/EventFiles.vue";
 import EventsContact from "@/components/EventPage/EventsContact.vue";
 import EventParticipants from "@/components/EventPage/EventParticipants.vue";
 import eventsApi from "@/api/eventsApi";
+import loader from "@/components/loader.vue";
 import moment from "moment";
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 export default {
@@ -149,10 +151,13 @@ export default {
 
   data() {
     return {
+      loading: false,
       tabHandle: "info",
       members: [],
       memberStatus: false,
       dateFormat: DATE_FORMAT,
+      coords: [],
+      event: {},
       tabList: [
         {
           name: "EventMain",
@@ -194,28 +199,24 @@ export default {
     };
   },
 
-  async asyncData({ $axios, params }) {
-    
-    const eventsData = await eventsApi.getEventsById($axios, { id: params.id });
-    const event = eventsData?.data;
-    const coords = [Number(eventsData?.data?.lat), Number(eventsData?.data?.lon)];
-    return {
-      event,
-      coords,
-    };
-  },
   async mounted() {
     try {
-      const eventsData = await eventsApi.getEventsById(this.$axios, {
+      this.loading = true;
+      const eventsData = await eventsApi.getEventsById({
         id: this.$route.params.id,
       });
       localStorage.removeItem("qr_code");
+      this.event = eventsData?.data;
+      this.coords = [Number(eventsData?.data?.lat), Number(eventsData?.data?.lon)];
+
       this.__GET_MEMBERS();
     } catch (e) {
       if (e.response.status == 404) {
         localStorage.removeItem("qr_code");
         this.$router.push("/");
       }
+    } finally {
+      this.loading = false;
     }
   },
   methods: {
@@ -223,6 +224,7 @@ export default {
       this.tabHandle = name;
     },
     moment,
+
     async __GET_MEMBERS() {
       const AUTH_STATUS = 401;
       try {

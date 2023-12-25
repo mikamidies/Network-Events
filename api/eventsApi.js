@@ -2,8 +2,11 @@ export default {
   async getEvents(axios, config = {}) {
     return await axios.get("/events", config);
   },
-  async getEventsById(axios, config = {}) {
-    return await axios.get(`/events/${config.id}`, config.payload);
+  async getEventsById(config = {}) {
+    return await $nuxt.$axiosInstance.get(
+      `/events/${config.id}`,
+      config.payload
+    );
   },
   async getClientById(config = {}) {
     return await $nuxt.$axiosInstance.get(
