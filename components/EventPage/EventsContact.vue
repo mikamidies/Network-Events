@@ -2,7 +2,7 @@
   <div class="events-contant">
     <h4 class="title">Tashkilotchi bilan aloqa</h4>
     <div class="list">
-      <a class="card" v-if="Boolean(event?.phone_number) && event?.phone_number.length == 12" :href="`tel:+${event?.phone_number}`">
+      <a class="card" v-if="Boolean(event?.phone_number) && `${event?.phone_number}`.length == 12" :href="`tel:+${event?.phone_number}`">
         <span>
           <svg
             width="24"
