@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="list">
-    <a class="card" :href="`tel:+${profile?.phone_number}`">
+    <a class="card" v-if="profile?.phone_number" :href="`tel:+${profile?.phone_number}`">
       <span>
         <svg
           width="24"

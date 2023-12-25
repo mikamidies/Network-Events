@@ -96,7 +96,12 @@
         </button>
       </div>
       <div class="items" v-if="memberStatus">
-        <div class="item" v-for="member in members" :key="member?.id">
+        <div
+          class="item"
+          v-for="member in members"
+          :key="member?.id"
+          @click="$router.push(`/member/${member?.id}`)"
+        >
           <div class="person">
             <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
             <img v-else src="@/assets/img/user.png" alt="" />
@@ -139,7 +144,7 @@
       </div>
       <div class="link" v-if="memberStatus && members?.length > membersLength">
         <button @click="$emit('tabChange', 'participants')">
-          {{$store.state.translations['main.all']}}
+          {{ $store.state.translations["main.all"] }}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="5"
@@ -362,6 +367,7 @@ export default {
   display: grid;
   grid-template-columns: 2fr 8fr;
   gap: 16px;
+  cursor: pointer;
 }
 .person img {
   width: 72px;
