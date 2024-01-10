@@ -32,7 +32,7 @@
         </client-only>
       </div>
       <div>
-        <p class="sup">Manzil</p>
+        <p class="sup">{{$store.state.translations['event.address']}}</p>
         <p class="value">
           {{ event?.adress }}
         </p>
@@ -69,7 +69,7 @@
         </client-only>
       </div>
       <div>
-        <p class="sup">Manzil</p>
+        <p class="sup">{{$store.state.translations['event.address']}}</p>
         <p class="value">
           {{ event?.adress }}
         </p>
@@ -77,7 +77,7 @@
     </div>
     <div class="guests">
       <div class="header">
-        <h4>Ishtirokchilar ({{ event?.members_count }})</h4>
+        <h4>{{$store.state.translations['event.members']}} ({{ event?.members_count }})</h4>
         <button>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -138,9 +138,9 @@
               fill="#28303F"
             />
           </svg>
-          Yopiq
+          {{$store.state.translations['event.closed']}}
         </h5>
-        <p>Ishtirokchilar faqat tadbir ishtokchilarga ko‘rinadi</p>
+        <p>{{$store.state.translations['event.show_members']}}</p>
       </div>
       <div class="link" v-if="memberStatus && members?.length > membersLength">
         <button @click="$emit('tabChange', 'participants')">

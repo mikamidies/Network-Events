@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="events-contant">
-    <h4 class="title">Tashkilotchi bilan aloqa</h4>
+    <h4 class="title">{{$store.state.translations['event.organizer_contact']}}</h4>
     <div class="list">
       <a
         class="card"

@@ -26,7 +26,7 @@
     <div class="body">
       <h4 class="title">{{ file?.name }}</h4>
       <a :href="file?.file" download target="_blank"
-        >Yuklab olish 123
+        >{{$store.state.translations['event.for_download']}}
         <svg
           width="21"
           height="20"

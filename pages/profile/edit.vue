@@ -281,6 +281,7 @@ export default {
     handleRemove() {
       this.fileList = [];
       this.image = "";
+      this.form.client_data.image = "";
     },
 
     async __PUT_PROFILE(form) {
@@ -316,6 +317,7 @@ export default {
             ...data?.data.client,
           },
         };
+        this.form.client_data.image = null;
         this.image = data?.data.client?.image;
         if (this.image) {
           this.fileList = [

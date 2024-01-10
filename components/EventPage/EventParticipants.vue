@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="wrap">
     <div class="header">
-      <h4>Ishtirokchilar</h4>
+      <h4>{{$store.state.translations['event.members']}}</h4>
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"

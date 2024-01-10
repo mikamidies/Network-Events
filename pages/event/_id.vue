@@ -74,32 +74,32 @@
         <h4 class="name">{{ event?.title }}</h4>
         <div class="tabs">
           <button @click="tabHandle = 'info'" :class="{ active: tabHandle == 'info' }">
-            Ma'lumot
+            {{$store.state.translations['event.info']}}
           </button>
           <button
             @click="tabHandle = 'speakers'"
             :class="{ active: tabHandle == 'speakers' }"
           >
-            Spikerlar
+            {{$store.state.translations['event.speakers']}}
           </button>
           <button
             v-if="memberStatus"
             @click="tabHandle = 'participants'"
             :class="{ active: tabHandle == 'participants' }"
           >
-            Ishtirokchilar
+            {{$store.state.translations['event.members']}}
           </button>
           <button @click="tabHandle = 'plan'" :class="{ active: tabHandle == 'plan' }">
-            Tadbir rejasi
+            {{$store.state.translations['event.place_tab']}}
           </button>
           <button @click="tabHandle = 'files'" :class="{ active: tabHandle == 'files' }">
-            Fayllar
+            {{$store.state.translations['event.files']}}
           </button>
           <button
             @click="tabHandle = 'contact'"
             :class="{ active: tabHandle == 'contact' }"
           >
-            Aloqa uchun
+            {{$store.state.translations['event.for_contact']}}
           </button>
         </div>
         <div class="body">
@@ -211,10 +211,11 @@ export default {
 
       this.__GET_MEMBERS();
     } catch (e) {
-      if (e.response.status == 404) {
-        localStorage.removeItem("qr_code");
-        this.$router.push("/");
-      }
+      console.log(e);
+      // if (e.response.status == 404) {
+      //   localStorage.removeItem("qr_code");
+      //   this.$router.push("/");
+      // }
     } finally {
       this.loading = false;
     }

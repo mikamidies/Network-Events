@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="list">
-    <a class="card" v-if="profile?.phone_number" :href="`tel:+${profile?.phone_number}`">
+    <a class="card" v-if="profile?.phone_number" :href="`tel:+${profile?.phone_number}`" >
       <span>
         <svg
           width="24"
@@ -37,7 +37,16 @@
         />
       </svg>
     </a>
-    <a class="card" v-if="profile?.client?.site" :href="profile?.client?.site">
+    <a
+      class="card"
+      target="_blank"
+      v-if="profile?.client?.site"
+      :href="
+        profile?.client?.site?.includes('http://')
+          ? profile?.client?.site
+          : 'http://' + profile?.client?.site
+      "
+    >
       <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +80,7 @@
     </a>
     <a
       class="card"
+      
       v-if="profile?.client?.telegram"
       :href="
         profile?.client?.telegram.includes('http://')
@@ -96,7 +106,11 @@
           />
         </svg>
 
-        {{ profile?.client?.telegram }}</span
+        {{
+          profile?.client?.telegram?.includes("@")
+            ? profile?.client?.telegram
+            : "@" + profile?.client?.telegram
+        }}</span
       ><svg
         width="24"
         height="24"
@@ -141,7 +155,11 @@
           />
         </svg>
 
-        {{ profile?.client?.instagram }}</span
+        {{
+          profile?.client?.instagram?.includes("@")
+            ? profile?.client?.instagram
+            : "@" + profile?.client?.instagram
+        }}</span
       ><svg
         width="24"
         height="24"
@@ -158,7 +176,7 @@
         />
       </svg>
     </a>
-    <a class="card" v-if="profile?.client?.linkedIn" :href="profile?.client?.linkedIn">
+    <a class="card" v-if="profile?.client?.linkedIn" :href="profile?.client?.linkedIn" target="_blank">
       <span>
         <svg
           width="24"
@@ -177,7 +195,11 @@
           />
         </svg>
 
-        {{ profile?.client?.linkedIn }}</span
+        {{
+          profile?.client?.linkedIn?.includes("@")
+            ? profile?.client?.linkedIn
+            : "@" + profile?.client?.linkedIn
+        }}</span
       ><svg
         width="24"
         height="24"

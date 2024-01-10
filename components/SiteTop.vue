@@ -18,7 +18,7 @@
               stroke-linejoin="round"
             />
           </svg>
-          Ortga qaytish
+          {{$store.state.translations['event.to_back']}}
         </span>
       </div>
       <div class="right">
