@@ -19,7 +19,7 @@
             />
           </svg>
         </button>
-        <h3>{{$store.state.translations["login.welcome"]}}</h3>
+        <h3>{{ $store.state.translations["login.welcome"] }}</h3>
       </div>
       <div class="register-page">
         <div class="image container">
@@ -34,11 +34,11 @@
                 .filter((item, index) => index != 0)
                 .join(" ")
             }}
-            {{$store.state.translations["login.number-text"]}}
+            {{ $store.state.translations["login.number-text"] }}
           </p>
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">{{$store.state.translations["login.enter-code"]}}</p>
+              <p class="sub">{{ $store.state.translations["login.enter-code"] }}</p>
               <div class="code-input position-relative">
                 <!-- <v-otp-input
                   ref="otpInput"
@@ -75,15 +75,15 @@
             </a-form-model-item></a-form-model
           >
           <div>
-            <button class="resend" :class="{ disabled: time != 0 }">
-              {{$store.state.translations["login.resend"]}}
+            <button class="resend" @click="resent" :class="{ disabled: time != 0 }">
+              {{ $store.state.translations["login.resend"] }}
             </button>
           </div>
         </div>
       </div>
     </div>
     <div class="btns container">
-      <button @click="submit">{{$store.state.translations["login.continue"]}}</button>
+      <button @click="submit">{{ $store.state.translations["login.continue"] }}</button>
     </div>
   </div>
 </template>
@@ -139,6 +139,9 @@ export default {
         }
       });
     },
+    resent() {
+      this.__SEND_NUMBER({ phone_number: this.form.phone_number });
+    },
     async __SEND_CODE(form) {
       try {
         const data = await sendNUmberApi.sendCode(this.$axios, form);
@@ -159,6 +162,19 @@ export default {
           message: "Error",
           description: e.response?.statusText,
         });
+      }
+    },
+    async __SEND_NUMBER(form) {
+      try {
+        const data = await sendNUmberApi.sendNumber(this.$axios, form);
+        await this.$router.push("/register/check-code");
+      } catch (e) {
+        if (e.response.status == 403) {
+          this.$notification["error"]({
+            message: "Error",
+            description: "Код для этого телефона уже отправлен",
+          });
+        }
       }
     },
     // handleOnComplete(value) {

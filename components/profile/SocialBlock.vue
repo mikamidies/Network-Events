@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="list">
-    <a class="card" v-if="profile?.phone_number" :href="`tel:+${profile?.phone_number}`" >
+    <a class="card" v-if="profile?.phone_number" :href="`tel:+${profile?.phone_number}`">
       <span>
         <svg
           width="24"
@@ -80,7 +80,6 @@
     </a>
     <a
       class="card"
-      
       v-if="profile?.client?.telegram"
       :href="
         profile?.client?.telegram.includes('http://')
@@ -131,7 +130,7 @@
       class="card"
       v-if="profile?.client?.instagram"
       :href="
-        profile?.client?.instagram.includes('https://')
+        profile?.client?.instagram?.includes('https://')
           ? profile?.client?.instagram
           : `https://www.instagram.com/${profile?.client?.instagram}/`
       "
@@ -176,7 +175,16 @@
         />
       </svg>
     </a>
-    <a class="card" v-if="profile?.client?.linkedIn" :href="profile?.client?.linkedIn" target="_blank">
+    <a
+      class="card"
+      v-if="profile?.client?.linkedIn"
+      :href="
+        profile?.client?.linkedIn?.includes('https://')
+          ? profile?.client?.linkedIn
+          : `https://www.linkedin.com/${profile?.client?.linkedIn}/`
+      "
+      target="_blank"
+    >
       <span>
         <svg
           width="24"
