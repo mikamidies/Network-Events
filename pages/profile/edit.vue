@@ -267,10 +267,8 @@ export default {
         },
       };
       if (data.client_data.linkedIn) {
-        data.client_data.linkedIn = !this.form.client_data.linkedIn.includes(
-          "{{$store.state.translations['login.linkedin_place']}}"
-        )
-          ? `{{$store.state.translations['login.linkedin_place']}}${this.form.client_data.linkedIn}`
+        data.client_data.linkedIn = !this.form.client_data.linkedIn.includes("https://")
+          ? `https://${this.form.client_data.linkedIn}`
           : this.form.client_data.linkedIn;
         data.client_data.linkedIn = !data.client_data.linkedIn.includes(".ru")
           ? `${data.client_data.linkedIn}.ru`
