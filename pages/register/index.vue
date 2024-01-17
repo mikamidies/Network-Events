@@ -41,7 +41,6 @@
                   />
                 </div> </a-form-model-item
             ></a-form-model>
-           
           </div>
         </div>
       </div>
@@ -73,7 +72,6 @@ export default {
     };
   },
   mounted() {
-
     if (localStorage.getItem("accessToken")) this.$router.push("/");
   },
   methods: {
