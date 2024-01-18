@@ -18,7 +18,7 @@ export default {
     try {
       const code = this.$route.params.code || localStorage.getItem("qr_code");
       const data = await eventApi.postEvent({ id: code, payload: {} });
-      this.$router.push(`/event/${data?.data?.id}`);
+      this.$router.push(`/community/${data?.data?.id}`);
     } catch (e) {
       const PARAMS_CODE = this.paramsObj?.code;
       console.log("params", this.$route.params, this.paramsObj);
