@@ -29,18 +29,24 @@
               .join(" ")
           }}</span
         ><svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M14 8L18 12M18 12L14 16M18 12L6 12"
-            stroke="#28303F"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M0.531506 11.5856C0.20806 11.3269 0.155619 10.8549 0.414376 10.5315L4.03956 5.99997L0.414376 1.46849C0.155618 1.14505 0.208059 0.673078 0.531506 0.414321C0.854952 0.155563 1.32692 0.208005 1.58568 0.531451L5.58568 5.53145C5.80481 5.80536 5.80481 6.19458 5.58568 6.46849L1.58568 11.4685C1.32692 11.7919 0.854953 11.8444 0.531506 11.5856Z"
+            fill="#1878F3"
+          />
+          <path
+            opacity="0.4"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M6.53151 11.5856C6.20806 11.3269 6.15562 10.8549 6.41438 10.5315L10.0396 5.99997L6.41438 1.46849C6.15562 1.14505 6.20806 0.673078 6.53151 0.414321C6.85495 0.155563 7.32692 0.208005 7.58568 0.531451L11.5857 5.53145C11.8048 5.80536 11.8048 6.19458 11.5857 6.46849L7.58568 11.4685C7.32692 11.7919 6.85495 11.8444 6.53151 11.5856Z"
+            fill="#1878F3"
           />
         </svg>
       </a>
@@ -72,18 +78,24 @@
           </svg>
           {{ event?.telegram }}</span
         ><svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M14 8L18 12M18 12L14 16M18 12L6 12"
-            stroke="#28303F"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M0.531506 11.5856C0.20806 11.3269 0.155619 10.8549 0.414376 10.5315L4.03956 5.99997L0.414376 1.46849C0.155618 1.14505 0.208059 0.673078 0.531506 0.414321C0.854952 0.155563 1.32692 0.208005 1.58568 0.531451L5.58568 5.53145C5.80481 5.80536 5.80481 6.19458 5.58568 6.46849L1.58568 11.4685C1.32692 11.7919 0.854953 11.8444 0.531506 11.5856Z"
+            fill="#1878F3"
+          />
+          <path
+            opacity="0.4"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M6.53151 11.5856C6.20806 11.3269 6.15562 10.8549 6.41438 10.5315L10.0396 5.99997L6.41438 1.46849C6.15562 1.14505 6.20806 0.673078 6.53151 0.414321C6.85495 0.155563 7.32692 0.208005 7.58568 0.531451L11.5857 5.53145C11.8048 5.80536 11.8048 6.19458 11.5857 6.46849L7.58568 11.4685C7.32692 11.7919 6.85495 11.8444 6.53151 11.5856Z"
+            fill="#1878F3"
           />
         </svg>
       </a>
@@ -96,6 +108,9 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+.events-contant {
+  margin-top: 8px;
+}
 .title {
   color: #020105;
   font-family: var(--decor-md);
@@ -111,10 +126,10 @@ export default {
 }
 .card {
   border-radius: 8px;
-  border: 1px solid #ebebeb;
-  background: #fff;
+  background: var(--Apple-Grey, #f5f5f7);
   padding: 12px 16px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .card span {

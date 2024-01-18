@@ -28,7 +28,7 @@
     <div class="others">
       <div class="header">
         <h4 class="title">{{ $store.state.translations["main.other_events"] }}</h4>
-        <NuxtLink to="/event/slug">
+        <NuxtLink to="/events">
           {{ $store.state.translations["main.all"] }}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,6 +81,62 @@
         <a-empty />
       </div>
     </div>
+    <div class="others">
+      <div class="header">
+        <h4 class="title">{{$store.state.translations['community.community']}}</h4>
+        <NuxtLink to="/community">
+          {{ $store.state.translations["main.all"] }}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M8.3335 5.83337L11.6668 10L8.3335 14.1667"
+              stroke="#28303F"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </NuxtLink>
+      </div>
+      <div class="items" v-if="!loading">
+        <div class="item" v-for="event in community" :key="event?.id">
+          <NuxtLink :to="`/community/${event?.id}`">
+            <div class="img">
+              <p class="date">
+                {{ moment(event?.start_date).format(dateFormat) }}
+              </p>
+              <img
+                loading="lazy"
+                v-if="event?.image"
+                :src="event?.image"
+                alt=""
+                class="pic"
+              />
+              <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+            </div>
+            <p class="name">
+              {{ event?.title }}
+            </p>
+          </NuxtLink>
+        </div>
+      </div>
+      <div class="items" v-if="loading">
+        <a-skeleton
+          :paragraph="false"
+          class="loading-card"
+          v-for="elem in emptyList"
+          :key="elem"
+        />
+      </div>
+      <div v-if="!loading && events.length == 0">
+        <a-empty />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -89,7 +145,7 @@ import moment from "moment";
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 
 export default {
-  props: ["events", "myEvents", "loading"],
+  props: ["events", "myEvents", "loading", "community"],
   name: "HomeEvents",
   data() {
     return {

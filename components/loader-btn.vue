@@ -6,21 +6,17 @@
   </div>
 </template>
 
-<script setup></script>
-
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .spinner {
   animation: rotate 2s linear infinite;
   width: 24px;
   height: 24px;
-
-  & .path {
-    stroke: #fff;
-    stroke-linecap: round;
-    animation: dash 1.5s ease-in-out infinite;
-  }
 }
-
+.path {
+  stroke: #fff;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
 @keyframes rotate {
   100% {
     transform: rotate(360deg);

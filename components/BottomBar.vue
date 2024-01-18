@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="container">
       <div class="links">
-        <NuxtLink to="/">
+        <NuxtLink to="/" :class="{ active: $route.name.includes('index') }">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -17,9 +17,9 @@
               stroke="#5D5D5F"
             />
           </svg>
-          <p>{{$store.state.translations['main.home']}}</p>
+          <p>{{ $store.state.translations["main.home"] }}</p>
         </NuxtLink>
-        <NuxtLink to="/">
+        <NuxtLink to="/events" :class="{ active: $route.name.includes('events') }">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -69,9 +69,38 @@
               fill="#5D5D5F"
             />
           </svg>
-          <p>{{$store.state.translations['main.events']}}</p>
+          <p>{{ $store.state.translations["main.events"] }}</p>
         </NuxtLink>
-        <NuxtLink to="/">
+        <NuxtLink to="/community" :class="{ active: $route.name.includes('community') }">
+          <svg
+            width="25"
+            height="24"
+            viewBox="0 0 25 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="6.5" cy="4" r="2" stroke="#5D5D5F" stroke-width="1.5" />
+            <ellipse cx="6.5" cy="8" rx="3" ry="2" stroke="#5D5D5F" stroke-width="1.5" />
+            <circle cx="18.5" cy="16" r="2" stroke="#5D5D5F" stroke-width="1.5" />
+            <path
+              d="M22.5 12C22.5 6.47715 18.0228 2 12.5 2M12.5 22C6.97715 22 2.5 17.5228 2.5 12"
+              stroke="#5D5D5F"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <ellipse
+              cx="18.5"
+              cy="20"
+              rx="3"
+              ry="2"
+              stroke="#5D5D5F"
+              stroke-width="1.5"
+            />
+          </svg>
+
+          <p>{{$store.state.translations['community.community']}}</p>
+        </NuxtLink>
+        <!-- <NuxtLink to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -85,8 +114,8 @@
             />
           </svg>
           <p>{{$store.state.translations['main.message']}}</p>
-        </NuxtLink>
-        <NuxtLink to="/profile">
+        </NuxtLink> -->
+        <NuxtLink to="/profile" :class="{ active: $route.name.includes('profile') }">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -150,5 +179,14 @@ export default {};
   flex-direction: column;
   gap: 4px;
   align-items: center;
+}
+.active {
+  color: #1878f3 !important;
+  stroke: #1878f3 !important;
+}
+.active svg ellipse,
+.active svg path,
+.active svg circle {
+  stroke: #1878f3 !important;
 }
 </style>

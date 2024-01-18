@@ -28,15 +28,20 @@
         </div>
       </div>
 
-      <HomeEvents :events="events" :myEvents="myEvents" :loading="loading" />
-      <div class="pag-block">
+      <HomeEvents
+        :events="events"
+        :myEvents="myEvents"
+        :loading="loading"
+        :community="community"
+      />
+      <!-- <div class="pag-block">
         <VPagination
           :load="true"
           class="xl:hidden"
           :totalPage="totalPage"
           @getData="__GET_EVENTS"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -44,6 +49,8 @@
 <script>
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
 import eventsApi from "../api/eventsApi";
+import communityApi from "../api/communityApi";
+
 import VPagination from "~/components/VPagination.vue";
 export default {
   data() {
@@ -56,9 +63,15 @@ export default {
     };
   },
   async asyncData({ $axios, query }) {
-    const MAX_PAGE_SIZE = 10;
-    const [eventsData] = await Promise.all([
+    const MAX_PAGE_SIZE = 3;
+    const [eventsData, communityData] = await Promise.all([
       eventsApi.getEvents($axios, {
+        params: {
+          ...query,
+          page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
+        },
+      }),
+      communityApi.getCommunity($axios, {
         params: {
           ...query,
           page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
@@ -67,9 +80,13 @@ export default {
     ]);
     const events = eventsData?.data?.results;
     const totalPage = eventsData?.data?.count;
+    const community = communityData?.data?.results;
+    const communitytotalPage = communityData?.data?.count;
     return {
       events,
       totalPage,
+      community,
+      communitytotalPage,
     };
   },
   async mounted() {
