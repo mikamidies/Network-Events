@@ -5,7 +5,7 @@
 </template>
 <script>
 import Loader from "../../../components/loader.vue";
-import eventApi from "../../../api/eventsApi";
+import communityApi from "../../../api/communityApi";
 export default {
   asyncData({ params }) {
     const paramsObj = params;
@@ -17,7 +17,7 @@ export default {
     const AUTH_STATUS = 401;
     try {
       const code = this.$route.params.code || localStorage.getItem("qr_code");
-      const data = await eventApi.postEvent({ id: code, payload: {} });
+      const data = await communityApi.postEvent({ id: code, payload: {} });
       this.$router.push(`/community/${data?.data?.id}`);
     } catch (e) {
       const PARAMS_CODE = this.paramsObj?.code;
