@@ -136,12 +136,14 @@ export default {
         );
         await this.$router.push("/register/check-code");
       } catch (e) {
-        if (e.response.status == 403) {
-          this.$notification["error"]({
-            message: "Error",
-            description: "Код для этого телефона уже отправлен",
-          });
-        }
+        console.log(e.response);
+        // if (e.response.status == 403) {
+        this.$notification["error"]({
+          message: "Error",
+          // description: "Код для этого телефона уже отправлен",
+          description: e.response.data.message,
+        });
+        // }
       } finally {
         this.loading = false;
       }
