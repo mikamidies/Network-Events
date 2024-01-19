@@ -125,14 +125,18 @@ export default {
     //   }
     // });
     // this.setInputPlaceholder();
+    let time1 = 0;
     if (localStorage.getItem("phone_number"))
       this.form.phone_number = localStorage.getItem("phone_number");
+
     setInterval(() => {
+      if (!localStorage.getItem("timer")) localStorage.setItem("timer", 60);
+      this.time = localStorage.getItem("timer");
       if (this.time > 0) {
-        this.time--;
-      }
-      if (this.timeProgress > 0) {
-        this.timeProgress -= 100 / 60;
+        this.time = this.time - 1;
+        time1 = this.time;
+        localStorage.setItem("timer", this.time);
+        this.timeProgress = (time1 / 60) * 100;
       }
     }, 1000);
   },
@@ -146,6 +150,8 @@ export default {
     },
     resent() {
       this.__SEND_NUMBER({ phone_number: this.form.phone_number });
+      localStorage.setItem("timer", 60);
+      localStorage.setItem("progress", 100);
     },
     async __SEND_CODE(form) {
       try {

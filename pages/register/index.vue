@@ -138,11 +138,15 @@ export default {
       } catch (e) {
         console.log(e.response);
         // if (e.response.status == 403) {
-        this.$notification["error"]({
-          message: "Error",
-          // description: "Код для этого телефона уже отправлен",
-          description: e.response.data.message,
-        });
+        if (e.response.data.wait) {
+          await this.$router.push("/register/check-code");
+        } else {
+          this.$notification["error"]({
+            message: "Error",
+            // description: "Код для этого телефона уже отправлен",
+            description: e.response.data.messae,
+          });
+        }
         // }
       } finally {
         this.loading = false;

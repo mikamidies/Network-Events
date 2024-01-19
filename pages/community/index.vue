@@ -32,24 +32,7 @@
         <div class="others">
           <div class="header">
             <h4 class="title">{{ $store.state.translations["community.community"] }}</h4>
-            <NuxtLink to="/event/slug">
-              {{ $store.state.translations["main.all"] }}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M8.3335 5.83337L11.6668 10L8.3335 14.1667"
-                  stroke="#28303F"
-                  stroke-width="1.2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </NuxtLink>
+         
           </div>
           <div class="items" v-if="!loading">
             <div class="item" v-for="event in events" :key="event?.id">

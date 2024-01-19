@@ -1,23 +1,25 @@
 <template lang="html">
   <div class="master">
     <div class="top-bar">
-      <h4>Tadbirlar</h4>
-      <button @click="open">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3 5H10M10 5C10 6.10457 10.8954 7 12 7C13.1046 7 14 6.10457 14 5M10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5M3 12H12M19 12H21M19 12C19 13.1046 18.1046 14 17 14C15.8954 14 15 13.1046 15 12C15 10.8954 15.8954 10 17 10C18.1046 10 19 10.8954 19 12ZM14 5H21M12 19H21M3 19H5M5 19C5 20.1046 5.89543 21 7 21C8.10457 21 9 20.1046 9 19C9 17.8954 8.10457 17 7 17C5.89543 17 5 17.8954 5 19Z"
-            stroke="#020105"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
+      <div class="container">
+        <h4>Tadbirlar</h4>
+        <button @click="open">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 5H10M10 5C10 6.10457 10.8954 7 12 7C13.1046 7 14 6.10457 14 5M10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5M3 12H12M19 12H21M19 12C19 13.1046 18.1046 14 17 14C15.8954 14 15 13.1046 15 12C15 10.8954 15.8954 10 17 10C18.1046 10 19 10.8954 19 12ZM14 5H21M12 19H21M3 19H5M5 19C5 20.1046 5.89543 21 7 21C8.10457 21 9 20.1046 9 19C9 17.8954 8.10457 17 7 17C5.89543 17 5 17.8954 5 19Z"
+              stroke="#020105"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <div class="container">
       <div class="search__wrap">
@@ -126,10 +128,10 @@
       class="bottom-drawer spicial-drawer h-full"
       :init-sheet-height="600"
     >
-      <div class="">
+      <div class="bd_container">
         <div class="head">
           <h4>Filter</h4>
-          <button>
+          <button @click="close">
             <svg
               width="24"
               height="24"
@@ -145,6 +147,47 @@
               />
             </svg>
           </button>
+        </div>
+        <div class="form">
+          <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
+            <a-form-model-item class="form-item mb-0" prop="sms_code" label="Sana">
+              <a-select
+                v-model="form.region"
+                placeholder="Sanani kiriting"
+                class="select"
+              >
+                <a-select-option value="shanghai"> Zone one </a-select-option>
+                <a-select-option value="beijing"> Zone two </a-select-option>
+              </a-select>
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0" prop="sms_code" label="Suhbat turi">
+              <a-select
+                v-model="form.region"
+                placeholder="Suhbat turini tanlang"
+                class="select"
+              >
+                <a-select-option value="shanghai"> Zone one </a-select-option>
+                <a-select-option value="beijing"> Zone two </a-select-option>
+              </a-select>
+            </a-form-model-item>
+            <a-form-model-item
+              class="form-item mb-0"
+              prop="sms_code"
+              label="Spikerni kiriting"
+            >
+              <a-select
+                v-model="form.region"
+                placeholder="Spikerni kiriting"
+                class="select"
+              >
+                <a-select-option value="shanghai"> Zone one </a-select-option>
+                <a-select-option value="beijing"> Zone two </a-select-option>
+              </a-select>
+            </a-form-model-item>
+          </a-form-model>
+          <div class="btn-fixed">
+            <button class="send-btn">Kodni jo’natish</button>
+          </div>
         </div>
       </div>
     </vue-bottom-sheet-vue2>
@@ -168,6 +211,18 @@ export default {
       formattedPhoneNumber: "",
       emptyList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       dateFormat: DATE_FORMAT,
+      rules: {
+        sms_code: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+        ],
+      },
+      form: {
+        region: undefined,
+      },
     };
   },
   async asyncData({ $axios, query }) {
@@ -263,13 +318,70 @@ export default {
 };
 </script>
 
-<style scoped>
-.bottom-drawer {
+<style lang="css" scoped>
+.btn-fixed {
+  position: absolute;
+  bottom: 16px;
+  width: 100%;
+  left: 0;
   padding: 0 16px;
 }
+.send-btn {
+  border-radius: 39px;
+  background: var(--Facebook-blue, #1878f3);
+  color: var(--White, #fff);
+  font-family: var(--medium);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: none;
+}
+.form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+:deep(.form-item label) {
+  color: var(--Black, #020105);
+  font-family: var(--medium);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+:deep(.form-item label::before) {
+  display: none;
+}
+:deep(.form-item .ant-select-selection--single) {
+  border-radius: 8px;
+  border: 2px solid var(--Apple-Grey, #f5f5f7);
+  background: var(--White, #fff);
+}
+:deep(.form-item .ant-select-selection--single),
+:deep(.form-item .ant-select-selection__rendered) {
+  height: 53px;
+}
+:deep(.form-item .ant-select-selection__rendered) {
+  display: flex;
+  align-items: center;
+}
+.bd_container {
+  padding: 0 16px;
+}
+
 .bottom-drawer .head {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ebebeb;
 }
 .bottom-drawer .head h4 {
   color: var(--Black, #020105);
@@ -288,12 +400,14 @@ export default {
   width: 35px;
 }
 .top-bar {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--grey-8, #ebebeb);
+  background: var(--White, #fff);
+}
+.top-bar > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid var(--grey-8, #ebebeb);
-  background: var(--White, #fff);
 }
 .top-bar h4 {
   color: var(--Black, #020105);
