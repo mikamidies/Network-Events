@@ -57,8 +57,8 @@
                   type="number"
                   pattern="/^-?\d+\.?\d*$/"
                   v-model="form.sms_code"
-                  onKeyPress="if(this.value.length==6) return false;"
-                  placeholder="******"
+                  onKeyPress="if(this.value.length==4) return false;"
+                  placeholder="****"
                 />
                 <div class="time-line">
                   <span

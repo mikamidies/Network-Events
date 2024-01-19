@@ -52,6 +52,7 @@
 </template>
 <script>
 import sendNUmberApi from "@/api/authApi";
+import moment from "moment";
 export default {
   layout: "empty",
   data() {
@@ -72,7 +73,30 @@ export default {
     };
   },
   mounted() {
+    const current_date = new Date();
+    const real_min = moment(current_date).format("HH:mm");
     if (localStorage.getItem("accessToken")) this.$router.push("/");
+    const timer_time = JSON.parse(localStorage.getItem("timer_time"));
+    if (timer_time) {
+      console.log("real_min", real_min, real_min.split(":")[0]);
+      console.log("old real_min", timer_time.real_min, timer_time.real_min.split(":"));
+      console.log(
+        "old timer_min",
+        timer_time.timer_min,
+        Number(timer_time.real_min.split(":")[1]) + timer_time.timer_min / 60
+      );
+      if (real_min.split(":")[0] == timer_time.real_min.split(":")[0]) {
+        console.log("asdas");
+        if (
+          real_min.split(":")[1] <
+          Number(timer_time.real_min.split(":")[1]) + timer_time.timer_min / 60
+        ) {
+          console.log("asd12312as");
+
+          this.$router.push("/register/check-code");
+        }
+      }
+    }
   },
   methods: {
     submit() {
@@ -89,6 +113,12 @@ export default {
     async __SEND_NUMBER(form) {
       try {
         const data = await sendNUmberApi.sendNumber(this.$axios, form);
+        const current_date = new Date();
+        const real_min = moment(current_date).format("HH:mm");
+        localStorage.setItem(
+          "timer_time",
+          JSON.stringify({ real_min: real_min, timer_min: data?.data?.expiration_date })
+        );
         await this.$router.push("/register/check-code");
       } catch (e) {
         if (e.response.status == 403) {
