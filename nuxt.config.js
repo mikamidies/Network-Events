@@ -26,6 +26,7 @@ export default {
       src: "~plugins/v-mask.js",
       ssr: false,
     },
+    { src: "~plugins/vue-drawer-layout.js", ssr: false },
   ],
 
   components: true,
@@ -40,7 +41,7 @@ export default {
   target: "server",
   server: {
     port: 8451,
-    host: "0.0.0.0"
+    host: "0.0.0.0",
   },
   build: {},
 };

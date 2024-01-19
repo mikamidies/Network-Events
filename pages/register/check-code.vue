@@ -37,7 +37,7 @@
             {{ $store.state.translations["login.number-text"] }}
           </p>
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
-            <a-form-model-item class="form-item mb-0">
+            <a-form-model-item class="form-item mb-0" prop="sms_code">
               <p class="sub">{{ $store.state.translations["login.enter-code"] }}</p>
               <div class="code-input position-relative">
                 <!-- <v-otp-input
@@ -83,7 +83,10 @@
       </div>
     </div>
     <div class="btns container">
-      <button @click="submit">{{ $store.state.translations["login.continue"] }}</button>
+      <button @click="submit" :class="{ disabled: loading, disabled: code_length }">
+        <span v-if="!loading">{{ $store.state.translations["login.continue"] }}</span>
+        <LoaderBtn v-else />
+      </button>
     </div>
   </div>
 </template>
@@ -93,6 +96,8 @@ export default {
   layout: "empty",
   data() {
     return {
+      loading: false,
+      code_length: true,
       form: {
         phone_number: "",
         sms_code: "",
@@ -100,7 +105,7 @@ export default {
       time: 60,
       timeProgress: 100,
       rules: {
-        name: [
+        sms_code: [
           {
             required: true,
             message: "This field is required",
@@ -144,6 +149,7 @@ export default {
     },
     async __SEND_CODE(form) {
       try {
+        this.loading = true;
         const data = await sendNUmberApi.sendCode(this.$axios, form);
 
         if (data?.data?.code_valid) {
@@ -162,6 +168,8 @@ export default {
           message: "Error",
           description: e.response?.statusText,
         });
+      } finally {
+        this.loading = false;
       }
     },
     async __SEND_NUMBER(form) {
@@ -200,9 +208,22 @@ export default {
     //   .forEach((input) => (input.placeholder = "*"));
     // },
   },
+  watch: {
+    "form.sms_code"(e) {
+      if (e.length == 4) {
+        this.code_length = false;
+      } else {
+        this.code_length = true;
+      }
+    },
+  },
 };
 </script>
 <style lang="css" scoped>
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 :deep(.disabledItem) {
   pointer-events: none;
 }

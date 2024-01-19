@@ -1,5 +1,24 @@
 <template lang="html">
   <div class="master">
+    <div class="top-bar">
+      <h4>Tadbirlar</h4>
+      <button @click="open">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3 5H10M10 5C10 6.10457 10.8954 7 12 7C13.1046 7 14 6.10457 14 5M10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5M3 12H12M19 12H21M19 12C19 13.1046 18.1046 14 17 14C15.8954 14 15 13.1046 15 12C15 10.8954 15.8954 10 17 10C18.1046 10 19 10.8954 19 12ZM14 5H21M12 19H21M3 19H5M5 19C5 20.1046 5.89543 21 7 21C8.10457 21 9 20.1046 9 19C9 17.8954 8.10457 17 7 17C5.89543 17 5 17.8954 5 19Z"
+            stroke="#020105"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </div>
     <div class="container">
       <div class="search__wrap">
         <div class="search">
@@ -102,6 +121,33 @@
         />
       </div>
     </div>
+    <vue-bottom-sheet-vue2
+      ref="open"
+      class="bottom-drawer spicial-drawer h-full"
+      :init-sheet-height="600"
+    >
+      <div class="">
+        <div class="head">
+          <h4>Filter</h4>
+          <button>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.7123 16.7729C16.0052 17.0658 16.4801 17.0658 16.7729 16.7729C17.0658 16.48 17.0658 16.0052 16.7729 15.7123L13.0607 12L16.7729 8.2877C17.0658 7.99481 17.0658 7.51993 16.7729 7.22704C16.48 6.93415 16.0052 6.93415 15.7123 7.22704L12 10.9393L8.28766 7.22699C7.99477 6.9341 7.5199 6.9341 7.227 7.22699C6.93411 7.51989 6.93411 7.99476 7.227 8.28765L10.9393 12L7.22699 15.7123C6.9341 16.0052 6.9341 16.4801 7.22699 16.773C7.51989 17.0659 7.99476 17.0659 8.28765 16.773L12 13.0606L15.7123 16.7729Z"
+                fill="#020105"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </vue-bottom-sheet-vue2>
   </div>
 </template>
 
@@ -151,6 +197,12 @@ export default {
     },
   },
   methods: {
+    open() {
+      this.$refs.open.open();
+    },
+    close() {
+      this.$refs.open.close();
+    },
     moment,
     async __GET_MY_EVENTS() {
       try {
@@ -212,6 +264,49 @@ export default {
 </script>
 
 <style scoped>
+.bottom-drawer {
+  padding: 0 16px;
+}
+.bottom-drawer .head {
+  display: flex;
+  justify-content: space-between;
+}
+.bottom-drawer .head h4 {
+  color: var(--Black, #020105);
+  font-family: var(--decor-md);
+  font-size: 18px;
+  font-style: normal;
+  line-height: 120%; /* 21.6px */
+  letter-spacing: -0.36px;
+}
+.bottom-drawer .head button {
+  background-color: transparent;
+  border: none;
+  border-radius: 35px;
+  background: var(--Apple-Grey, #f5f5f7);
+  height: 35px;
+  width: 35px;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--grey-8, #ebebeb);
+  background: var(--White, #fff);
+}
+.top-bar h4 {
+  color: var(--Black, #020105);
+  font-family: var(--decor-md);
+  font-size: 18px;
+  font-style: normal;
+  line-height: 120%; /* 21.6px */
+  letter-spacing: -0.36px;
+}
+.top-bar button {
+  background-color: transparent;
+  border: none;
+}
 .pag-block {
   margin-top: 24px;
 }

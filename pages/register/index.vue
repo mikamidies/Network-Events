@@ -28,7 +28,7 @@
           </div>
           <div class="container">
             <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
-              <a-form-model-item class="form-item mb-0">
+              <a-form-model-item class="form-item mb-0" prop="phone_number">
                 <p class="sub">{{ $store.state.translations["login.enter-phone"] }}</p>
                 <div class="input-context">
                   <span>+998</span>
@@ -45,7 +45,13 @@
         </div>
       </div>
       <div class="btns container">
-        <button @click="submit">{{ $store.state.translations["login.continue"] }}</button>
+        <button
+          @click="submit"
+          :class="{ disabled: loading, disabled: phone_number_length }"
+        >
+          <span v-if="!loading">{{ $store.state.translations["login.continue"] }}</span>
+          <LoaderBtn v-else />
+        </button>
       </div>
     </div>
   </div>
@@ -53,19 +59,27 @@
 <script>
 import sendNUmberApi from "@/api/authApi";
 import moment from "moment";
+import LoaderBtn from "../../components/loader-btn.vue";
 export default {
   layout: "empty",
   data() {
     return {
+      loading: false,
+      phone_number_length: true,
       form: {
         phone_number: "",
       },
 
       rules: {
-        name: [
+        phone_number: [
           {
             required: true,
             message: "This field is required",
+            trigger: "change",
+          },
+          {
+            min: 12,
+            message: "The length of the number should not be less than 9",
             trigger: "change",
           },
         ],
@@ -73,30 +87,30 @@ export default {
     };
   },
   mounted() {
-    const current_date = new Date();
-    const real_min = moment(current_date).format("HH:mm");
+    // const current_date = new Date();
+    // const real_min = moment(current_date).format("HH:mm");
     if (localStorage.getItem("accessToken")) this.$router.push("/");
-    const timer_time = JSON.parse(localStorage.getItem("timer_time"));
-    if (timer_time) {
-      console.log("real_min", real_min, real_min.split(":")[0]);
-      console.log("old real_min", timer_time.real_min, timer_time.real_min.split(":"));
-      console.log(
-        "old timer_min",
-        timer_time.timer_min,
-        Number(timer_time.real_min.split(":")[1]) + timer_time.timer_min / 60
-      );
-      if (real_min.split(":")[0] == timer_time.real_min.split(":")[0]) {
-        console.log("asdas");
-        if (
-          real_min.split(":")[1] <
-          Number(timer_time.real_min.split(":")[1]) + timer_time.timer_min / 60
-        ) {
-          console.log("asd12312as");
+    // const timer_time = JSON.parse(localStorage.getItem("timer_time"));
+    // if (timer_time) {
+    //   console.log("real_min", real_min, real_min.split(":")[0]);
+    //   console.log("old real_min", timer_time.real_min, timer_time.real_min.split(":"));
+    //   console.log(
+    //     "old timer_min",
+    //     timer_time.timer_min,
+    //     Number(timer_time.real_min.split(":")[1]) + timer_time.timer_min / 60
+    //   );
+    //   if (real_min.split(":")[0] == timer_time.real_min.split(":")[0]) {
+    //     console.log("asdas");
+    //     if (
+    //       real_min.split(":")[1] <
+    //       Number(timer_time.real_min.split(":")[1]) + timer_time.timer_min / 60
+    //     ) {
+    //       console.log("asd12312as");
 
-          this.$router.push("/register/check-code");
-        }
-      }
-    }
+    //       this.$router.push("/register/check-code");
+    //     }
+    //   }
+    // }
   },
   methods: {
     submit() {
@@ -112,6 +126,7 @@ export default {
     },
     async __SEND_NUMBER(form) {
       try {
+        this.loading = true;
         const data = await sendNUmberApi.sendNumber(this.$axios, form);
         const current_date = new Date();
         const real_min = moment(current_date).format("HH:mm");
@@ -127,12 +142,30 @@ export default {
             description: "Код для этого телефона уже отправлен",
           });
         }
+      } finally {
+        this.loading = false;
       }
     },
+  },
+  watch: {
+    "form.phone_number"(e) {
+      if (e.length == 12) {
+        this.phone_number_length = false;
+      } else {
+        this.phone_number_length = true;
+      }
+    },
+  },
+  components: {
+    LoaderBtn,
   },
 };
 </script>
 <style lang="css" scoped>
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 .image {
   display: flex;
   justify-content: center;
