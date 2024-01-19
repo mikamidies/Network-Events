@@ -60,6 +60,7 @@ export default {
     },
     async getProfileInfo() {
       const QR_CODE = localStorage.getItem("qr_code");
+      const CURRENT_PAGE = localStorage.getItem("page");
       const REFRESH_TOKEN = localStorage.getItem("refreshToken");
       const AUTH_STATUS = 401;
       const PARAMS_CODE = this.$route.params?.code;
@@ -67,7 +68,8 @@ export default {
       try {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
-        if (QR_CODE) this.$router.push(`/event/join/${QR_CODE}`);
+        if (QR_CODE && CURRENT_PAGE)
+          this.$router.push(`/${CURRENT_PAGE}/join/${QR_CODE}`);
       } catch (e) {
         if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
         if (e.response.status == AUTH_STATUS && REFRESH_TOKEN) {

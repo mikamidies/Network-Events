@@ -23,7 +23,7 @@ export default {
       const PARAMS_CODE = this.paramsObj?.code;
       console.log("params", this.$route.params, this.paramsObj);
       if (PARAMS_CODE) {
-        console.log("inner");
+        localStorage.setItem("page", "event");
         localStorage.setItem("qr_code", PARAMS_CODE);
       }
       if (e.response.status == AUTH_STATUS) this.$router.push("/register");
