@@ -74,32 +74,32 @@
         <h4 class="name">{{ event?.title }}</h4>
         <div class="tabs">
           <button @click="tabHandle = 'info'" :class="{ active: tabHandle == 'info' }">
-            {{$store.state.translations['event.info']}}
+            {{ $store.state.translations["event.info"] }}
           </button>
           <button
             @click="tabHandle = 'speakers'"
             :class="{ active: tabHandle == 'speakers' }"
           >
-            {{$store.state.translations['event.speakers']}}
+            {{ $store.state.translations["event.speakers"] }}
           </button>
           <button
-            v-if="memberStatus"
+            v-if="event.is_member"
             @click="tabHandle = 'participants'"
             :class="{ active: tabHandle == 'participants' }"
           >
-            {{$store.state.translations['event.members']}}
+            {{ $store.state.translations["event.members"] }}
           </button>
           <button @click="tabHandle = 'plan'" :class="{ active: tabHandle == 'plan' }">
-            {{$store.state.translations['event.place_tab']}}
+            {{ $store.state.translations["event.place_tab"] }}
           </button>
           <button @click="tabHandle = 'files'" :class="{ active: tabHandle == 'files' }">
-            {{$store.state.translations['event.files']}}
+            {{ $store.state.translations["event.files"] }}
           </button>
           <button
             @click="tabHandle = 'contact'"
             :class="{ active: tabHandle == 'contact' }"
           >
-            {{$store.state.translations['event.for_contact']}}
+            {{ $store.state.translations["event.for_contact"] }}
           </button>
         </div>
         <div class="body">

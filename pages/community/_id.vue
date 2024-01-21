@@ -118,7 +118,7 @@
         </div>
         <h4 class="name">{{ event?.title }}</h4>
         <div class="messangers">
-          <a :href="event?.telegram_chat">
+          <a target="_blank" :href="event?.telegram_chat">
             <svg
               width="20"
               height="18"
@@ -136,7 +136,7 @@
             >{{ $store.state.translations["community.tg_chat"] }}
           </a>
           <div>
-            <a :href="event?.telegram_channel"
+            <a target="_blank" :href="event?.instagram"
               ><svg
                 width="24"
                 height="24"
@@ -154,7 +154,7 @@
                 />
               </svg>
             </a>
-            <a :href="event?.instagram"
+            <a target="_blank" :href="event?.telegram_channel"
               ><svg
                 width="24"
                 height="24"
