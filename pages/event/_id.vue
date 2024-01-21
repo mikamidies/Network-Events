@@ -83,7 +83,6 @@
             {{ $store.state.translations["event.speakers"] }}
           </button>
           <button
-            v-if="event.is_member"
             @click="tabHandle = 'participants'"
             :class="{ active: tabHandle == 'participants' }"
           >
