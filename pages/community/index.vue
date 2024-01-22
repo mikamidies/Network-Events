@@ -32,15 +32,14 @@
         <div class="others">
           <div class="header">
             <h4 class="title">{{ $store.state.translations["community.community"] }}</h4>
-         
           </div>
           <div class="items" v-if="!loading">
             <div class="item" v-for="event in events" :key="event?.id">
               <NuxtLink :to="`/community/${event?.id}`">
                 <div class="img">
-                  <p class="date">
+                  <!-- <p class="date">
                     {{ moment(event?.start_date).format(dateFormat) }}
-                  </p>
+                  </p> -->
                   <img
                     loading="lazy"
                     v-if="event?.image"
@@ -98,28 +97,31 @@ export default {
       emptyList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       dateFormat: DATE_FORMAT,
       moment,
+      events: [],
+      totalPage: [],
     };
   },
-  async asyncData({ $axios, query }) {
-    const MAX_PAGE_SIZE = 10;
-    const [eventsData] = await Promise.all([
-      communityApi.getCommunity($axios, {
-        params: {
-          ...query,
-          page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
-        },
-      }),
-    ]);
-    const events = eventsData?.data?.results;
-    const totalPage = eventsData?.data?.count;
-    return {
-      events,
-      totalPage,
-    };
-  },
+  // async asyncData({ $axios, query }) {
+  //   const MAX_PAGE_SIZE = 10;
+  //   const [eventsData] = await Promise.all([
+  //     communityApi.getCommunity($axios, {
+  //       params: {
+  //         ...query,
+  //         page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
+  //       },
+  //     }),
+  //   ]);
+  //   const events = eventsData?.data?.results;
+  //   const totalPage = eventsData?.data?.count;
+  //   return {
+  //     events,
+  //     totalPage,
+  //   };
+  // },
   async mounted() {
     if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
+    this.__GET_COMMUNITIES();
   },
   computed: {
     handleUser() {
@@ -127,6 +129,22 @@ export default {
     },
   },
   methods: {
+    async __GET_COMMUNITIES() {
+      const MAX_PAGE_SIZE = 10;
+
+      try {
+        const communityData = await communityApi.getCommunity({
+          params: {
+            ...this.$route?.query,
+            page_size: this.$route.query?.page_size
+              ? this.$route?.query?.page_size
+              : MAX_PAGE_SIZE,
+          },
+        });
+        this.events = communityData?.data?.results;
+        this.totalPage = communityData?.data?.count;
+      } catch (e) {}
+    },
     async __GET_MY_EVENTS() {
       try {
         const data = await communityApi.getMyCommunity();

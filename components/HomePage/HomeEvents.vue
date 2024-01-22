@@ -107,9 +107,7 @@
         <div class="item" v-for="event in community" :key="event?.id">
           <NuxtLink :to="`/community/${event?.id}`">
             <div class="img">
-              <p class="date">
-                {{ moment(event?.start_date).format(dateFormat) }}
-              </p>
+             
               <img
                 loading="lazy"
                 v-if="event?.image"

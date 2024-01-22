@@ -60,38 +60,41 @@ export default {
       loading: false,
       phoneNumber: "",
       formattedPhoneNumber: "",
+      community: [],
+      communitytotalPage: [],
     };
   },
   async asyncData({ $axios, query }) {
     const MAX_PAGE_SIZE = 3;
-    const [eventsData, communityData] = await Promise.all([
+    const [eventsData] = await Promise.all([
       eventsApi.getEvents($axios, {
         params: {
           ...query,
           page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
         },
       }),
-      communityApi.getCommunity($axios, {
-        params: {
-          ...query,
-          page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
-        },
-      }),
+      // communityApi.getCommunity($axios, {
+      //   params: {
+      //     ...query,
+      //     page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
+      //   },
+      // }),
     ]);
     const events = eventsData?.data?.results;
     const totalPage = eventsData?.data?.count;
-    const community = communityData?.data?.results;
-    const communitytotalPage = communityData?.data?.count;
+    // const community = communityData?.data?.results;
+    // const communitytotalPage = communityData?.data?.count;
     return {
       events,
       totalPage,
-      community,
-      communitytotalPage,
+      // community,
+      // communitytotalPage,
     };
   },
   async mounted() {
     if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
+    this.__GET_COMMUNITIES();
   },
   computed: {
     handleUser() {
@@ -103,6 +106,22 @@ export default {
       try {
         const data = await eventsApi.getMyEvents();
         this.myEvents = data?.data?.results;
+      } catch (e) {}
+    },
+    async __GET_COMMUNITIES() {
+      const MAX_PAGE_SIZE = 3;
+
+      try {
+        const communityData = await communityApi.getCommunity({
+          params: {
+            ...this.$route?.query,
+            page_size: this.$route.query?.page_size
+              ? this.$route?.query?.page_size
+              : MAX_PAGE_SIZE,
+          },
+        });
+        this.community = communityData?.data?.results;
+        this.communitytotalPage = communityData?.data?.count;
       } catch (e) {}
     },
     async __GET_EVENTS() {

@@ -47,6 +47,16 @@
             />
           </svg>
         </div>
+        <div class="categories">
+          <ul>
+            <button>+20</button>
+            <li @click="activeTab = 1" :class="{ active: activeTab == 1 }">Malumot</li>
+            <li @click="activeTab = 2" :class="{ active: activeTab == 2 }">Malumot</li>
+            <li @click="activeTab = 3" :class="{ active: activeTab == 3 }">
+              Не заставляйте пользователя думать
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="wrap">
@@ -150,6 +160,12 @@
         </div>
         <div class="form">
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
+            <a-form-model-item class="form-item mb-0" prop="sms_code" label="Holati">
+              <div class="bottom_tab">
+                <button>Barchasi</button>
+                <button>Men qatnashganlarim</button>
+              </div>
+            </a-form-model-item>
             <a-form-model-item class="form-item mb-0" prop="sms_code" label="Sana">
               <a-select
                 v-model="form.region"
@@ -204,6 +220,7 @@ import VPagination from "~/components/VPagination.vue";
 export default {
   data() {
     return {
+      activeTab: 1,
       myEvents: [],
       search: "",
       loading: false,
@@ -319,6 +336,71 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.categories {
+  margin-top: 16px;
+}
+.categories button {
+  border-radius: 57px;
+  background: #5c46e5;
+  color: var(--White, #fff);
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  display: flex;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+}
+.categories ul {
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+  margin-bottom: 0;
+  padding-left: 16px;
+}
+
+.categories ul::-webkit-scrollbar {
+  display: none;
+}
+.categories ul li {
+  border-radius: 57px;
+  white-space: nowrap;
+  background: var(--Apple-Grey, #f5f5f7);
+  height: 36px;
+  padding: 0 12px;
+  color: var(--grey-80);
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+}
+.categories ul .active {
+  color: #1878f3;
+  border-color: #1878f3;
+}
+.bottom_tab button {
+  border-radius: 57px;
+  background: #f5f5f7;
+  height: 36px;
+  border: none;
+  padding: 0 12px;
+  color: var(--grey-80, #353437);
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 19.6px */
+}
+.bottom_tab {
+  display: flex;
+  gap: 16px;
+}
 .btn-fixed {
   position: absolute;
   bottom: 16px;

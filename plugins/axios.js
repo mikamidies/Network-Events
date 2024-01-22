@@ -12,6 +12,7 @@ export default function ({ $axios, redirect, error }, inject) {
   });
 
   axios.onError((err) => {
+    console.log(err);
     // const errors = [404, 500];
     // if (errors.includes(err.response.status)) {
     //   error({

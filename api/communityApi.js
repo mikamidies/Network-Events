@@ -1,6 +1,6 @@
 export default {
-  async getCommunity(axios, config = {}) {
-    return await axios.get("/community", config);
+  async getCommunity( config = {}) {
+    return await $nuxt.$axiosInstance.get("/community", config);
   },
   async getCommunityById(config = {}) {
     return await $nuxt.$axiosInstance.get(

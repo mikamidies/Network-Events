@@ -232,7 +232,7 @@ import SiteTop from "@/components/SiteTop.vue";
 import CommunityMain from "@/components/Community/CommunityMain.vue";
 import CommunityFiles from "../../components/Community/CommunityFiles.vue";
 import CommunityContact from "../../components/Community/CommunityContact.vue";
-import EventParticipants from "@/components/EventPage/EventParticipants.vue";
+import CommunityMembers from "../../components/Community/CommunityMembers.vue";
 import communityApi from "../../api/communityApi";
 
 import loader from "@/components/loader.vue";
@@ -244,7 +244,7 @@ export default {
     CommunityMain,
     CommunityFiles,
     CommunityContact,
-    EventParticipants,
+    CommunityMembers,
   },
 
   data() {
@@ -276,7 +276,7 @@ export default {
           propItem: {},
         },
         {
-          name: "EventParticipants",
+          name: "CommunityMembers",
           class: "participants guests",
           key: "participants",
           propItem: {},
