@@ -131,7 +131,7 @@
           :key="elem"
         />
       </div>
-      <div v-if="!loading && events.length == 0">
+      <div v-if="!loading && community.length == 0">
         <a-empty />
       </div>
     </div>

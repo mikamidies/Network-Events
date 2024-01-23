@@ -125,11 +125,15 @@ export default {
       } catch (e) {}
     },
     async __GET_EVENTS() {
+      const MAX_PAGE_SIZE = 3;
       try {
         this.loading = true;
         const data = await eventsApi.getEvents(this.$axios, {
           params: {
             ...this.$route.query,
+            page_size: this.$route.query?.page_size
+              ? this.$route?.query?.page_size
+              : MAX_PAGE_SIZE,
           },
         });
         this.events = data?.data?.results;
@@ -150,6 +154,7 @@ export default {
           query: { ...this.$route.query, page: 1, search: e.target.value },
         });
         this.__GET_EVENTS();
+        this.__GET_COMMUNITIES();
       }
     },
   },
@@ -167,6 +172,7 @@ export default {
           query: { ...query },
         });
         this.__GET_EVENTS();
+        this.__GET_COMMUNITIES();
       }
     },
   },

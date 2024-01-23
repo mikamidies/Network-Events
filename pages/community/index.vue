@@ -73,7 +73,7 @@
           :load="true"
           class="xl:hidden"
           :totalPage="totalPage"
-          @getData="__GET_EVENTS"
+          @getData="__GET_COMMUNITIES"
         />
       </div>
     </div>
@@ -119,9 +119,8 @@ export default {
   //   };
   // },
   async mounted() {
-    if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
+    if (localStorage.getItem("accessToken")) this.__GET_COMMUNITIES();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
-    this.__GET_COMMUNITIES();
   },
   computed: {
     handleUser() {
@@ -145,27 +144,7 @@ export default {
         this.totalPage = communityData?.data?.count;
       } catch (e) {}
     },
-    async __GET_MY_EVENTS() {
-      try {
-        const data = await communityApi.getMyCommunity();
-        this.myEvents = data?.data?.results;
-      } catch (e) {}
-    },
-    async __GET_EVENTS() {
-      try {
-        this.loading = true;
-        const data = await communityApi.getCommunity(this.$axios, {
-          params: {
-            ...this.$route.query,
-          },
-        });
-        this.events = data?.data?.results;
-        this.totalPage = data?.data?.count;
-      } catch (e) {
-      } finally {
-        this.loading = false;
-      }
-    },
+
     async onSearch(e) {
       const MIN_TEXT_LENGTH = 2;
       if (
@@ -176,16 +155,11 @@ export default {
           path: this.$route.path,
           query: { ...this.$route.query, page: 1, search: e.target.value },
         });
-        this.__GET_EVENTS();
+        this.__GET_COMMUNITIES();
       }
     },
   },
   watch: {
-    handleUser(val) {
-      if (val > 0) {
-        this.__GET_MY_EVENTS();
-      }
-    },
     async search(val) {
       if (val.length == 0 && this.$route.query?.search) {
         const { search, ...query } = this.$route.query;
@@ -193,7 +167,7 @@ export default {
           path: this.$route.path,
           query: { ...query },
         });
-        this.__GET_EVENTS();
+        this.__GET_COMMUNITIES();
       }
     },
   },

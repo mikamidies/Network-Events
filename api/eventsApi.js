@@ -29,4 +29,7 @@ export default {
   async getMyEvents(config = {}) {
     return await $nuxt.$axiosInstance.get("/events/my", config);
   },
+  async getCategories(config = {}) {
+    return await $nuxt.$axios.get("/crm/categories", config);
+  },
 };

@@ -38,7 +38,7 @@
   --decor: "Halvar";
   --decor-md: "Halvar-medium";
   --decor-bd: "Halvar-bold";
-  
+
   --grey-8: #ebebeb;
   --grey-24: #c2c2c3;
   --grey-40: #9a999b;
@@ -47,7 +47,6 @@
   --bg-grey: #f8f9ff;
   --blue: #5c46e5;
   --black: #020105;
-
 }
 
 body {
@@ -209,4 +208,14 @@ button {
 }
 .ant-select-dropdown-placement-bottomLeft {
   z-index: 99999 !important;
+}
+.ant-calendar-picker-container {
+  z-index: 99999 !important;
+}
+.ant-select-dropdown-menu {
+  max-height: 180px !important;
+}
+.ant-calendar-range {
+  width: 100% !important;
+  max-width: 552px !important;
 }

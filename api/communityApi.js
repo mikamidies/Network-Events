@@ -1,5 +1,5 @@
 export default {
-  async getCommunity( config = {}) {
+  async getCommunity(config = {}) {
     return await $nuxt.$axiosInstance.get("/community", config);
   },
   async getCommunityById(config = {}) {
@@ -28,5 +28,8 @@ export default {
   },
   async getMyCommunity(config = {}) {
     return await $nuxt.$axiosInstance.get("/community/my", config);
+  },
+  async getCategories(config = {}) {
+    return await $nuxt.$axios.get("/crm/categories", config);
   },
 };

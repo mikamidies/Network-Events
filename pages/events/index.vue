@@ -136,7 +136,7 @@
     <vue-bottom-sheet-vue2
       ref="open"
       class="bottom-drawer spicial-drawer h-full"
-      :init-sheet-height="600"
+      :init-sheet-height="690"
     >
       <div class="bd_container">
         <div class="head">
@@ -160,33 +160,48 @@
         </div>
         <div class="form">
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
-            <a-form-model-item class="form-item mb-0" prop="sms_code" label="Holati">
+            <a-form-model-item class="form-item mb-0" label="Holati">
               <div class="bottom_tab">
-                <button>Barchasi</button>
-                <button>Men qatnashganlarim</button>
+                <button
+                  @click="filterForm.my = false"
+                  :class="{ active: !filterForm.my }"
+                >
+                  Barchasi
+                </button>
+                <button @click="filterForm.my = true" :class="{ active: filterForm.my }">
+                  Men qatnashganlarim
+                </button>
               </div>
             </a-form-model-item>
-            <a-form-model-item class="form-item mb-0" prop="sms_code" label="Sana">
-              <a-select
-                v-model="form.region"
-                placeholder="Sanani kiriting"
-                class="select"
+
+            <a-form-model-item class="form-item mb-0 w-100" label="Sana">
+              <a-range-picker
+                :default-value="[
+                  moment(filterForm.date_from, dateFormat1),
+                  moment(filterForm.date_to, dateFormat1),
+                ]"
+                class="date-pic"
+                @change="onChangeDate"
               >
-                <a-select-option value="shanghai"> Zone one </a-select-option>
-                <a-select-option value="beijing"> Zone two </a-select-option>
-              </a-select>
+              </a-range-picker>
             </a-form-model-item>
-            <a-form-model-item class="form-item mb-0" prop="sms_code" label="Suhbat turi">
+            <a-form-model-item class="form-item mb-0" label="Suhbat turi">
               <a-select
-                v-model="form.region"
+                v-model="filterForm.category"
                 placeholder="Suhbat turini tanlang"
-                class="select"
+                class="select-item"
               >
-                <a-select-option value="shanghai"> Zone one </a-select-option>
-                <a-select-option value="beijing"> Zone two </a-select-option>
+                <a-select-option
+                  class="select-options"
+                  :value="category?.id"
+                  v-for="category in categories"
+                  :key="category?.id"
+                >
+                  {{ category?.title }}
+                </a-select-option>
               </a-select>
             </a-form-model-item>
-            <a-form-model-item
+            <!-- <a-form-model-item
               class="form-item mb-0"
               prop="sms_code"
               label="Spikerni kiriting"
@@ -199,10 +214,16 @@
                 <a-select-option value="shanghai"> Zone one </a-select-option>
                 <a-select-option value="beijing"> Zone two </a-select-option>
               </a-select>
-            </a-form-model-item>
+            </a-form-model-item> -->
           </a-form-model>
           <div class="btn-fixed">
-            <button class="send-btn">Kodni jo’natish</button>
+            <button
+              @click="sendFilter"
+              class="send-btn"
+              :class="{ disabledBtn: areObjectsEqual($route.query, filterForm) }"
+            >
+              Kodni jo’natish
+            </button>
           </div>
         </div>
       </div>
@@ -213,13 +234,13 @@
 <script>
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
 import eventsApi from "@/api/eventsApi";
-import communityApi from "@/api/communityApi";
 import moment from "moment";
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 import VPagination from "~/components/VPagination.vue";
 export default {
   data() {
     return {
+      dateFormat1: "YYYY-MM-DD",
       activeTab: 1,
       myEvents: [],
       search: "",
@@ -237,13 +258,24 @@ export default {
           },
         ],
       },
+
       form: {
         region: undefined,
       },
+      categories: [],
     };
   },
   async asyncData({ $axios, query }) {
     const MAX_PAGE_SIZE = 10;
+    const filterForm = {
+      date_from: "",
+      date_to: "",
+      category: undefined,
+      my: false,
+    };
+    Object.entries(query).forEach(([name, value]) => {
+      filterForm[name] = value;
+    });
     const [eventsData] = await Promise.all([
       eventsApi.getEvents($axios, {
         params: {
@@ -257,11 +289,16 @@ export default {
     return {
       events,
       totalPage,
+      filterForm,
     };
   },
   async mounted() {
+    Object.entries(this.$route.query).forEach(([name, value]) => {
+      this.filterForm[name] = value;
+    });
     if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
+    this.__GET_CATEGORIES();
   },
   computed: {
     handleUser() {
@@ -269,6 +306,10 @@ export default {
     },
   },
   methods: {
+    onChangeDate(e) {
+      this.filterForm.date_from = moment(e[0]).format(this.dateFormat1);
+      this.filterForm.date_to = moment(e[1]).format(this.dateFormat1);
+    },
     open() {
       this.$refs.open.open();
     },
@@ -280,6 +321,12 @@ export default {
       try {
         const data = await eventsApi.getMyEvents();
         this.myEvents = data?.data?.results;
+      } catch (e) {}
+    },
+    async __GET_CATEGORIES() {
+      try {
+        const data = await eventsApi.getCategories();
+        this.categories = data?.data?.results;
       } catch (e) {}
     },
     async __GET_EVENTS() {
@@ -310,6 +357,35 @@ export default {
         this.__GET_EVENTS();
       }
     },
+    async sendFilter() {
+      let query = { ...this.$route.query };
+      Object.entries(this.filterForm).forEach(([name, value]) =>
+        value ? (query[name] = `${value}`) : delete query[name]
+      );
+
+      if (
+        Object.keys(query).length > 0 &&
+        !this.areObjectsEqual(this.$route.query, query)
+      ) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...query },
+        });
+        this.__GET_EVENTS();
+      }
+    },
+    areObjectsEqual(obj1, obj2) {
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+
+      if (keys1.length !== keys2.length) return false;
+
+      for (const key of keys1) {
+        if (obj1[key] !== obj2[key]) return false;
+      }
+
+      return true;
+    },
   },
   watch: {
     handleUser(val) {
@@ -336,6 +412,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.disabledBtn {
+  pointer-events: none;
+  opacity: 0.5;
+}
+:deep(.form-item .ant-form-item) {
+  margin-bottom: 16px;
+}
+:deep(.date-pic) {
+  width: 100%;
+}
 .categories {
   margin-top: 16px;
 }
@@ -352,6 +438,7 @@ export default {
   height: 36px;
   align-items: center;
   justify-content: center;
+  border: none;
 }
 .categories ul {
   display: flex;
@@ -379,8 +466,10 @@ export default {
   display: flex;
   align-items: center;
   border: 1px solid transparent;
+  cursor: pointer;
 }
-.categories ul .active {
+.categories ul .active,
+.form .active {
   color: #1878f3;
   border-color: #1878f3;
 }
@@ -396,6 +485,7 @@ export default {
   font-style: normal;
   font-weight: 500;
   line-height: 140%; /* 19.6px */
+  border: 1px solid transparent;
 }
 .bottom_tab {
   display: flex;
@@ -441,14 +531,21 @@ export default {
 :deep(.form-item label::before) {
   display: none;
 }
-:deep(.form-item .ant-select-selection--single) {
+:deep(.form-item .ant-select-selection--single),
+:deep(.form-item .ant-calendar-picker-input) {
   border-radius: 8px;
   border: 2px solid var(--Apple-Grey, #f5f5f7);
   background: var(--White, #fff);
 }
 :deep(.form-item .ant-select-selection--single),
-:deep(.form-item .ant-select-selection__rendered) {
+:deep(.form-item .ant-select-selection__rendered),
+:deep(.form-item .ant-calendar-picker-input) {
   height: 53px;
+  width: 100%;
+}
+:deep(.form-item .ant-calendar-range-picker-separator) {
+  display: inline-flex;
+  align-items: center;
 }
 :deep(.form-item .ant-select-selection__rendered) {
   display: flex;
