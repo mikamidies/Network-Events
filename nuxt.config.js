@@ -1,6 +1,6 @@
 export default {
   head: {
-    title: "Network-App",
+    title: "Justlink",
     htmlAttrs: {
       lang: "en",
     },

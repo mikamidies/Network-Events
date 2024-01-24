@@ -25,6 +25,28 @@
             </div>
           </NuxtLink>
         </div>
+        <div class="item" v-for="event in myCommunity" :key="event?.id">
+          <NuxtLink :to="`/event/${event?.id}`">
+            <img
+              loading="lazy"
+              v-if="event?.image"
+              :src="event?.image"
+              alt=""
+              class="pic"
+            />
+            <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+            <div class="content">
+              <div class="badge">
+                {{
+                  event.end_date < nowPresent
+                    ? "Siz ishtirok etgansiz"
+                    : "Siz ishtirok etyapsiz"
+                }}
+              </div>
+              <p class="name">{{ event?.title }}</p>
+            </div>
+          </NuxtLink>
+        </div>
       </div>
       <div v-if="!loading && myEvents.length == 0">
         <a-empty />
@@ -148,7 +170,7 @@ import moment from "moment";
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 
 export default {
-  props: ["events", "myEvents", "loading", "community"],
+  props: ["events", "myEvents", "loading", "community", "myCommunity"],
   name: "HomeEvents",
   data() {
     return {

@@ -33,6 +33,7 @@
         :myEvents="myEvents"
         :loading="loading"
         :community="community"
+        :myCommunity="myCommunity"
       />
       <!-- <div class="pag-block">
         <VPagination
@@ -62,6 +63,7 @@ export default {
       formattedPhoneNumber: "",
       community: [],
       communitytotalPage: [],
+      myCommunity: [],
     };
   },
   async asyncData({ $axios, query }) {
@@ -92,7 +94,10 @@ export default {
     };
   },
   async mounted() {
-    if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
+    if (localStorage.getItem("accessToken")) {
+      this.__GET_MY_EVENTS();
+      this.__GET_MY_COMMUNITES();
+    }
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
     this.__GET_COMMUNITIES();
   },
@@ -108,9 +113,14 @@ export default {
         this.myEvents = data?.data?.results;
       } catch (e) {}
     },
+    async __GET_MY_COMMUNITES() {
+      try {
+        const data = await communityApi.getMyCommunity();
+        this.myCommunity = data?.data?.results;
+      } catch (e) {}
+    },
     async __GET_COMMUNITIES() {
       const MAX_PAGE_SIZE = 3;
-
       try {
         const communityData = await communityApi.getCommunity({
           params: {
