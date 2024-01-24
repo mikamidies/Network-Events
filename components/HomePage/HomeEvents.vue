@@ -26,7 +26,7 @@
           </NuxtLink>
         </div>
         <div class="item" v-for="event in myCommunity" :key="event?.id">
-          <NuxtLink :to="`/event/${event?.id}`">
+          <NuxtLink :to="`/community/${event?.id}`">
             <img
               loading="lazy"
               v-if="event?.image"
