@@ -49,11 +49,14 @@
         </div>
         <div class="categories">
           <ul>
-            <button>+20</button>
-            <li @click="activeTab = 1" :class="{ active: activeTab == 1 }">Malumot</li>
-            <li @click="activeTab = 2" :class="{ active: activeTab == 2 }">Malumot</li>
-            <li @click="activeTab = 3" :class="{ active: activeTab == 3 }">
-              Не заставляйте пользователя думать
+            <button @click="visible = true">+{{ categories.slice(0, -3).length }}</button>
+            <li
+              v-for="category in categories.slice(-3)"
+              :key="category?.id"
+              @click="filterCategory(category?.id)"
+              :class="{ active: filterForm.category == category?.id }"
+            >
+              {{ category?.title }}
             </li>
           </ul>
         </div>
@@ -177,8 +180,8 @@
             <a-form-model-item class="form-item mb-0 w-100" label="Sana">
               <a-range-picker
                 :default-value="[
-                  moment(filterForm.date_from, dateFormat1),
-                  moment(filterForm.date_to, dateFormat1),
+                  filterForm.date_from ? moment(filterForm.date_from, dateFormat1):'',
+                  filterForm.date_to ? moment(filterForm.date_to, dateFormat1):'',
                 ]"
                 class="date-pic"
                 @change="onChangeDate"
@@ -228,6 +231,49 @@
         </div>
       </div>
     </vue-bottom-sheet-vue2>
+    <a-modal
+      v-model="visible"
+      :closable="false"
+      centered
+      @ok="() => (visible = false)"
+      :width="524"
+    >
+      <div class="all-categories">
+        <div class="head">
+          <h4>Bo’limlar</h4>
+          <button @click="visible = false">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.7123 16.7729C16.0052 17.0658 16.4801 17.0658 16.7729 16.7729C17.0658 16.48 17.0658 16.0052 16.7729 15.7123L13.0607 12L16.7729 8.2877C17.0658 7.99481 17.0658 7.51993 16.7729 7.22704C16.48 6.93415 16.0052 6.93415 15.7123 7.22704L12 10.9393L8.28766 7.22699C7.99477 6.9341 7.5199 6.9341 7.227 7.22699C6.93411 7.51989 6.93411 7.99476 7.227 8.28765L10.9393 12L7.22699 15.7123C6.9341 16.0052 6.9341 16.4801 7.22699 16.773C7.51989 17.0659 7.99476 17.0659 8.28765 16.773L12 13.0606L15.7123 16.7729Z"
+                fill="#020105"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="body">
+          <ul class="categories-list">
+            <li
+              v-for="category in categories.slice(0, -3)"
+              :key="category?.id"
+              @click="filterCategory(category?.id)"
+              :class="{ active: filterForm.category == category?.id }"
+            >
+              {{ category?.title }}
+            </li>
+          </ul>
+        </div>
+        <template slot="footer"></template>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -240,6 +286,7 @@ import VPagination from "~/components/VPagination.vue";
 export default {
   data() {
     return {
+      visible: false,
       dateFormat1: "YYYY-MM-DD",
       activeTab: 1,
       myEvents: [],
@@ -293,9 +340,10 @@ export default {
     };
   },
   async mounted() {
-    Object.entries(this.$route.query).forEach(([name, value]) => {
-      this.filterForm[name] = value;
-    });
+    eventsApi.getEvents(this.$axios),
+      Object.entries(this.$route.query).forEach(([name, value]) => {
+        this.filterForm[name] = value;
+      });
     if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
     this.__GET_CATEGORIES();
@@ -374,6 +422,10 @@ export default {
         this.__GET_EVENTS();
       }
     },
+    filterCategory(id) {
+      this.filterForm.category = id;
+      this.sendFilter();
+    },
     areObjectsEqual(obj1, obj2) {
       const keys1 = Object.keys(obj1);
       const keys2 = Object.keys(obj2);
@@ -412,6 +464,59 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.categories-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-top: 24px;
+}
+.categories-list li {
+  border-radius: 57px;
+  background: var(--Apple-Grey, #f5f5f7);
+  color: var(--grey-80, #353437);
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.all-categories .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.all-categories .head h4 {
+  color: var(--black);
+  font-family: var(--decor-md);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 21.6px */
+  letter-spacing: -0.36px;
+}
+.all-categories .head button {
+  border-radius: 35px;
+  background: #f5f5f7;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+:deep(.ant-modal-content) {
+  border-radius: 28px;
+}
+:deep(.ant-modal-body) {
+  padding: 16px;
+}
 .disabledBtn {
   pointer-events: none;
   opacity: 0.5;
@@ -436,6 +541,7 @@ export default {
   line-height: 140%;
   display: flex;
   height: 36px;
+  min-width: 36px;
   align-items: center;
   justify-content: center;
   border: none;
@@ -469,6 +575,7 @@ export default {
   cursor: pointer;
 }
 .categories ul .active,
+.categories-list .active,
 .form .active {
   color: #1878f3;
   border-color: #1878f3;
