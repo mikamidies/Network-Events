@@ -180,8 +180,8 @@
             <a-form-model-item class="form-item mb-0 w-100" label="Sana">
               <a-range-picker
                 :default-value="[
-                  filterForm.date_from ? moment(filterForm.date_from, dateFormat1):'',
-                  filterForm.date_to ? moment(filterForm.date_to, dateFormat1):'',
+                  filterForm.date_from ? moment(filterForm.date_from, dateFormat1) : '',
+                  filterForm.date_to ? moment(filterForm.date_to, dateFormat1) : '',
                 ]"
                 class="date-pic"
                 @change="onChangeDate"
@@ -423,7 +423,9 @@ export default {
       }
     },
     filterCategory(id) {
-      this.filterForm.category = id;
+      this.filterForm.category == id
+        ? (this.filterForm.category = undefined)
+        : (this.filterForm.category = id);
       this.sendFilter();
     },
     areObjectsEqual(obj1, obj2) {

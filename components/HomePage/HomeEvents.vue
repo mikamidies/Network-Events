@@ -14,7 +14,13 @@
             />
             <img v-else src="@/assets/img/image.png" alt="" class="pic" />
             <div class="content">
-              <div class="badge">Siz ishtirokdasz</div>
+              <div class="badge">
+                {{
+                  event.end_date < nowPresent
+                    ? "Siz ishtirok etgansiz"
+                    : "Siz ishtirok etyapsiz"
+                }}
+              </div>
               <p class="name">{{ event?.title }}</p>
             </div>
           </NuxtLink>
@@ -83,7 +89,7 @@
     </div>
     <div class="others">
       <div class="header">
-        <h4 class="title">{{$store.state.translations['community.community']}}</h4>
+        <h4 class="title">{{ $store.state.translations["community.community"] }}</h4>
         <NuxtLink to="/community">
           {{ $store.state.translations["main.all"] }}
           <svg
@@ -107,7 +113,6 @@
         <div class="item" v-for="event in community" :key="event?.id">
           <NuxtLink :to="`/community/${event?.id}`">
             <div class="img">
-             
               <img
                 loading="lazy"
                 v-if="event?.image"
@@ -150,6 +155,12 @@ export default {
       emptyList: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       dateFormat: DATE_FORMAT,
     };
+  },
+  computed: {
+    nowPresent() {
+      const date = new Date();
+      return moment(date).format("YYYY-MM-DDTHH:mm:ss");
+    },
   },
   methods: {
     moment,
@@ -217,11 +228,12 @@ export default {
   height: 100%;
   justify-content: space-between;
   padding: 12px 8px;
+  align-items: flex-start;
 }
 .current .badge {
   display: inline-flex;
   justify-content: center;
-  max-width: 120px;
+  /* max-width: 120px; */
   padding: 6px 8px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.4);
