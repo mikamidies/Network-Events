@@ -64,39 +64,16 @@ export default {
       community: [],
       communitytotalPage: [],
       myCommunity: [],
+      events: [],
+      totalPage: 0
     };
   },
-  async asyncData({ $axios, query }) {
-    const MAX_PAGE_SIZE = 3;
-    const [eventsData] = await Promise.all([
-      eventsApi.getEvents($axios, {
-        params: {
-          ...query,
-          page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
-        },
-      }),
-      // communityApi.getCommunity($axios, {
-      //   params: {
-      //     ...query,
-      //     page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
-      //   },
-      // }),
-    ]);
-    const events = eventsData?.data?.results;
-    const totalPage = eventsData?.data?.count;
-    // const community = communityData?.data?.results;
-    // const communitytotalPage = communityData?.data?.count;
-    return {
-      events,
-      totalPage,
-      // community,
-      // communitytotalPage,
-    };
-  },
+
   async mounted() {
     if (localStorage.getItem("accessToken")) {
       this.__GET_MY_EVENTS();
       this.__GET_MY_COMMUNITES();
+      this.__GET_EVENTS();
     }
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
     this.__GET_COMMUNITIES();
@@ -107,6 +84,20 @@ export default {
     },
   },
   methods: {
+    async __GET_EVENTS() {
+      const MAX_PAGE_SIZE = 3;
+
+      try {
+        const data = await eventsApi.getEvents(this.$axios, {
+          params: {
+            ...query,
+            page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
+          },
+        });
+        this.events = data?.data?.results;
+        this.totalPage = data?.data?.count;
+      } catch (e) {}
+    },
     async __GET_MY_EVENTS() {
       try {
         const data = await eventsApi.getMyEvents();
