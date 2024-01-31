@@ -29,7 +29,7 @@
               <p class="sub">{{ $store.state.translations["login.full_name"] }}</p>
               <input
                 type="text"
-                v-model="form.full_name"
+                v-model.trim="form.full_name"
                 :placeholder="$store.state.translations['login.full_name_place']"
               />
             </a-form-model-item>

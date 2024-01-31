@@ -10,7 +10,7 @@
               <p class="sub">{{ $store.state.translations["login.full_name"] }}</p>
               <input
                 type="text"
-                v-model="form.full_name"
+                v-model.trim="form.full_name"
                 :placeholder="$store.state.translations['login.full_name_place']"
               />
             </a-form-model-item>
@@ -21,7 +21,7 @@
               <p class="sub">{{ $store.state.translations["login.company_name"] }}</p>
               <input
                 type="text"
-                v-model="form.client_data.company_name"
+                v-model.trim="form.client_data.company_name"
                 :placeholder="$store.state.translations['login.company_name_place']"
               />
             </a-form-model-item>
@@ -32,7 +32,7 @@
               <p class="sub">{{ $store.state.translations["login.position"] }}</p>
               <input
                 type="text"
-                v-model="form.client_data.job_title"
+                v-model.trim="form.client_data.job_title"
                 :placeholder="$store.state.translations['login.position_place']"
               />
             </a-form-model-item>
@@ -131,7 +131,7 @@
               <p class="sub">{{ $store.state.translations["login.desc"] }}</p>
               <textarea
                 rows="5"
-                v-model="form.client_data.info"
+                v-model.trim="form.client_data.info"
                 placeholder="Ma’lumot kiriting"
               />
             </a-form-model-item>
@@ -139,7 +139,7 @@
               <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
               <input
                 type="text"
-                v-model="form.client_data.site"
+                v-model.trim="form.client_data.site"
                 :placeholder="$store.state.translations['login.site_place']"
               />
             </a-form-model-item>
@@ -147,7 +147,7 @@
               <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
               <input
                 type="text"
-                v-model="form.client_data.instagram"
+                v-model.trim="form.client_data.instagram"
                 placeholder="@nickname"
               />
             </a-form-model-item>
@@ -155,7 +155,7 @@
               <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
               <input
                 type="text"
-                v-model="form.client_data.telegram"
+                v-model.trim="form.client_data.telegram"
                 placeholder="@nickname"
               />
             </a-form-model-item>
@@ -163,7 +163,7 @@
               <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
               <input
                 type="text"
-                v-model="form.client_data.linkedIn"
+                v-model.trim="form.client_data.linkedIn"
                 :placeholder="$store.state.translations['login.linkedin_place']"
               />
             </a-form-model-item>
