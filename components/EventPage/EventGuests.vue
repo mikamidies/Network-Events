@@ -80,7 +80,7 @@
               </div>
 
               <div class="info_name">
-                <h4>{{ speaker?.user?.full_name }}</h4>
+                <h4>{{ speaker?.name }}</h4>
                 <p>{{ speaker?.job_title }}</p>
               </div>
               <p class="info_position">{{ speaker?.company }}</p>
@@ -201,6 +201,8 @@ export default {
   width: 178px;
   height: 178px;
   overflow: hidden;
+  z-index: 2;
+  position: relative;
 }
 .info .image img {
   width: 100%;
@@ -211,6 +213,7 @@ export default {
   position: absolute;
   top: 0;
   width: 120%;
+  z-index: 1;
 }
 .per_info {
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -320,6 +323,7 @@ export default {
   display: grid;
   grid-template-columns: 2fr 8fr;
   gap: 16px;
+  cursor: pointer;
 }
 .person img {
   width: 72px;

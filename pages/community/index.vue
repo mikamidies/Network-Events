@@ -27,16 +27,42 @@
           </svg>
         </div>
       </div>
-
+      <div class="categories">
+        <ul>
+          <button v-if="categories.slice(0, -3).length > 0" @click="visible = true">+{{ categories.slice(0, -3).length }}</button>
+          <li
+            @click="allEvents"
+            :class="{ active: !filterForm.category && !filterForm.my }"
+          >
+            Barchasi
+          </li>
+          <li
+            v-for="category in categories.slice(-3)"
+            :key="category?.id"
+            @click="filterCategory(category?.id)"
+            :class="{ active: filterForm.category == category?.id }"
+          >
+            {{ category?.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
       <div class="wrap">
         <div class="others">
           <div class="header">
-            <h4 class="title">{{ $store.state.translations["community.community"] }}</h4>
+            <h4 class="title">
+              {{ $store.state.translations["community.community"] }}
+            </h4>
           </div>
           <div class="items" v-if="!loading">
             <div class="item" v-for="event in events" :key="event?.id">
               <NuxtLink :to="`/community/${event?.id}`">
                 <div class="img">
+                  <span class="tag"
+                    >{{ $store.state.translations["community.community1"] }} -
+                    {{ event?.category?.title }}</span
+                  >
                   <!-- <p class="date">
                     {{ moment(event?.start_date).format(dateFormat) }}
                   </p> -->
@@ -98,29 +124,30 @@ export default {
       dateFormat: DATE_FORMAT,
       moment,
       events: [],
-      totalPage: [],
+      totalPage: 0,
+      categories: [],
     };
   },
-  // async asyncData({ $axios, query }) {
-  //   const MAX_PAGE_SIZE = 10;
-  //   const [eventsData] = await Promise.all([
-  //     communityApi.getCommunity($axios, {
-  //       params: {
-  //         ...query,
-  //         page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
-  //       },
-  //     }),
-  //   ]);
-  //   const events = eventsData?.data?.results;
-  //   const totalPage = eventsData?.data?.count;
-  //   return {
-  //     events,
-  //     totalPage,
-  //   };
-  // },
+
+  async asyncData({ $axios, query }) {
+    const filterForm = {
+      date_from: "",
+      date_to: "",
+      category: undefined,
+      my: false,
+    };
+    Object.entries(query).forEach(([name, value]) => {
+      filterForm[name] = value;
+    });
+
+    return {
+      filterForm,
+    };
+  },
   async mounted() {
     if (localStorage.getItem("accessToken")) this.__GET_COMMUNITIES();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
+    this.__GET_CATEGORIES();
   },
   computed: {
     handleUser() {
@@ -144,7 +171,49 @@ export default {
         this.totalPage = communityData?.data?.count;
       } catch (e) {}
     },
+    async __GET_CATEGORIES() {
+      try {
+        const data = await communityApi.getCategories();
+        this.categories = data?.data?.results;
+      } catch (e) {}
+    },
+    async sendFilter() {
+      let query = { ...this.$route.query };
+      Object.entries(this.filterForm).forEach(([name, value]) =>
+        value ? (query[name] = `${value}`) : delete query[name]
+      );
 
+      if (
+        Object.keys(query).length > 0 &&
+        !this.areObjectsEqual(this.$route.query, query)
+      ) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...query },
+        });
+        this.__GET_COMMUNITIES();
+        this.close();
+      }
+    },
+    async allEvents() {
+      let query = { ...this.$route.query };
+      if (Object.keys(query).length > 2) {
+        this.filterForm.category = null;
+        this.filterForm.my = null;
+        query = { page: 1, page_size: 10 };
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...query },
+        });
+        this.__GET_COMMUNITIES();
+      }
+    },
+    filterCategory(id) {
+      this.filterForm.category == id
+        ? (this.filterForm.category = undefined)
+        : (this.filterForm.category = id);
+      this.sendFilter();
+    },
     async onSearch(e) {
       const MIN_TEXT_LENGTH = 2;
       if (
@@ -157,6 +226,18 @@ export default {
         });
         this.__GET_COMMUNITIES();
       }
+    },
+    areObjectsEqual(obj1, obj2) {
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+
+      if (keys1.length !== keys2.length) return false;
+
+      for (const key of keys1) {
+        if (obj1[key] !== obj2[key]) return false;
+      }
+
+      return true;
     },
   },
   watch: {
@@ -179,6 +260,78 @@ export default {
 </script>
 
 <style scoped>
+.categories {
+  margin-top: 16px;
+}
+.categories button {
+  border-radius: 57px;
+  background: #5c46e5;
+  color: var(--White, #fff);
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  display: flex;
+  height: 36px;
+  min-width: 36px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+.categories ul {
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+  margin-bottom: 0;
+  padding-left: 16px;
+}
+
+.categories ul::-webkit-scrollbar {
+  display: none;
+}
+.categories ul li {
+  border-radius: 57px;
+  white-space: nowrap;
+  background: var(--Apple-Grey, #f5f5f7);
+  height: 36px;
+  padding: 0 12px;
+  color: var(--grey-80);
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.categories ul .active,
+.categories-list .active,
+.form .active {
+  color: #1878f3;
+  border-color: #1878f3;
+}
+.img .tag {
+  color: var(--black);
+  font-family: var(--medium);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%; /* 15.6px */
+  height: 28px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: #fff;
+  backdrop-filter: blur(2px);
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+}
 .pag-block {
   margin-top: 24px;
 }

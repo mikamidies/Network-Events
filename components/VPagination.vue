@@ -74,17 +74,17 @@ export default {
   display: flex;
 }
 .order-pagination :deep(.ant-pagination-item) a {
-  color: var(--grey-40,#9a999b);
+  color: var(--grey-40, #9a999b);
   font-family: var(--regular);
   font-size: 16px;
   font-weight: 400;
   line-height: 150%; /* 24px */
 }
 .order-pagination :deep(.ant-pagination-item-active) {
-  border-color: var(--blue,#5c46e5);
+  border-color: var(--blue, #5c46e5);
 }
 .order-pagination :deep(.ant-pagination-item-active) a {
-  color: var(--blue,#5c46e5);
+  color: var(--blue, #5c46e5);
 }
 @media (max-width: 1200px) {
   .order-pagination :deep(.ant-pagination-item),

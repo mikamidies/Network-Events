@@ -30,6 +30,6 @@ export default {
     return await $nuxt.$axiosInstance.get("/community/my", config);
   },
   async getCategories(config = {}) {
-    return await $nuxt.$axios.get("/crm/categories", config);
+    return await $nuxt.$axios.get("/community_types", config);
   },
 };

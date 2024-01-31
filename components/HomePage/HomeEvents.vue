@@ -135,6 +135,10 @@
         <div class="item" v-for="event in community" :key="event?.id">
           <NuxtLink :to="`/community/${event?.id}`">
             <div class="img">
+              <span class="tag"
+                >{{ $store.state.translations["community.community1"] }} -
+                {{ event?.category?.title }}</span
+              >
               <img
                 loading="lazy"
                 v-if="event?.image"
@@ -344,5 +348,24 @@ export default {
   border-radius: 30px;
   margin-bottom: 0;
   margin-top: 0;
+}
+.img .tag {
+  color: var(--black);
+  font-family: var(--medium);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%; /* 15.6px */
+  height: 28px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: #fff;
+  backdrop-filter: blur(2px);
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
 }
 </style>

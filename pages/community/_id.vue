@@ -118,7 +118,11 @@
         </div>
         <h4 class="name">{{ event?.title }}</h4>
         <div class="messangers">
-          <a target="_blank" :href="event?.telegram_chat">
+          <a
+            target="_blank"
+            :class="{ disabled: !event?.telegram_chat }"
+            :href="event?.telegram_chat"
+          >
             <svg
               width="20"
               height="18"
@@ -332,6 +336,10 @@ export default {
 </script>
 
 <style scoped>
+.disabled {
+  background-color: #f5f5f7 !important;
+  pointer-events: none;
+}
 .container {
   padding: 16px 16px 0 16px;
   overflow: hidden;

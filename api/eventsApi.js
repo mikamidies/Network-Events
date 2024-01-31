@@ -1,6 +1,6 @@
 export default {
   async getEvents(axios, config = {}) {
-    return await axios.get("/events", config);
+    return await $nuxt.$axiosInstance.get("/events", config);
   },
   async getEventsById(config = {}) {
     return await $nuxt.$axiosInstance.get(
@@ -30,6 +30,6 @@ export default {
     return await $nuxt.$axiosInstance.get("/events/my", config);
   },
   async getCategories(config = {}) {
-    return await $nuxt.$axios.get("/crm/categories", config);
+    return await $nuxt.$axios.get("/categories", config);
   },
 };

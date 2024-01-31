@@ -49,7 +49,8 @@
         </div>
         <div class="categories">
           <ul>
-            <button @click="visible = true">+{{ categories.slice(0, -3).length }}</button>
+            <button v-if="categories.slice(0, -3).length > 0" @click="visible = true">+{{ categories.slice(0, -3).length }}</button>
+            <li @click="allEvents" :class="{ active: !filterForm.category && !filterForm.my }">Barchasi</li>
             <li
               v-for="category in categories.slice(-3)"
               :key="category?.id"
@@ -310,10 +311,12 @@ export default {
         region: undefined,
       },
       categories: [],
+      events: [],
+      totalPage: 0,
     };
   },
   async asyncData({ $axios, query }) {
-    const MAX_PAGE_SIZE = 10;
+    // const MAX_PAGE_SIZE = 10;
     const filterForm = {
       date_from: "",
       date_to: "",
@@ -323,19 +326,19 @@ export default {
     Object.entries(query).forEach(([name, value]) => {
       filterForm[name] = value;
     });
-    const [eventsData] = await Promise.all([
-      eventsApi.getEvents($axios, {
-        params: {
-          ...query,
-          page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
-        },
-      }),
-    ]);
-    const events = eventsData?.data?.results;
-    const totalPage = eventsData?.data?.count;
+    // const [eventsData] = await Promise.all([
+    //   eventsApi.getEvents($axios, {
+    //     params: {
+    //       ...query,
+    //       page_size: query?.page_size ? query?.page_size : MAX_PAGE_SIZE,
+    //     },
+    //   }),
+    // ]);
+    // const events = eventsData?.data?.results;
+    // const totalPage = eventsData?.data?.count;
     return {
-      events,
-      totalPage,
+      // events,
+      // totalPage,
       filterForm,
     };
   },
@@ -347,6 +350,7 @@ export default {
     if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
     this.__GET_CATEGORIES();
+    Promise.all([this.__GET_EVENTS(), this.__GET_CATEGORIES()]);
   },
   computed: {
     handleUser() {
@@ -378,11 +382,16 @@ export default {
       } catch (e) {}
     },
     async __GET_EVENTS() {
+      const MAX_PAGE_SIZE = 10;
+
       try {
         this.loading = true;
         const data = await eventsApi.getEvents(this.$axios, {
           params: {
             ...this.$route.query,
+            page_size: this.$route.query?.page_size
+              ? this.$route.query?.page_size
+              : MAX_PAGE_SIZE,
           },
         });
         this.events = data?.data?.results;
@@ -415,6 +424,20 @@ export default {
         Object.keys(query).length > 0 &&
         !this.areObjectsEqual(this.$route.query, query)
       ) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...query },
+        });
+        this.__GET_EVENTS();
+        this.close();
+      }
+    },
+    async allEvents() {
+      let query = { ...this.$route.query };
+      if (Object.keys(query).length > 2) {
+        this.filterForm.category = null;
+        this.filterForm.my = null;
+        query = { page: 1, page_size: 10 };
         await this.$router.replace({
           path: this.$route.path,
           query: { ...query },
@@ -512,6 +535,10 @@ export default {
   justify-content: center;
   align-items: center;
   border: none;
+}
+.all-categories .head button svg {
+  min-width: 24px;
+  min-height: 24px;
 }
 :deep(.ant-modal-content) {
   border-radius: 28px;
