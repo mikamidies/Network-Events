@@ -50,7 +50,7 @@
         <div class="categories">
           <ul>
             <button v-if="categories.slice(0, -3).length > 0" @click="visible = true">+{{ categories.slice(0, -3).length }}</button>
-            <li @click="allEvents" :class="{ active: !filterForm.category && !filterForm.my }">Barchasi</li>
+            <li @click="allEvents" :class="{ active: !filterForm.category && !filterForm.my }">{{$store.state.translations['main.all']}}</li>
             <li
               v-for="category in categories.slice(-3)"
               :key="category?.id"
@@ -170,7 +170,7 @@
                   @click="filterForm.my = false"
                   :class="{ active: !filterForm.my }"
                 >
-                  Barchasi
+                {{$store.state.translations['main.all']}}
                 </button>
                 <button @click="filterForm.my = true" :class="{ active: filterForm.my }">
                   Men qatnashganlarim

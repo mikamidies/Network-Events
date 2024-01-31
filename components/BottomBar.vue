@@ -139,7 +139,7 @@
               stroke-linejoin="round"
             />
           </svg>
-          <p>Profil</p>
+          <p>{{$store.state.translations['main.profile']}}</p>
         </NuxtLink>
       </div>
     </div>

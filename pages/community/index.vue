@@ -34,7 +34,7 @@
             @click="allEvents"
             :class="{ active: !filterForm.category && !filterForm.my }"
           >
-            Barchasi
+          {{$store.state.translations['main.all']}}
           </li>
           <li
             v-for="category in categories.slice(-3)"
