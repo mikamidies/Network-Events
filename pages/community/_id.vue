@@ -215,7 +215,6 @@
             :class="tabItem.class"
             :propObj="tabItem.propItem"
           >
-            {{ totalPage }}
             <component
               :is="tabItem.name"
               :event="event"

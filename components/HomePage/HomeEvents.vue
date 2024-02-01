@@ -48,7 +48,7 @@
           </NuxtLink>
         </div>
       </div>
-      <div v-if="!loading && myEvents.length == 0">
+      <div v-if="!loading && myEvents.length == 0 && myCommunity.length == 0">
         <a-empty />
       </div>
     </div>
