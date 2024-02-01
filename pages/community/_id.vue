@@ -71,7 +71,7 @@
                 fill="#9A999B"
               />
             </svg>
-            {{ members?.length }} {{ $store.state.translations["community.users"] }}
+            {{ event?.members_count }} {{ $store.state.translations["community.users"] }}
           </p>
           <p class="security" :class="event?.public ? 'public' : 'private'">
             <svg
