@@ -116,6 +116,8 @@
               :members="members"
               :coords="coords"
               :memberStatus="memberStatus"
+              @getData="__GET_MEMBERS"
+              :totalPage="totalPage"
             />
           </div>
         </div>
@@ -230,9 +232,14 @@ export default {
       try {
         const data = await eventsApi.getMembers({
           id: this.$route.params.id,
-          payload: {},
+          payload: {
+            params: {
+              ...this.$route.query,
+            },
+          },
         });
         this.members = data?.data?.results;
+        this.totalPage = data?.data?.count;
         this.memberStatus = true;
       } catch (e) {
         if (e.response.status == AUTH_STATUS) {

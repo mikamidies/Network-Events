@@ -215,6 +215,7 @@
             :class="tabItem.class"
             :propObj="tabItem.propItem"
           >
+            {{ totalPage }}
             <component
               :is="tabItem.name"
               :event="event"
@@ -222,6 +223,8 @@
               :members="members"
               :coords="coords"
               :memberStatus="memberStatus"
+              @getData="__GET_MEMBERS"
+              :totalPage="totalPage"
             />
           </div>
         </div>
@@ -260,6 +263,7 @@ export default {
       dateFormat: DATE_FORMAT,
       coords: [],
       event: {},
+      totalPage: 0,
       tabList: [
         {
           name: "CommunityMain",
@@ -297,8 +301,6 @@ export default {
       });
       localStorage.removeItem("qr_code");
       this.event = eventsData?.data;
-      console.log(this.event);
-
       this.__GET_MEMBERS();
     } catch (e) {
       console.log(e);
@@ -321,9 +323,14 @@ export default {
       try {
         const data = await communityApi.getMembers({
           id: this.$route.params.id,
-          payload: {},
+          payload: {
+            params: {
+              ...this.$route.query,
+            },
+          },
         });
         this.members = data?.data?.results;
+        this.totalPage = data?.data?.count;
         this.memberStatus = true;
       } catch (e) {
         if (e.response.status == AUTH_STATUS) {

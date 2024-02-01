@@ -64,18 +64,29 @@
         </svg>
         {{ $store.state.translations["event.closed"] }}
       </h5>
-      <p>{{ $store.state.translations["event.show_members"] }}</p>
+      <!-- <p>{{ $store.state.translations["event.show_members"] }}</p> -->
+    </div>
+    <div class="pag-block">
+      <VPagination
+        :load="true"
+        class="xl:hidden"
+        :totalPage="totalPage"
+        @getData="$emit('getData')"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import VPagination from "../VPagination.vue";
+
 export default {
-  props: ["members", "event"],
+  props: ["members", "event", "totalPage"],
   data() {
     return {};
   },
   methods: {},
+  components: { VPagination },
 };
 </script>
 
