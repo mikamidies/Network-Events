@@ -203,11 +203,13 @@
           />
         </svg>
 
-        {{
-          profile?.client?.linkedIn?.includes("@")
-            ? profile?.client?.linkedIn
-            : "@" + profile?.client?.linkedIn
-        }}</span
+        <p>
+          {{
+            profile?.client?.linkedIn?.includes("@")
+              ? profile?.client?.linkedIn
+              : "@" + profile?.client?.linkedIn
+          }}
+        </p></span
       ><svg
         width="24"
         height="24"
@@ -254,5 +256,12 @@ export default {
   font-size: 16px;
   font-style: normal;
   line-height: 150%;
+  max-width: 90%;
+}
+.card span p {
+  max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
