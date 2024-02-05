@@ -88,7 +88,7 @@
       </h5>
       <p>{{ $store.state.translations["event.show_members"] }}</p>
     </div>
-    <div class="pag-block">
+    <div class="pag-block" v-if="event.is_member">
       <VPagination
         :load="true"
         class="xl:hidden"

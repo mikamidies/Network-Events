@@ -93,7 +93,7 @@
         </h5>
         <p>{{ $store.state.translations["event.show_members"] }}</p>
       </div>
-      <div class="link" v-if="memberStatus && members?.length > membersLength">
+      <div class="link" v-if="event.is_member && members?.length > membersLength">
         <button @click="$emit('tabChange', 'participants')">
           {{ $store.state.translations["main.all"] }}
           <svg
