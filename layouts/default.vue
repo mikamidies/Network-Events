@@ -29,12 +29,11 @@ export default {
     this.$store.commit("handleTranslations", translationsData?.data);
   },
   async mounted() {
-    // const translationsData = await translationsApi.getTranslations(this.$axios);
     const ACCESS_TOKEN = localStorage.getItem("refreshToken");
     if (!ACCESS_TOKEN) {
-      this.$router.push("/register");
+      await this.$router.push("/register");
     } else {
-      this.getProfileInfo();
+      await this.getProfileInfo();
     }
   },
   methods: {
@@ -45,17 +44,16 @@ export default {
 
     async refreshToken() {
       const REFRESH_TOKEN = localStorage.getItem("refreshToken");
-
       try {
         const tokens = await authApi.postRefreshToken(this.$axios, {
           refresh: REFRESH_TOKEN,
         });
         await localStorage.setItem("accessToken", tokens?.data?.access);
         await localStorage.setItem("refreshToken", tokens?.data?.refresh);
-        // this.get{{$store.state.translations['main.profile']}}Info();
+        location.reload()
       } catch (e) {
         this.removeTokens();
-        this.$router.push("/register");
+        await this.$router.push("/register");
       }
     },
     async getProfileInfo() {
@@ -69,14 +67,14 @@ export default {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
         if (QR_CODE && CURRENT_PAGE)
-          this.$router.push(`/${CURRENT_PAGE}/join/${QR_CODE}`);
+          await this.$router.push(`/${CURRENT_PAGE}/join/${QR_CODE}`);
       } catch (e) {
         if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
-        if (e.response.status == AUTH_STATUS && REFRESH_TOKEN) {
-          this.refreshToken();
+        if (e.response.status === AUTH_STATUS && REFRESH_TOKEN) {
+          await this.refreshToken();
         } else {
           this.removeTokens();
-          this.$router.push("/register");
+          await this.$router.push("/register");
         }
       } finally {
         this.loader = false;
