@@ -13,6 +13,7 @@ import loader from "~/components/loader.vue";
 import BottomBar from "@/components/BottomBar.vue";
 import authApi from "@/api/authApi";
 import translationsApi from "~/api/translationsApi";
+
 export default {
   components: {
     BottomBar,
@@ -41,15 +42,17 @@ export default {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     },
-
+    setTokens(tokens) {
+      localStorage.setItem("accessToken", tokens?.data?.access);
+      localStorage.setItem("refreshToken", tokens?.data?.refresh);
+    },
     async refreshToken() {
       const REFRESH_TOKEN = localStorage.getItem("refreshToken");
       try {
         const tokens = await authApi.postRefreshToken(this.$axios, {
           refresh: REFRESH_TOKEN,
         });
-        await localStorage.setItem("accessToken", tokens?.data?.access);
-        await localStorage.setItem("refreshToken", tokens?.data?.refresh);
+        await this.setTokens(tokens)
         location.reload()
       } catch (e) {
         this.removeTokens();
