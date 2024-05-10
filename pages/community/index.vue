@@ -48,6 +48,15 @@
       </div>
     </div>
     <div class="container">
+      <div class=" my-events">
+        <button :class="{active: $route.query?.my}" @click="myEvetsFilter(true)">
+          Men qatnashayotganlarim
+        </button>
+        <button :class="{active: !$route.query?.my}" @click="myEvetsFilter(false)">Barchasi</button>
+      </div>
+    </div>
+
+    <div class="container">
       <div class="wrap">
         <div class="others">
           <div class="header">
@@ -200,6 +209,12 @@ export default {
     },
   },
   methods: {
+    async myEvetsFilter(my) {
+      let query = {...this.$route.query}
+      my ? query.my = my : delete query['my']
+      await this.$router.replace({path: this.$route.path, query: query})
+      await this.__GET_COMMUNITIES()
+    },
     async __GET_COMMUNITIES() {
       const MAX_PAGE_SIZE = 10;
 
@@ -303,6 +318,32 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+.my-events {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #EBEBEB;
+  margin-top: 24px;
+}
+
+.my-events button {
+  background: transparent;
+  font-family: var(--medium);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+  border: none;
+  padding: 0;
+  color: #9A999B;
+  padding-bottom: 8px;
+  border-bottom: 2px solid transparent;
+}
+
+.my-events .active {
+  color: #020105;
+  border-color: #5C46E5
+}
+
 .categories-list {
   display: flex;
   gap: 12px;

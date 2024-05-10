@@ -40,7 +40,7 @@
           <div class="info">
             <h5 class="info-title">{{ $store.state.translations["login.add_info"] }}</h5>
             <p class="info-desc">
-              {{ $store.state.translations["login.login.add_info_text"] }}
+              {{ $store.state.translations["login.add_info_text"] }}
             </p>
             <div class="upload-card">
               <div class="image">
@@ -136,7 +136,13 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
+              <div class="d-flex justify-content-between">
               <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
+              <p class="sub">
+                <a-switch size="small" />
+                Отображать
+              </p>
+          </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.site"
@@ -144,7 +150,13 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
+              <div class="d-flex justify-content-between">
               <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
+              <p class="sub">
+                <a-switch size="small"/>
+                Отображать
+              </p>
+          </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.instagram"
@@ -152,7 +164,13 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
+              <div class="d-flex justify-content-between">
               <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
+              <p class="sub">
+                <a-switch size="small"/>
+                Отображать
+              </p>
+          </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.telegram"
@@ -160,13 +178,22 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
+              <div class="d-flex justify-content-between">
               <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
+              <p class="sub">
+                <a-switch size="small"/>
+                Отображать
+              </p>
+          </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.linkedIn"
                 :placeholder="$store.state.translations['login.linkedin_place']"
               />
             </a-form-model-item>
+          </div>
+          <div class="category-container">
+            <CategorySelectBlock></CategorySelectBlock>
           </div>
         </a-form-model>
         <div class="btns">
@@ -343,6 +370,9 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+.category-container {
+  margin-top: 40px;
+}
 :deep(.ant-upload-list-item-list-type-text) {
   display: none;
 }
@@ -379,7 +409,7 @@ export default {
   padding: 16px;
 }
 .form-item input {
-  height: 56px;
+  height: 54px;
 }
 .form-item {
   margin-bottom: 0 !important;
@@ -423,16 +453,19 @@ export default {
   letter-spacing: -0.36px;
 }
 .info {
-  margin-top: 48px;
+  margin-top: 32px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
   margin-bottom: 16px;
+  background: #F5F5F7;
+  border-radius: 16px;
+  padding: 16px;
 }
 .info .info-desc {
   color: #9a999b;
-  text-align: center;
+  text-align: start;
   font-family: var(--regular);
   font-size: 14px;
   font-style: normal;
@@ -512,7 +545,8 @@ export default {
   display: grid;
   gap: 16px;
   grid-template-columns: 55px 1fr;
-  margin-top: 16px;
+  margin-top: 8px;
+  background: #fff;
 }
 .body {
   display: flex;
@@ -540,5 +574,13 @@ export default {
 }
 .delete-btn {
   background-color: red;
+}
+:deep(.ant-switch) {
+  margin: 0;
+  background-color: #9A999B;
+}
+
+:deep(.ant-switch-checked) {
+  background-color: #1890ff;
 }
 </style>

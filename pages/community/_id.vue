@@ -1,12 +1,12 @@
 <template lang="html">
   <div class="master">
-    <SiteTop />
+    <SiteTop/>
 
     <div class="container">
       <div class="top">
         <div class="img">
           <span class="tag"
-            >{{ $store.state.translations["community.community1"] }} -
+          >{{ $store.state.translations["community.community1"] }} -
             {{ event?.category?.title }}</span
           >
           <img
@@ -16,7 +16,7 @@
             alt=""
             class="pic"
           />
-          <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+          <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
         </div>
         <div class="info">
           <!-- <p>{{ moment(event?.start_date).format(dateFormat) }}</p> -->
@@ -136,12 +136,28 @@
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              /></svg
-            >{{ $store.state.translations["community.tg_chat"] }}
+              />
+            </svg
+            >
+            {{ $store.state.translations["community.tg_chat"] }}
           </a>
+          <button
+            class="presence"
+            :class="{nopresence: true}"
+          >
+<!--            <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5 4C11.5 6.20914 9.70914 8 7.5 8C5.29086 8 3.5 6.20914 3.5 4C3.5 1.79086 5.29086 0 7.5 0C9.70914 0 11.5 1.79086 11.5 4ZM14.5 14C14.5 16.2091 11.366 18 7.5 18C3.63401 18 0.5 16.2091 0.5 14C0.5 11.7909 3.63401 10 7.5 10C11.366 10 14.5 11.7909 14.5 14ZM15.5 9.75C15.0858 9.75 14.75 9.41421 14.75 9V7.75H13.5C13.0858 7.75 12.75 7.41421 12.75 7C12.75 6.58579 13.0858 6.25 13.5 6.25H14.75V5C14.75 4.58579 15.0858 4.25 15.5 4.25C15.9142 4.25 16.25 4.58579 16.25 5V6.25H17.5C17.9142 6.25 18.25 6.58579 18.25 7C18.25 7.41421 17.9142 7.75 17.5 7.75H16.25V9C16.25 9.41421 15.9142 9.75 15.5 9.75Z" fill="white"/>-->
+<!--            </svg>-->
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 4C11 6.20914 9.20914 8 7 8C4.79086 8 3 6.20914 3 4C3 1.79086 4.79086 0 7 0C9.20914 0 11 1.79086 11 4ZM14 14C14 16.2091 10.866 18 7 18C3.13401 18 0 16.2091 0 14C0 11.7909 3.13401 10 7 10C10.866 10 14 11.7909 14 14ZM13 6.25C12.5858 6.25 12.25 6.58579 12.25 7C12.25 7.41421 12.5858 7.75 13 7.75H17C17.4142 7.75 17.75 7.41421 17.75 7C17.75 6.58579 17.4142 6.25 17 6.25H13Z" fill="white"/>
+            </svg>
+
+            Bступить
+          </button>
           <div>
             <a target="_blank" :href="event?.instagram"
-              ><svg
+            >
+              <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -159,7 +175,8 @@
               </svg>
             </a>
             <a target="_blank" :href="event?.telegram_channel"
-              ><svg
+            >
+              <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -229,7 +246,7 @@
         </div>
       </div>
     </div>
-    <loader v-if="loading" />
+    <loader v-if="loading"/>
   </div>
 </template>
 
@@ -243,6 +260,7 @@ import communityApi from "../../api/communityApi";
 
 import loader from "@/components/loader.vue";
 import moment from "moment";
+
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 export default {
   components: {
@@ -346,6 +364,7 @@ export default {
   background-color: #f5f5f7 !important;
   pointer-events: none;
 }
+
 .container {
   padding: 16px 16px 0 16px;
   overflow: hidden;
@@ -370,17 +389,20 @@ export default {
   bottom: 14px;
   left: 14px;
 }
+
 .img {
   margin-bottom: 16px;
   border-radius: 16px;
   overflow: hidden;
   position: relative;
 }
+
 .img img {
   width: 100%;
   height: 210px;
   object-fit: cover;
 }
+
 .info {
   display: flex;
   align-items: center;
@@ -388,6 +410,7 @@ export default {
   gap: 24px;
   margin-bottom: 8px;
 }
+
 .info p {
   display: flex;
   align-items: center;
@@ -399,6 +422,7 @@ export default {
   font-weight: 500;
   line-height: 140%; /* 19.6px */
 }
+
 .name {
   margin-bottom: 16px;
   color: var(--Black, #020105);
@@ -410,6 +434,7 @@ export default {
   letter-spacing: -0.36px;
   text-align: center;
 }
+
 .tabs {
   display: flex;
   align-items: center;
@@ -422,9 +447,11 @@ export default {
   gap: 10px;
   padding-right: 16px;
 }
+
 .tabs::-webkit-scrollbar {
   display: none;
 }
+
 .tabs button {
   padding: 8px 12px;
   border: 1px solid #f5f5f7;
@@ -441,14 +468,17 @@ export default {
   font-weight: 500;
   line-height: 140%; /* 19.6px */
 }
+
 .tabs button.active {
   background-color: #1878f3;
   color: #fff;
 }
+
 .body {
   padding-top: 16px;
   border-top: 1px solid #ebebeb;
 }
+
 .security {
   font-family: var(--medium);
   font-size: 14px;
@@ -459,12 +489,15 @@ export default {
   gap: 4px;
   align-items: center;
 }
+
 .info .public {
   color: #00cd69 !important;
 }
+
 .info .private {
   color: #eb5757 !important;
 }
+
 .messangers > div > a {
   border-radius: 12px;
   background: var(--Facebook-blue, #1878f3);
@@ -474,14 +507,36 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .messangers {
   display: grid;
-  grid-template-columns: 1fr 88px;
-  gap: 24px;
+  grid-template-columns: 1fr 1fr 88px;
+  gap: 8px;
   border-radius: 16px;
   background: var(--Apple-Grey, #f5f5f7);
   padding: 8px;
   margin-bottom: 16px;
+}
+
+.presence {
+  height: 40px;
+  padding: 8px 10px;
+  gap: 4px;
+  border-radius: 12px;
+  font-family: var(--medium);
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+  background: #00CD69;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nopresence {
+  background: #EB5757;
 }
 .messangers > a {
   border-radius: 12px;
@@ -499,6 +554,7 @@ export default {
   align-items: center;
   gap: 8px;
 }
+
 .messangers > div {
   display: flex;
   gap: 8px;

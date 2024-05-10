@@ -21,7 +21,6 @@ export default {
       this.$router.push(`/community/${data?.data?.id}`);
     } catch (e) {
       const PARAMS_CODE = this.paramsObj?.code;
-      console.log("params", this.$route.params, this.paramsObj);
       if (PARAMS_CODE) {
         localStorage.setItem("qr_code", PARAMS_CODE);
         localStorage.setItem("page", "community");

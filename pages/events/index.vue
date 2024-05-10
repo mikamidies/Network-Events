@@ -49,8 +49,13 @@
         </div>
         <div class="categories">
           <ul>
-            <button v-if="categories.slice(0, -3).length > 0" @click="visible = true">+{{ categories.slice(0, -3).length }}</button>
-            <li @click="allEvents" :class="{ active: !filterForm.category && !filterForm.my }">{{$store.state.translations['main.all']}}</li>
+            <button v-if="categories.slice(0, -3).length > 0" @click="visible = true">+{{
+                categories.slice(0, -3).length
+              }}
+            </button>
+            <li @click="allEvents" :class="{ active: !filterForm.category && !filterForm.my }">
+              {{ $store.state.translations['main.all'] }}
+            </li>
             <li
               v-for="category in categories.slice(-3)"
               :key="category?.id"
@@ -61,6 +66,12 @@
             </li>
           </ul>
         </div>
+      </div>
+      <div class="my-events">
+        <button :class="{active: $route.query?.my}" @click="myEvetsFilter(true)">
+          Men qatnashayotganlarim
+        </button>
+        <button :class="{active: !$route.query?.my}" @click="myEvetsFilter(false)">Barchasi</button>
       </div>
 
       <div class="wrap">
@@ -107,7 +118,7 @@
                     alt=""
                     class="pic"
                   />
-                  <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+                  <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
                 </div>
                 <p class="name">
                   {{ event?.title }}
@@ -124,7 +135,7 @@
             />
           </div>
           <div v-if="!loading && events.length == 0">
-            <a-empty />
+            <a-empty/>
           </div>
         </div>
       </div>
@@ -170,7 +181,7 @@
                   @click="filterForm.my = false"
                   :class="{ active: !filterForm.my }"
                 >
-                {{$store.state.translations['main.all']}}
+                  {{ $store.state.translations['main.all'] }}
                 </button>
                 <button @click="filterForm.my = true" :class="{ active: filterForm.my }">
                   Men qatnashganlarim
@@ -282,8 +293,10 @@
 import HomeEvents from "@/components/HomePage/HomeEvents.vue";
 import eventsApi from "@/api/eventsApi";
 import moment from "moment";
+
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 import VPagination from "~/components/VPagination.vue";
+
 export default {
   data() {
     return {
@@ -315,7 +328,7 @@ export default {
       totalPage: 0,
     };
   },
-  async asyncData({ $axios, query }) {
+  async asyncData({$axios, query}) {
     // const MAX_PAGE_SIZE = 10;
     const filterForm = {
       date_from: "",
@@ -358,6 +371,12 @@ export default {
     },
   },
   methods: {
+    async myEvetsFilter(my) {
+      let query = {...this.$route.query}
+      my ? query.my = my : delete query['my']
+      await this.$router.replace({path: this.$route.path, query: query})
+     await this.__GET_EVENTS()
+    },
     onChangeDate(e) {
       this.filterForm.date_from = moment(e[0]).format(this.dateFormat1);
       this.filterForm.date_to = moment(e[1]).format(this.dateFormat1);
@@ -373,13 +392,15 @@ export default {
       try {
         const data = await eventsApi.getMyEvents();
         this.myEvents = data?.data?.results;
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     async __GET_CATEGORIES() {
       try {
         const data = await eventsApi.getCategories();
         this.categories = data?.data?.results;
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     async __GET_EVENTS() {
       const MAX_PAGE_SIZE = 10;
@@ -409,13 +430,13 @@ export default {
       ) {
         await this.$router.replace({
           path: this.$route.path,
-          query: { ...this.$route.query, page: 1, search: e.target.value },
+          query: {...this.$route.query, page: 1, search: e.target.value},
         });
         this.__GET_EVENTS();
       }
     },
     async sendFilter() {
-      let query = { ...this.$route.query };
+      let query = {...this.$route.query};
       Object.entries(this.filterForm).forEach(([name, value]) =>
         value ? (query[name] = `${value}`) : delete query[name]
       );
@@ -426,21 +447,21 @@ export default {
       ) {
         await this.$router.replace({
           path: this.$route.path,
-          query: { ...query },
+          query: {...query},
         });
         this.__GET_EVENTS();
         this.close();
       }
     },
     async allEvents() {
-      let query = { ...this.$route.query };
+      let query = {...this.$route.query};
       if (Object.keys(query).length > 2) {
         this.filterForm.category = null;
         this.filterForm.my = null;
-        query = { page: 1, page_size: 10 };
+        query = {page: 1, page_size: 10};
         await this.$router.replace({
           path: this.$route.path,
-          query: { ...query },
+          query: {...query},
         });
         this.__GET_EVENTS();
       }
@@ -472,10 +493,10 @@ export default {
     },
     async search(val) {
       if (val.length == 0 && this.$route.query?.search) {
-        const { search, ...query } = this.$route.query;
+        const {search, ...query} = this.$route.query;
         await this.$router.replace({
           path: this.$route.path,
-          query: { ...query },
+          query: {...query},
         });
         this.__GET_EVENTS();
       }
@@ -489,6 +510,33 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.my-events {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #EBEBEB;
+  margin-top: 12px;
+}
+
+.my-events button {
+  background: transparent;
+  font-family: var(--medium);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+  border: none;
+  padding: 0;
+  color: #9A999B;
+  padding-bottom: 8px;
+  border-bottom: 2px solid transparent;
+}
+
+.my-events .active {
+  color: #020105;
+  border-color: #5C46E5
+}
+
 .categories-list {
   display: flex;
   gap: 12px;
@@ -496,6 +544,7 @@ export default {
   padding-left: 0;
   margin-top: 24px;
 }
+
 .categories-list li {
   border-radius: 57px;
   background: var(--Apple-Grey, #f5f5f7);
@@ -512,11 +561,13 @@ export default {
   cursor: pointer;
   border: 1px solid transparent;
 }
+
 .all-categories .head {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .all-categories .head h4 {
   color: var(--black);
   font-family: var(--decor-md);
@@ -526,6 +577,7 @@ export default {
   line-height: 120%; /* 21.6px */
   letter-spacing: -0.36px;
 }
+
 .all-categories .head button {
   border-radius: 35px;
   background: #f5f5f7;
@@ -536,29 +588,37 @@ export default {
   align-items: center;
   border: none;
 }
+
 .all-categories .head button svg {
   min-width: 24px;
   min-height: 24px;
 }
+
 :deep(.ant-modal-content) {
   border-radius: 28px;
 }
+
 :deep(.ant-modal-body) {
   padding: 16px;
 }
+
 .disabledBtn {
   pointer-events: none;
   opacity: 0.5;
 }
+
 :deep(.form-item .ant-form-item) {
   margin-bottom: 16px;
 }
+
 :deep(.date-pic) {
   width: 100%;
 }
+
 .categories {
   margin-top: 16px;
 }
+
 .categories button {
   border-radius: 57px;
   background: #5c46e5;
@@ -575,6 +635,7 @@ export default {
   justify-content: center;
   border: none;
 }
+
 .categories ul {
   display: flex;
   gap: 10px;
@@ -586,6 +647,7 @@ export default {
 .categories ul::-webkit-scrollbar {
   display: none;
 }
+
 .categories ul li {
   border-radius: 57px;
   white-space: nowrap;
@@ -603,12 +665,14 @@ export default {
   border: 1px solid transparent;
   cursor: pointer;
 }
+
 .categories ul .active,
 .categories-list .active,
 .form .active {
   color: #1878f3;
   border-color: #1878f3;
 }
+
 .bottom_tab button {
   border-radius: 57px;
   background: #f5f5f7;
@@ -623,10 +687,12 @@ export default {
   line-height: 140%; /* 19.6px */
   border: 1px solid transparent;
 }
+
 .bottom_tab {
   display: flex;
   gap: 16px;
 }
+
 .btn-fixed {
   position: absolute;
   bottom: 16px;
@@ -634,6 +700,7 @@ export default {
   left: 0;
   padding: 0 16px;
 }
+
 .send-btn {
   border-radius: 39px;
   background: var(--Facebook-blue, #1878f3);
@@ -650,12 +717,14 @@ export default {
   width: 100%;
   border: none;
 }
+
 .form {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 :deep(.form-item label) {
   color: var(--Black, #020105);
   font-family: var(--medium);
@@ -664,29 +733,35 @@ export default {
   font-weight: 500;
   line-height: 150%; /* 24px */
 }
+
 :deep(.form-item label::before) {
   display: none;
 }
+
 :deep(.form-item .ant-select-selection--single),
 :deep(.form-item .ant-calendar-picker-input) {
   border-radius: 8px;
   border: 2px solid var(--Apple-Grey, #f5f5f7);
   background: var(--White, #fff);
 }
+
 :deep(.form-item .ant-select-selection--single),
 :deep(.form-item .ant-select-selection__rendered),
 :deep(.form-item .ant-calendar-picker-input) {
   height: 53px;
   width: 100%;
 }
+
 :deep(.form-item .ant-calendar-range-picker-separator) {
   display: inline-flex;
   align-items: center;
 }
+
 :deep(.form-item .ant-select-selection__rendered) {
   display: flex;
   align-items: center;
 }
+
 .bd_container {
   padding: 0 16px;
 }
@@ -698,6 +773,7 @@ export default {
   padding-bottom: 16px;
   border-bottom: 1px solid #ebebeb;
 }
+
 .bottom-drawer .head h4 {
   color: var(--Black, #020105);
   font-family: var(--decor-md);
@@ -706,6 +782,7 @@ export default {
   line-height: 120%; /* 21.6px */
   letter-spacing: -0.36px;
 }
+
 .bottom-drawer .head button {
   background-color: transparent;
   border: none;
@@ -714,16 +791,19 @@ export default {
   height: 35px;
   width: 35px;
 }
+
 .top-bar {
   padding: 16px 0;
   border-bottom: 1px solid var(--grey-8, #ebebeb);
   background: var(--White, #fff);
 }
+
 .top-bar > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .top-bar h4 {
   color: var(--Black, #020105);
   font-family: var(--decor-md);
@@ -732,19 +812,21 @@ export default {
   line-height: 120%; /* 21.6px */
   letter-spacing: -0.36px;
 }
+
 .top-bar button {
   background-color: transparent;
   border: none;
 }
+
 .pag-block {
   margin-top: 24px;
 }
+
 .search__wrap {
   padding: 12px 0;
-  border-bottom: 1px solid var(--grey-8, #ebebeb);
-  background: var(--White, #fff);
-  margin: 0 -16px;
+//border-bottom: 1px solid var(--grey-8, #ebebeb); background: var(--White, #fff); margin: 0 -16px;
 }
+
 .search {
   position: relative;
   border-radius: 8px;
@@ -756,6 +838,7 @@ export default {
   padding: 12px 16px;
   margin: 0 16px;
 }
+
 .search label {
   position: absolute;
   top: 0;
@@ -763,6 +846,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .search input {
   color: black;
   font-size: 16px;
@@ -773,6 +857,7 @@ export default {
   background: transparent;
   width: 90%;
 }
+
 .search input:focus {
   outline: none;
 }
@@ -780,6 +865,7 @@ export default {
 .current {
   padding-top: 24px;
 }
+
 .title {
   color: var(--Black, #020105);
   font-family: var(--decor-bd);
@@ -790,6 +876,7 @@ export default {
   letter-spacing: -0.4px;
   margin-bottom: 12px;
 }
+
 .current .item {
   position: relative;
   border-radius: 16px;
@@ -799,6 +886,7 @@ export default {
   -moz-box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
 }
+
 .current .item::after {
   border-radius: 0px 0px 16px 16px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 100%);
@@ -810,6 +898,7 @@ export default {
   width: 100%;
   z-index: 8;
 }
+
 .current .pic {
   position: absolute;
   top: 0;
@@ -818,6 +907,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .current .name {
   color: var(--White, #fff);
   font-family: var(--decor-md);
@@ -828,6 +918,7 @@ export default {
   letter-spacing: -0.36px;
   padding-left: 6px;
 }
+
 .current .content {
   position: relative;
   display: flex;
@@ -837,6 +928,7 @@ export default {
   justify-content: space-between;
   padding: 12px 8px;
 }
+
 .current .badge {
   display: inline-flex;
   justify-content: center;
@@ -859,16 +951,19 @@ export default {
 .others {
   padding: 34px 0 0 0;
 }
+
 .others .title {
   margin: 0;
   font-family: var(--decor-bd);
 }
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
 }
+
 .header a {
   display: flex;
   align-items: center;
@@ -884,22 +979,26 @@ export default {
   font-weight: 500;
   line-height: 130%; /* 15.6px */
 }
+
 .items {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
+
 .img {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 12px;
 }
+
 .others .pic {
   width: 100%;
   height: 192px;
   object-fit: cover;
 }
+
 .date {
   position: absolute;
   top: 8px;
@@ -916,6 +1015,7 @@ export default {
   font-weight: 500;
   line-height: 130%; /* 15.6px */
 }
+
 .others .name {
   color: var(--Black, #020105);
   font-family: var(--medium);
@@ -924,6 +1024,7 @@ export default {
   font-weight: 500;
   line-height: 140%; /* 22.4px */
 }
+
 .loading-card :deep(.ant-skeleton-title) {
   height: 230px;
   border-radius: 30px;

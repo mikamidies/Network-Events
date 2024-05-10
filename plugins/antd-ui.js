@@ -14,14 +14,18 @@ import {
   message,
   notification,
   Select,
-  DatePicker
+  DatePicker,
+  Dropdown,
+  Switch
 } from "ant-design-vue";
 Vue.prototype.$notification = notification;
 const { info, success, error, warning, confirm } = Modal;
 Vue.prototype.$notification = notification;
 Vue.prototype.$message = message;
 Vue.prototype.$confirm = confirm;
+Vue.use(Switch)
 Vue.use(DatePicker);
+Vue.use(Dropdown);
 Vue.use(Select);
 Vue.use(Skeleton);
 Vue.use(Progress);

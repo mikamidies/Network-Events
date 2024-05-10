@@ -1,28 +1,11 @@
 <template lang="html">
   <div class="wrap">
     <div class="head container">
-      <button @click="$router.go(-1)">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10 16L6 12M6 12L10 8M6 12L18 12"
-            stroke="#020105"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
-      <h3>{{ $store.state.translations["login.welcome"] }}</h3>
+      <h3>{{ $store.state.translations["login.info"] }}</h3>
     </div>
     <div class="container">
       <div class="edit-page">
-        <h4 class="page-title">{{ $store.state.translations["login.info"] }}</h4>
+        <!--        <h4 class="page-title">{{ $store.state.translations["login.info"] }}</h4>-->
         <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
           <div class="list">
             <a-form-model-item prop="full_name" class="form-item mb-0 required">
@@ -59,17 +42,17 @@
           <div class="info">
             <h5 class="info-title">{{ $store.state.translations["login.add_info"] }}</h5>
             <p class="info-desc">
-              {{ $store.state.translations["login.login.add_info_text"] }}
+              {{ $store.state.translations["login.add_info_text"] }}
             </p>
             <div class="upload-card">
               <div class="image">
-                <img v-if="image" :src="image" alt="" /><img
-                  v-else
-                  src="@/assets/img/user.png"
-                  alt=""
-                />
+                <img v-if="image" :src="image" alt=""/><img
+                v-else
+                src="@/assets/img/user.png"
+                alt=""
+              />
                 <span v-if="imgLoad"
-                  ><a-spin>
+                ><a-spin>
                     <a-icon
                       slot="indicator"
                       type="loading"
@@ -155,7 +138,13 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
+              <div class="d-flex justify-content-between">
+                <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small"/>
+                  Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model="form.client_data.site"
@@ -163,7 +152,13 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
+              <div class="d-flex justify-content-between">
+                <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small"/>
+                  Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model="form.client_data.instagram"
@@ -171,7 +166,14 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
+              <div class="d-flex justify-content-between">
+                <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small"/>
+                  Отображать
+                </p>
+              </div>
+
               <input
                 type="text"
                 v-model="form.client_data.telegram"
@@ -179,13 +181,22 @@
               />
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
-              <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
+              <div class="d-flex justify-content-between">
+                <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small"/>
+                  Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model="form.client_data.linkedIn"
                 :placeholder="$store.state.translations['login.linkedin_place']"
               />
             </a-form-model-item>
+          </div>
+          <div class="category-container">
+            <CategorySelectBlock></CategorySelectBlock>
           </div>
         </a-form-model>
         <div class="btns">
@@ -201,6 +212,7 @@
 <script>
 import EditTop from "../../components/EditTop.vue";
 import sendNUmberApi from "@/api/authApi";
+
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -209,6 +221,7 @@ function getBase64(file) {
     reader.onerror = (error) => reject(error);
   });
 }
+
 export default {
   layout: "empty",
 
@@ -298,7 +311,8 @@ export default {
         localStorage.removeItem("phone_number");
         localStorage.removeItem("accessCode");
         await this.$router.push("/");
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     // handleRemove(file) {
     //   const index = this.fileList.indexOf(file);
@@ -313,7 +327,7 @@ export default {
       this.previewImage = file.url || file.preview;
       this.previewVisible = true;
     },
-    handleChange({ fileList }) {
+    handleChange({fileList}) {
       this.imgLoad = true;
       this.fileList = fileList;
 
@@ -330,34 +344,44 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+.category-container {
+  margin-top: 40px;
+}
+
 :deep(.ant-upload-list-item-list-type-text) {
   display: none;
 }
+
 .head h3 {
   color: #020105;
   text-align: center;
   font-family: var(--decor-md);
-  font-size: 24px;
+  font-size: 18px;
   font-style: normal;
   line-height: 120%;
 }
+
 .head button {
   position: absolute;
   left: 16px;
   border: none;
   background-color: transparent;
 }
+
 .head {
   position: relative;
-  padding: 24px 16px;
+  padding: 18px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid #EBEBEB
 }
+
 .container {
   padding-top: 24px;
   padding-top: 24px;
 }
+
 .page-title {
   color: #020105;
   text-align: center;
@@ -368,6 +392,7 @@ export default {
   letter-spacing: -0.36px;
   margin-bottom: 16px;
 }
+
 .form-item input,
 .form-item textarea {
   border-radius: 8px;
@@ -383,15 +408,19 @@ export default {
   font-style: normal;
   line-height: 150%;
 }
+
 .form-item textarea {
   padding: 16px;
 }
+
 .form-item input {
-  height: 56px;
+  height: 54px;
 }
+
 .form-item {
   margin-bottom: 0 !important;
 }
+
 .form-item input:focus,
 .form-item input:focus-visible,
 .form-item textarea:focus-visible,
@@ -399,6 +428,7 @@ export default {
   border: 2px solid #3c4bdc !important;
   outline: none;
 }
+
 .form-item .sub {
   color: #020105;
   font-family: var(--semi);
@@ -407,8 +437,20 @@ export default {
   line-height: 150%;
   margin-bottom: 12px;
   position: relative;
-  display: inline;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
 }
+
+:deep(.ant-switch) {
+  margin: 0;
+  background-color: #9A999B;
+}
+
+:deep(.ant-switch-checked) {
+  background-color: #1890ff;
+}
+
 .required .sub::after {
   content: "*";
   color: red;
@@ -416,11 +458,13 @@ export default {
   right: -10px;
   top: 0;
 }
+
 .list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
 .info .info-title {
   color: #020105;
   text-align: center;
@@ -430,28 +474,35 @@ export default {
   line-height: 120%;
   letter-spacing: -0.36px;
 }
+
 .info {
-  margin-top: 48px;
+  margin-top: 32px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
   margin-bottom: 16px;
+  background: #F5F5F7;
+  border-radius: 16px;
+  padding: 16px;
 }
+
 .info .info-desc {
   color: #9a999b;
-  text-align: center;
+  text-align: start;
   font-family: var(--regular);
   font-size: 14px;
   font-style: normal;
   line-height: 140%;
 }
+
 .btns {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 48px;
 }
+
 .btns button {
   border: none;
   height: 56px;
@@ -462,20 +513,24 @@ export default {
   font-style: normal;
   line-height: 150%;
 }
+
 .btns .send {
   background-color: #1878f3;
   color: #fff;
 }
+
 .btns .cancel {
   border: 1px solid #ebebeb;
   color: #f00;
   background-color: #fff;
 }
+
 .upload-card {
   border-radius: 16px;
-  background: #f5f5f7;
+  background: #fff;
   padding: 10px;
 }
+
 .upload-card .image {
   width: 55px;
   height: 55px;
@@ -486,6 +541,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .upload-card .image > span {
   position: absolute;
   display: flex;
@@ -496,11 +552,13 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .upload-card .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .upload-card .body h5 {
   color: #020105;
   font-family: var(--medium);
@@ -508,6 +566,7 @@ export default {
   font-style: normal;
   line-height: 150%;
 }
+
 .upload-card .body p {
   color: #9a999b;
   font-family: var(--regular);
@@ -515,23 +574,27 @@ export default {
   font-style: normal;
   line-height: 130%;
 }
+
 .upload-card {
   width: 100%;
   display: grid;
   gap: 16px;
   grid-template-columns: 55px 1fr;
-  margin-top: 16px;
+  margin-top: 8px;
 }
+
 .body {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .body .text {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
+
 .upload-btn,
 .delete-btn {
   display: flex;
@@ -543,9 +606,11 @@ export default {
   border-radius: 8px;
   border: none;
 }
+
 .upload-btn {
   background: #1878f3;
 }
+
 .delete-btn {
   background-color: red;
 }
