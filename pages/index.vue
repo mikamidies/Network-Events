@@ -73,9 +73,9 @@ export default {
     if (localStorage.getItem("accessToken")) {
       this.__GET_MY_EVENTS();
       this.__GET_MY_COMMUNITES();
-      this.__GET_EVENTS();
     }
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
+    this.__GET_EVENTS();
     this.__GET_COMMUNITIES();
   },
   computed: {

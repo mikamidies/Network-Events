@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="wrap">
-    <EditTop @back="$router.push('/profile')" />
+    <EditTop @back="$router.push('/profile')"/>
     <div class="container">
       <div class="edit-page">
         <h4 class="page-title">{{ $store.state.translations["login.info"] }}</h4>
@@ -44,13 +44,13 @@
             </p>
             <div class="upload-card">
               <div class="image">
-                <img loading="lazy" v-if="image" :src="image" alt="" /><img
-                  v-else
-                  src="@/assets/img/user.png"
-                  alt=""
-                />
+                <img loading="lazy" v-if="image" :src="image" alt=""/><img
+                v-else
+                src="@/assets/img/user.png"
+                alt=""
+              />
                 <span v-if="imgLoad"
-                  ><a-spin>
+                ><a-spin>
                     <a-icon
                       slot="indicator"
                       type="loading"
@@ -137,12 +137,12 @@
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
               <div class="d-flex justify-content-between">
-              <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
-              <p class="sub">
-                <a-switch size="small" />
-                Отображать
-              </p>
-          </div>
+                <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small" :checked="form.client_data.show_site" @change="e => form.client_data.show_site = e"/>
+                  Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.site"
@@ -151,12 +151,12 @@
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
               <div class="d-flex justify-content-between">
-              <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
-              <p class="sub">
-                <a-switch size="small"/>
-                Отображать
-              </p>
-          </div>
+                <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small" :checked="form.client_data.show_instagram" @change="e => form.client_data.show_instagram = e"/>
+                  Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.instagram"
@@ -165,12 +165,12 @@
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
               <div class="d-flex justify-content-between">
-              <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
-              <p class="sub">
-                <a-switch size="small"/>
-                Отображать
-              </p>
-          </div>
+                <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small" :checked="form.client_data.show_telegram" @change="e => form.client_data.show_telegram = e"/>
+                  Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.telegram"
@@ -179,12 +179,12 @@
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
               <div class="d-flex justify-content-between">
-              <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
-              <p class="sub">
-                <a-switch size="small"/>
-                Отображать
-              </p>
-          </div>
+                <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
+                <p class="sub">
+                  <a-switch size="small" :checked="form.client_data.show_linkedIn" @change="e => form.client_data.show_linkedIn = e"/>
+               Отображать
+                </p>
+              </div>
               <input
                 type="text"
                 v-model.trim="form.client_data.linkedIn"
@@ -211,6 +211,7 @@
 <script>
 import authApi from "@/api/authApi";
 import EditTop from "../../components/EditTop.vue";
+
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -219,6 +220,7 @@ function getBase64(file) {
     reader.onerror = (error) => reject(error);
   });
 }
+
 export default {
   data() {
     return {
@@ -238,6 +240,10 @@ export default {
           instagram: "",
           telegram: "",
           linkedIn: "",
+          show_site: false,
+          show_instagram: false,
+          show_telegram: false,
+          show_linkedIn: false,
         },
       },
       headers: {
@@ -284,6 +290,9 @@ export default {
     this.__GET_INFO();
   },
   methods: {
+    onChange(e, name) {
+      this.form.client_data[name] = e
+    },
     submit() {
       const data = {
         ...this.form,
@@ -314,7 +323,8 @@ export default {
         const data = await authApi.putProfile(form);
         this.$nuxt.refresh();
         this.$router.push("/profile");
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     async handlePreview(file) {
       if (!file.url && !file.preview) {
@@ -323,7 +333,7 @@ export default {
       this.previewImage = file.url || file.preview;
       this.previewVisible = true;
     },
-    handleChange({ fileList }) {
+    handleChange({fileList}) {
       this.imgLoad = true;
       this.fileList = fileList;
       if (fileList[0]?.response?.upload_url) {
@@ -373,13 +383,16 @@ export default {
 .category-container {
   margin-top: 40px;
 }
+
 :deep(.ant-upload-list-item-list-type-text) {
   display: none;
 }
+
 .container {
   padding-top: 24px;
   padding-top: 24px;
 }
+
 .page-title {
   color: #020105;
   text-align: center;
@@ -390,6 +403,7 @@ export default {
   letter-spacing: -0.36px;
   margin-bottom: 16px;
 }
+
 .form-item input,
 .form-item textarea {
   border-radius: 8px;
@@ -405,15 +419,19 @@ export default {
   font-style: normal;
   line-height: 150%;
 }
+
 .form-item textarea {
   padding: 16px;
 }
+
 .form-item input {
   height: 54px;
 }
+
 .form-item {
   margin-bottom: 0 !important;
 }
+
 .form-item input:focus,
 .form-item input:focus-visible,
 .form-item textarea:focus-visible,
@@ -421,6 +439,7 @@ export default {
   border: 2px solid #3c4bdc !important;
   outline: none;
 }
+
 .form-item .sub {
   color: #020105;
   font-family: var(--semi);
@@ -431,6 +450,7 @@ export default {
   position: relative;
   display: inline;
 }
+
 .required .sub::after {
   content: "*";
   color: red;
@@ -438,11 +458,13 @@ export default {
   right: -10px;
   top: 0;
 }
+
 .list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
 .info .info-title {
   color: #020105;
   text-align: center;
@@ -452,6 +474,7 @@ export default {
   line-height: 120%;
   letter-spacing: -0.36px;
 }
+
 .info {
   margin-top: 32px;
   display: flex;
@@ -463,6 +486,7 @@ export default {
   border-radius: 16px;
   padding: 16px;
 }
+
 .info .info-desc {
   color: #9a999b;
   text-align: start;
@@ -471,12 +495,14 @@ export default {
   font-style: normal;
   line-height: 140%;
 }
+
 .btns {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 48px;
 }
+
 .btns button {
   border: none;
   height: 56px;
@@ -487,20 +513,24 @@ export default {
   font-style: normal;
   line-height: 150%;
 }
+
 .btns .send {
   background-color: #1878f3;
   color: #fff;
 }
+
 .btns .cancel {
   border: 1px solid #ebebeb;
   color: #f00;
   background-color: #fff;
 }
+
 .upload-card {
   border-radius: 16px;
   background: #f5f5f7;
   padding: 10px;
 }
+
 .upload-card .image {
   width: 55px;
   height: 55px;
@@ -511,6 +541,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .upload-card .image > span {
   position: absolute;
   display: flex;
@@ -521,11 +552,13 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .upload-card .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .upload-card .body h5 {
   color: #020105;
   font-family: var(--medium);
@@ -533,6 +566,7 @@ export default {
   font-style: normal;
   line-height: 150%;
 }
+
 .upload-card .body p {
   color: #9a999b;
   font-family: var(--regular);
@@ -540,6 +574,7 @@ export default {
   font-style: normal;
   line-height: 130%;
 }
+
 .upload-card {
   width: 100%;
   display: grid;
@@ -548,16 +583,19 @@ export default {
   margin-top: 8px;
   background: #fff;
 }
+
 .body {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .body .text {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
+
 .upload-btn,
 .delete-btn {
   display: flex;
@@ -569,12 +607,15 @@ export default {
   border-radius: 8px;
   border: none;
 }
+
 .upload-btn {
   background: #1878f3;
 }
+
 .delete-btn {
   background-color: red;
 }
+
 :deep(.ant-switch) {
   margin: 0;
   background-color: #9A999B;
