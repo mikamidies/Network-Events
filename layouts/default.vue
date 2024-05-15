@@ -1,10 +1,10 @@
 <template lang="html">
   <div>
     <main class="main">
-      <nuxt />
+      <nuxt/>
     </main>
-    <loader v-if="loader" />
-    <BottomBar />
+    <loader v-if="loader"/>
+    <BottomBar/>
   </div>
 </template>
 
@@ -22,19 +22,17 @@ export default {
   data() {
     return {
       searchInputTest: true,
-      loader: true,
+      loader: false,
     };
   },
   async fetch() {
     const translationsData = await translationsApi.getTranslations(this.$axios);
     this.$store.commit("handleTranslations", translationsData?.data);
   },
-  async mounted() {
-    const ACCESS_TOKEN = localStorage.getItem("refreshToken");
-    if (!ACCESS_TOKEN) {
-      await this.$router.push("/register");
-    } else {
-      await this.getProfileInfo();
+  mounted() {
+    const ACCESS_TOKEN = localStorage.getItem("accessToken");
+    if (ACCESS_TOKEN) {
+      this.getProfileInfo();
     }
   },
   methods: {
@@ -56,7 +54,7 @@ export default {
         location.reload()
       } catch (e) {
         this.removeTokens();
-        await this.$router.push("/register");
+        await this.$router.push("/");
       }
     },
     async getProfileInfo() {
@@ -77,10 +75,10 @@ export default {
           await this.refreshToken();
         } else {
           this.removeTokens();
-          await this.$router.push("/register");
+          await this.$router.push("/");
         }
       } finally {
-        this.loader = false;
+
       }
     },
   },
