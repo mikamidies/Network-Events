@@ -67,7 +67,7 @@
           </ul>
         </div>
       </div>
-      <div class="my-events">
+      <div class="my-events" v-if="$store.state.profile?.id">
         <button :class="{active: $route.query?.my}" @click="myEvetsFilter(true)">
           Men qatnashayotganlarim
         </button>

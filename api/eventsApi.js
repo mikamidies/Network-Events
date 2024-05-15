@@ -1,5 +1,10 @@
 export default {
   async getEvents(axios, config = {}) {
+    const ACCESS_TOKEN = localStorage.getItem('accessToken')
+    if (ACCESS_TOKEN) {
+      config['headers'] = {}
+      config['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
+    }
     return await $nuxt.$axios.get("/events", config);
   },
   async getEventsById(config = {}) {

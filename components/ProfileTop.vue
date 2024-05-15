@@ -72,6 +72,7 @@ export default {
     logout() {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      this.$store.commit("getProfile", {});
       this.$router.push("/");
     },
   },
