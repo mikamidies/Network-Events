@@ -24,7 +24,7 @@
           </svg>
         </button>
       </div>
-      <div class="items" v-if="event.is_member">
+      <div class="items" v-if="event.public || event.is_member">
         <div
           class="item"
           v-for="member in members"
@@ -64,7 +64,7 @@
           </svg>
         </div>
       </div>
-      <div v-else class="members-locked">
+      <div v-if="!event.public && !event.is_member" class="members-locked">
         <h5>
           <svg
             width="24"
@@ -93,7 +93,7 @@
         </h5>
         <p>{{ $store.state.translations["event.show_members"] }}</p>
       </div>
-      <div class="link" v-if="event.is_member && members?.length > membersLength">
+      <div class="link" v-if="(event.public || event.is_member) && members?.length > membersLength">
         <button @click="$emit('tabChange', 'participants')">
           {{ $store.state.translations["main.all"] }}
           <svg

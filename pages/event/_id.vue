@@ -72,6 +72,97 @@
           </p>
         </div>
         <h4 class="name">{{ event?.title }}</h4>
+<!--        <div class="messangers">-->
+<!--          <a-->
+<!--            target="_blank"-->
+<!--            :class="{ disabled: !event?.telegram_chat }"-->
+<!--            :href="event?.telegram_chat"-->
+<!--          >-->
+<!--            <svg-->
+<!--              width="20"-->
+<!--              height="18"-->
+<!--              viewBox="0 0 20 18"-->
+<!--              fill="none"-->
+<!--              xmlns="http://www.w3.org/2000/svg"-->
+<!--            >-->
+<!--              <path-->
+<!--                d="M1.90891 8.0952L17.2976 1.44458C18.0212 1.13183 18.8054 1.74041 18.682 2.51906L16.5779 15.795C16.448 16.6151 15.4331 16.9287 14.8631 16.325L11.5295 12.7699C10.8523 12.0526 10.7992 10.9488 11.4045 10.1698L13.7232 6.92966C13.8626 6.75029 13.6425 6.51431 13.4538 6.64086L8.60651 9.89269C7.78393 10.4445 6.78586 10.6715 5.80554 10.5297L2.16248 10.0028C1.16449 9.8585 0.98328 8.49523 1.90891 8.0952Z"-->
+<!--                stroke="#1878F3"-->
+<!--                stroke-width="1.5"-->
+<!--                stroke-linecap="round"-->
+<!--                stroke-linejoin="round"-->
+<!--              />-->
+<!--            </svg-->
+<!--            >-->
+<!--            {{ $store.state.translations["community.tg_chat"] }}-->
+<!--          </a>-->
+<!--          <button-->
+<!--            class="presence nopresence"-->
+<!--            :class="{disabled: event.public}"-->
+<!--            v-if="event?.is_member"-->
+<!--          >-->
+
+<!--            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <path fill-rule="evenodd" clip-rule="evenodd"-->
+<!--                    d="M11 4C11 6.20914 9.20914 8 7 8C4.79086 8 3 6.20914 3 4C3 1.79086 4.79086 0 7 0C9.20914 0 11 1.79086 11 4ZM14 14C14 16.2091 10.866 18 7 18C3.13401 18 0 16.2091 0 14C0 11.7909 3.13401 10 7 10C10.866 10 14 11.7909 14 14ZM13 6.25C12.5858 6.25 12.25 6.58579 12.25 7C12.25 7.41421 12.5858 7.75 13 7.75H17C17.4142 7.75 17.75 7.41421 17.75 7C17.75 6.58579 17.4142 6.25 17 6.25H13Z"-->
+<!--                    fill="white"/>-->
+<!--            </svg>-->
+
+<!--            Bыйти-->
+<!--          </button>-->
+<!--          <button-->
+<!--            class="presence"-->
+<!--            @click="toMember(event?.uuid)"-->
+<!--            :class="{disabled: event.public}"-->
+<!--            v-else-->
+<!--          >-->
+<!--            <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <path fill-rule="evenodd" clip-rule="evenodd"-->
+<!--                    d="M11.5 4C11.5 6.20914 9.70914 8 7.5 8C5.29086 8 3.5 6.20914 3.5 4C3.5 1.79086 5.29086 0 7.5 0C9.70914 0 11.5 1.79086 11.5 4ZM14.5 14C14.5 16.2091 11.366 18 7.5 18C3.63401 18 0.5 16.2091 0.5 14C0.5 11.7909 3.63401 10 7.5 10C11.366 10 14.5 11.7909 14.5 14ZM15.5 9.75C15.0858 9.75 14.75 9.41421 14.75 9V7.75H13.5C13.0858 7.75 12.75 7.41421 12.75 7C12.75 6.58579 13.0858 6.25 13.5 6.25H14.75V5C14.75 4.58579 15.0858 4.25 15.5 4.25C15.9142 4.25 16.25 4.58579 16.25 5V6.25H17.5C17.9142 6.25 18.25 6.58579 18.25 7C18.25 7.41421 17.9142 7.75 17.5 7.75H16.25V9C16.25 9.41421 15.9142 9.75 15.5 9.75Z"-->
+<!--                    fill="white"/>-->
+<!--            </svg>-->
+<!--            Bступить-->
+<!--          </button>-->
+<!--          <div>-->
+<!--            <a target="_blank" :href="event?.instagram"-->
+<!--            >-->
+<!--              <svg-->
+<!--                width="24"-->
+<!--                height="24"-->
+<!--                viewBox="0 0 24 24"-->
+<!--                fill="none"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path-->
+<!--                  d="M17.0102 6.98988L17.0123 6.99116M10.7554 21.246H13.2443C16.0446 21.246 17.4447 21.246 18.5143 20.7011C19.4551 20.2217 20.22 19.4568 20.6994 18.516C21.2443 17.4464 21.2443 16.0463 21.2443 13.246V10.7571C21.2443 7.95682 21.2443 6.55669 20.6994 5.48713C20.22 4.54632 19.4551 3.78141 18.5143 3.30205C17.4447 2.75708 16.0446 2.75708 13.2443 2.75708H10.7554C7.95511 2.75708 6.55498 2.75708 5.48542 3.30205C4.54461 3.78141 3.77971 4.54632 3.30034 5.48713C2.75537 6.55669 2.75537 7.95682 2.75537 10.7571V13.246C2.75537 16.0463 2.75537 17.4464 3.30034 18.516C3.77971 19.4568 4.54461 20.2217 5.48542 20.7011C6.55498 21.246 7.95511 21.246 10.7554 21.246ZM15.6649 12.0019C15.6649 14.025 14.0249 15.665 12.0018 15.665C9.97872 15.665 8.3387 14.025 8.3387 12.0019C8.3387 9.97882 9.97872 8.3388 12.0018 8.3388C14.0249 8.3388 15.6649 9.97882 15.6649 12.0019Z"-->
+<!--                  stroke="white"-->
+<!--                  stroke-width="1.5"-->
+<!--                  stroke-miterlimit="10"-->
+<!--                  stroke-linecap="round"-->
+<!--                  stroke-linejoin="round"-->
+<!--                />-->
+<!--              </svg>-->
+<!--            </a>-->
+<!--            <a target="_blank" :href="event?.telegram_channel"-->
+<!--            >-->
+<!--              <svg-->
+<!--                width="24"-->
+<!--                height="24"-->
+<!--                viewBox="0 0 24 24"-->
+<!--                fill="none"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path-->
+<!--                  d="M3.90891 11.0952L19.2976 4.44458C20.0212 4.13183 20.8054 4.74041 20.682 5.51906L18.5779 18.795C18.448 19.6151 17.4331 19.9287 16.8631 19.325L13.5295 15.7699C12.8523 15.0526 12.7992 13.9488 13.4045 13.1698L15.7232 9.92966C15.8626 9.75029 15.6425 9.51431 15.4538 9.64086L10.6065 12.8927C9.78393 13.4445 8.78586 13.6715 7.80554 13.5297L4.16248 13.0028C3.16449 12.8585 2.98328 11.4952 3.90891 11.0952Z"-->
+<!--                  stroke="white"-->
+<!--                  stroke-width="1.5"-->
+<!--                  stroke-linecap="round"-->
+<!--                  stroke-linejoin="round"-->
+<!--                />-->
+<!--              </svg>-->
+<!--            </a>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="tabs">
           <button @click="tabHandle = 'info'" :class="{ active: tabHandle == 'info' }">
             {{ $store.state.translations["event.info"] }}
@@ -222,6 +313,9 @@ export default {
     }
   },
   methods: {
+    toMember(id) {
+      this.$router.push(`/event/join/${id}`);
+    },
     tabChange(name) {
       this.tabHandle = name;
     },
@@ -331,5 +425,68 @@ export default {
 .body {
   padding-top: 16px;
   border-top: 1px solid #ebebeb;
+}
+.messangers > div > a {
+  border-radius: 12px;
+  background: var(--Facebook-blue, #1878f3);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messangers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 88px;
+  gap: 8px;
+  border-radius: 16px;
+  background: var(--Apple-Grey, #f5f5f7);
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.presence {
+  height: 40px;
+  padding: 8px 10px;
+  gap: 4px;
+  border-radius: 12px;
+  font-family: var(--medium);
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+  background: #00CD69;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nopresence {
+  background: #EB5757;
+}
+
+.messangers > a {
+  border-radius: 12px;
+  background: var(--White, #fff);
+  box-shadow: 0px 4px 15px 0px rgba(24, 120, 243, 0.1);
+  color: #1878f3;
+  font-family: var(--medium);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.messangers > div {
+  display: flex;
+  gap: 8px;
 }
 </style>

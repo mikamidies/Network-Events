@@ -157,6 +157,7 @@
           </button>
           <button
             class="presence"
+            @click="toMember(event?.uuid)"
             :class="{disabled: event.public}"
             v-else
           >
@@ -347,7 +348,9 @@ export default {
       this.tabHandle = name;
     },
     moment,
-
+    toMember(id) {
+      this.$router.push(`/community/join/${id}`);
+    },
     async __GET_MEMBERS() {
       const AUTH_STATUS = 401;
       try {
@@ -356,6 +359,7 @@ export default {
           payload: {
             params: {
               ...this.$route.query,
+              page_size: this.$route.query?.page_size || 10
             },
           },
         });

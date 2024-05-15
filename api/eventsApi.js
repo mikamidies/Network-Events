@@ -3,6 +3,12 @@ export default {
     return await $nuxt.$axios.get("/events", config);
   },
   async getEventsById(config = {}) {
+    const ACCESS_TOKEN = localStorage.getItem('accessToken')
+    if (ACCESS_TOKEN) {
+      config.payload = {}
+      config.payload['headers'] = {}
+      config.payload['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
+    }
     return await $nuxt.$axios.get(
       `/events/${config.id}`,
       config.payload
@@ -15,6 +21,12 @@ export default {
     );
   },
   async getMembers(config = {}) {
+    const ACCESS_TOKEN = localStorage.getItem('accessToken')
+    if (ACCESS_TOKEN) {
+      config.payload = {}
+      config.payload['headers'] = {}
+      config.payload['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
+    }
     return await $nuxt.$axios.get(
       `/events/${config.id}/members`,
       config.payload

@@ -19,7 +19,7 @@
         </svg>
       </button>
     </div>
-    <div class="items" v-if="event.is_member">
+    <div class="items" v-if="event.public || event.is_member">
       <div
         class="item"
         v-for="member in members"
@@ -88,7 +88,7 @@
       </h5>
       <p>{{ $store.state.translations["event.show_members"] }}</p>
     </div>
-    <div class="pag-block" v-if="event.is_member">
+    <div class="pag-block" v-if="event.public || event.is_member">
       <VPagination
         :load="true"
         class="xl:hidden"
