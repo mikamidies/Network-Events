@@ -249,6 +249,7 @@ export default {
         sms_code: null,
         full_name: "",
         client_data: {
+          specifications: [1,2],
           image: "",
           company_name: "",
           job_title: "",
