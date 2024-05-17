@@ -5,7 +5,7 @@
         <h4 class="title">{{ $store.state.translations["profile.cabinet"] }}</h4>
       </div>
       <div class="right">
-        <button class="share">
+        <button class="share" @click="$router.push('/profile/edit')">
           <svg
             width="24"
             height="24"
@@ -56,9 +56,9 @@ export default {
   methods: {
     showConfirm(event) {
       this.$confirm({
-        title: "Profilingizdan chiqishni xoxlaysizmi?",
-        okText: "Ha",
-        cancelText: "Yo'q",
+        title: this.$store.state.translations['profile.logout_text'],
+        okText: this.$store.state.translations['profile.yes'],
+        cancelText: this.$store.state.translations['profile.no'],
         onOk() {
           event.logout();
         },

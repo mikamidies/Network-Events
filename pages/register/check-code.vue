@@ -19,9 +19,8 @@
         </a-menu>
       </a-dropdown>
       <div class="image-texts">
-        <h4>hamma narsani bir joyda o’rganing</h4>
-        <p>Shaxsiylashtirilgan sahifalar uchun barchasi
-          bitta platformada</p>
+        <h4>{{ $store.state.translations["login.sms_title"] }}</h4>
+        <p>{{ $store.state.translations["login.sms_subtitle"] }}</p>
       </div>
     </div>
     <div class="bg-image">
@@ -31,7 +30,7 @@
       <div>
 
         <div class="info-texts">
-          <h4>Kodni kiriting</h4>
+          <h4>{{ $store.state.translations["login.enter_code"] }}</h4>
           <p >
             +{{
               form.phone_number &&
@@ -357,7 +356,7 @@ export default {
 .master {
   height: 100vh;
   display: grid;
-  grid-template-rows: 4fr 554px;
+  grid-template-rows: 4fr 7fr;
 }
 
 .register-page {

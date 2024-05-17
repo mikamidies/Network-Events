@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="list">
-    <a class="card" v-if="profile?.phone_number" :href="`tel:+${profile?.phone_number}`">
+    <a class="card"   v-if="profile?.phone_number && profile?.client?.show_phone_number" :href="`tel:+${profile?.phone_number}`">
       <span>
          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="40" height="40" rx="8" fill="#00CD69"/>
@@ -118,22 +118,13 @@
       target="_blank"
     >
           <span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.0107 6.98988L17.0128 6.99116M10.7559 21.246H13.2448C16.0451 21.246 17.4452 21.246 18.5148 20.7011C19.4556 20.2217 20.2205 19.4568 20.6999 18.516C21.2448 17.4464 21.2448 16.0463 21.2448 13.246V10.7571C21.2448 7.95682 21.2448 6.55669 20.6999 5.48713C20.2205 4.54632 19.4556 3.78141 18.5148 3.30205C17.4452 2.75708 16.0451 2.75708 13.2448 2.75708H10.7559C7.9556 2.75708 6.55547 2.75708 5.48591 3.30205C4.5451 3.78141 3.78019 4.54632 3.30083 5.48713C2.75586 6.55669 2.75586 7.95682 2.75586 10.7571V13.246C2.75586 16.0463 2.75586 17.4464 3.30083 18.516C3.78019 19.4568 4.5451 20.2217 5.48591 20.7011C6.55547 21.246 7.9556 21.246 10.7559 21.246ZM15.6654 12.0019C15.6654 14.025 14.0254 15.665 12.0023 15.665C9.97921 15.665 8.33919 14.025 8.33919 12.0019C8.33919 9.97882 9.97921 8.3388 12.0023 8.3388C14.0254 8.3388 15.6654 9.97882 15.6654 12.0019Z"
-                stroke="#EB5757"
-                stroke-width="1.5"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="40" height="40" rx="8" fill="#5D5FEF"/>
+<path fill-rule="evenodd" clip-rule="evenodd"
+      d="M15 10C12.2386 10 10 12.2386 10 15V25C10 27.7614 12.2386 30 15 30H25C27.7614 30 30 27.7614 30 25V15C30 12.2386 27.7614 10 25 10H15ZM26 15C26.5523 15 27 14.5523 27 14C27 13.4477 26.5523 13 26 13C25.4477 13 25 13.4477 25 14C25 14.5523 25.4477 15 26 15ZM25 20C25 22.7614 22.7614 25 20 25C17.2386 25 15 22.7614 15 20C15 17.2386 17.2386 15 20 15C22.7614 15 25 17.2386 25 20ZM20 23C21.6569 23 23 21.6569 23 20C23 18.3431 21.6569 17 20 17C18.3431 17 17 18.3431 17 20C17 21.6569 18.3431 23 20 23Z"
+      fill="white"/>
+</svg>
+
 
             {{
               profile?.client?.instagram?.includes("@")
@@ -178,9 +169,7 @@
 
         <p>
           {{
-            profile?.client?.linkedIn?.includes("@")
-              ? profile?.client?.linkedIn
-              : "@" + profile?.client?.linkedIn
+            profile?.client?.linkedIn
           }}
         </p></span
       >

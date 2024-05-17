@@ -139,10 +139,24 @@
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0">
               <div class="d-flex justify-content-between">
+                <p class="sub">{{ $store.state.translations["profile.phone_number"] }}</p>
+                <p class="sub">
+                  <a-switch size="small" :checked="form.client_data.show_phone_number" @change="e => form.client_data.show_phone_number = e"/>
+                  {{ $store.state.translations["profile.show"] }}
+                </p>
+              </div>
+              <input
+                type="text"
+                disabled
+                v-model.trim="form.phone_number"
+              />
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0">
+              <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small"/>
-                  Отображать
+                  <a-switch size="small" :checked="form.client_data.show_site" @change="e => form.client_data.show_site = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -155,8 +169,8 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small"/>
-                  Отображать
+                  <a-switch size="small" :checked="form.client_data.show_instagram" @change="e => form.client_data.show_instagram = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -169,8 +183,8 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small"/>
-                  Отображать
+                  <a-switch size="small" :checked="form.client_data.show_telegram" @change="e => form.client_data.show_telegram = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
 
@@ -184,8 +198,8 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small"/>
-                  Отображать
+                  <a-switch size="small" :checked="form.client_data.show_linkedIn" @change="e => form.client_data.show_linkedIn = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -196,7 +210,7 @@
             </a-form-model-item>
           </div>
           <div class="category-container">
-            <CategorySelectBlock></CategorySelectBlock>
+            <!--            <CategorySelectBlock></CategorySelectBlock>-->
           </div>
         </a-form-model>
         <div class="btns">
@@ -243,6 +257,11 @@ export default {
           instagram: null,
           telegram: "",
           linkedIn: null,
+          show_site: false,
+          show_instagram: false,
+          show_telegram: false,
+          show_linkedIn: false,
+          show_phone_number: false
         },
       },
       headers: {
@@ -284,6 +303,10 @@ export default {
       base_url: process.env.BASE_URL,
       image: "",
     };
+  },
+  mounted() {
+    const number = localStorage.getItem("phone_number");
+    if (number) this.form.phone_number = number
   },
   methods: {
     submit() {

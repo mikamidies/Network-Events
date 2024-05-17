@@ -143,8 +143,8 @@
           </a>
           <button
             class="presence nopresence"
-            :class="{disabled: event.public}"
             v-if="event?.is_member"
+            @click="toLeave(event?.uuid)"
           >
 
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,7 +158,6 @@
           <button
             class="presence"
             @click="toMember(event?.uuid)"
-            :class="{disabled: event.public}"
             v-else
           >
             <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -325,31 +324,45 @@ export default {
   },
 
   async mounted() {
-    try {
-      this.loading = true;
-      const eventsData = await communityApi.getCommunityById({
-        id: this.$route.params.id,
-      });
-      localStorage.removeItem("qr_code");
-      this.event = eventsData?.data;
-      this.__GET_MEMBERS();
-    } catch (e) {
-      console.log(e);
-      // if (e.response.status == 404) {
-      //   localStorage.removeItem("qr_code");
-      //   this.$router.push("/");
-      // }
-    } finally {
-      this.loading = false;
-    }
+    this.__GET_COMMUNITY()
   },
   methods: {
     tabChange(name) {
       this.tabHandle = name;
     },
     moment,
+    async toLeave(id) {
+      try {
+        await communityApi.postLeave({
+          id: this.$route.params.id,
+        });
+        this.__GET_COMMUNITY()
+      } catch (e) {
+        console.log(e)
+      }
+
+    },
     toMember(id) {
       this.$router.push(`/community/join/${id}`);
+    },
+    async __GET_COMMUNITY() {
+      try {
+        this.loading = true;
+        const eventsData = await communityApi.getCommunityById({
+          id: this.$route.params.id,
+        });
+        localStorage.removeItem("qr_code");
+        this.event = eventsData?.data;
+        this.__GET_MEMBERS();
+      } catch (e) {
+        console.log(e);
+        // if (e.response.status == 404) {
+        //   localStorage.removeItem("qr_code");
+        //   this.$router.push("/");
+        // }
+      } finally {
+        this.loading = false;
+      }
     },
     async __GET_MEMBERS() {
       const AUTH_STATUS = 401;
@@ -359,7 +372,7 @@ export default {
           payload: {
             params: {
               ...this.$route.query,
-              page_size: this.$route.query?.page_size || 10
+              page_size: this.$route.query?.page_size || 10,
             },
           },
         });

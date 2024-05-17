@@ -15,10 +15,10 @@
 <script>
 import global from "@/mixins/global";
 export default {
-  props: ["totalPage", "load"],
+  props: ["totalPage", "load","pageSize"],
   mixins: [global],
   mounted() {
-    this.getFirstData();
+    this.getFirstData(this.pageSize);
   },
   methods: {
     async pageChange(e) {

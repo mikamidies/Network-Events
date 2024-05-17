@@ -6,7 +6,7 @@
         <div
           class="personal-card"
           :style="{
-            backgroundImage: `url(${$store.state.profile?.client?.image})`,
+            backgroundImage: `url(${$store.state.profile?.client?.image ? $store.state.profile?.client?.image:'/empty-avatar.jpg'})`,
           }"
         >
           <div class="bottom-shadow"></div>
@@ -23,7 +23,7 @@
           </p>
         </div>
         <SocialBlock :profile="$store.state.profile"/>
-        <UserCategories/>
+<!--        <UserCategories/>-->
         <div class="edit">
           <button class="edit-btn" @click="$router.push('/profile/edit')">
             {{ $store.state.translations['profile.edit'] }}

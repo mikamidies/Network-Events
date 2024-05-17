@@ -24,14 +24,14 @@ export default {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     },
-    async getFirstData() {
+    async getFirstData(pageSize) {
       if (
         !Object.keys(this.$route.query).includes("page") ||
         !Object.keys(this.$route.query).includes("page_size")
       ) {
         await this.$router.replace({
           path: this.$route.path,
-          query: { page: this.params.page, page_size: this.params.pageSize },
+          query: { page: this.params.page, page_size: pageSize || this.params.pageSize },
         });
       }
       this.params.pageSize = Number(this.$route.query.page_size);

@@ -93,6 +93,7 @@
         :load="true"
         class="xl:hidden"
         :totalPage="totalPage"
+        :pageSize="pageSize"
         @getData="$emit('getData')"
       />
     </div>
@@ -105,7 +106,9 @@ import VPagination from "../VPagination.vue";
 export default {
   props: ["members", "event", "totalPage"],
   data() {
-    return {};
+    return {
+      pageSize: 30
+    };
   },
   components: { VPagination },
 };

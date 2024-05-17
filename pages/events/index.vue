@@ -69,9 +69,9 @@
       </div>
       <div class="my-events" v-if="$store.state.profile?.id">
         <button :class="{active: $route.query?.my}" @click="myEvetsFilter(true)">
-          Men qatnashayotganlarim
+          {{ $store.state.translations['main.is_members'] }}
         </button>
-        <button :class="{active: !$route.query?.my}" @click="myEvetsFilter(false)">Barchasi</button>
+        <button :class="{active: !$route.query?.my}" @click="myEvetsFilter(false)">   {{ $store.state.translations['main.all'] }}</button>
       </div>
 
       <div class="wrap">
@@ -175,19 +175,19 @@
         </div>
         <div class="form">
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
-            <a-form-model-item class="form-item mb-0" label="Holati">
-              <div class="bottom_tab">
-                <button
-                  @click="filterForm.my = false"
-                  :class="{ active: !filterForm.my }"
-                >
-                  {{ $store.state.translations['main.all'] }}
-                </button>
-                <button @click="filterForm.my = true" :class="{ active: filterForm.my }">
-                  Men qatnashganlarim
-                </button>
-              </div>
-            </a-form-model-item>
+<!--            <a-form-model-item class="form-item mb-0" label="Holati">-->
+<!--              <div class="bottom_tab">-->
+<!--                <button-->
+<!--                  @click="filterForm.my = false"-->
+<!--                  :class="{ active: !filterForm.my }"-->
+<!--                >-->
+<!--                  {{ $store.state.translations['main.all'] }}-->
+<!--                </button>-->
+<!--                <button @click="filterForm.my = true" :class="{ active: filterForm.my }">-->
+<!--                  Men qatnashganlarim-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </a-form-model-item>-->
 
             <a-form-model-item class="form-item mb-0 w-100" label="Sana">
               <a-range-picker

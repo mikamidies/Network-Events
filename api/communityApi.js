@@ -28,7 +28,7 @@ export default {
   async getMembers(config = {}) {
     const ACCESS_TOKEN = localStorage.getItem('accessToken')
     if (ACCESS_TOKEN) {
-      config.payload = {}
+      // config.payload = {}
       config.payload['headers'] = {}
       config.payload['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     }
@@ -40,6 +40,12 @@ export default {
   async postEvent(config = {}) {
     return await $nuxt.$axiosInstance.post(
       `/community/${config.id}/join`,
+      config.payload
+    );
+  },
+  async postLeave(config = {}) {
+    return await $nuxt.$axiosInstance.post(
+      `/community/${config.id}/leave/`,
       config.payload
     );
   },

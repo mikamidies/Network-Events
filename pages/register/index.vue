@@ -2,11 +2,27 @@
   <div class="master">
     <!--    <div class="block">-->
   <div class="image-info">
+    <a-dropdown :trigger="['click']">
+      <button class="drop-btn">
+        <LangRuIcon />
+
+        Русский <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      </button>
+      <a-menu slot="overlay">
+        <div class="dowpdown_body">
+          <button> <LangRuIcon/>Русский</button>
+          <button> <LangRuIcon/>Uzbek</button>
+          <button> <LangRuIcon/>English</button>
+        </div>
+      </a-menu>
+    </a-dropdown>
     <RegisterLogo/>
     <div class="image-texts">
-      <h4>Hush kelibsiz</h4>
-      <p>Shaxsiylashtirilgan sahifalar uchun barchasi
-        bitta platformada</p>
+      <h4>{{ $store.state.translations["login.welcome"] }}</h4>
+      <p>{{ $store.state.translations["login.title"] }}</p>
     </div>
   </div>
     <div class="bg-image">
@@ -15,8 +31,8 @@
     <div class="container info-block">
       <div>
         <div class="info-texts">
-          <h4>Telefon raqam</h4>
-          <p>Telefon raqamingizga tasdiqlash kodi yuboriladi</p>
+          <h4>{{ $store.state.translations["profile.phone_number"] }}</h4>
+          <p>{{ $store.state.translations["login.subtitle"] }}</p>
         </div>
         <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
           <a-form-model-item class="form-item mb-0" prop="phone_number">
@@ -31,7 +47,7 @@
                 placeholder="(__) ___ __ __"
               />
             </div>
-            <p class="input-btext">Kiritgan telefon raqamingizga tasdiqlash kodi yuboriladi</p>
+            <p class="input-btext">{{ $store.state.translations["login.bottom_text"] }}</p>
           </a-form-model-item
           >
         </a-form-model>
@@ -54,6 +70,7 @@ import sendNUmberApi from "@/api/authApi";
 import moment from "moment";
 import LoaderBtn from "../../components/loader-btn.vue";
 import RegisterLogo from "~/components/icons/register-logo.vue";
+import LangRuIcon from "@/components/icons/lang-ru-icon.vue";
 
 export default {
   layout: "empty",
@@ -157,6 +174,7 @@ export default {
     },
   },
   components: {
+    LangRuIcon,
     RegisterLogo,
     LoaderBtn,
   },
@@ -189,7 +207,7 @@ export default {
 .master {
   height: 100vh;
   display: grid;
-grid-template-rows: 4fr  554px;
+grid-template-rows: 4fr 7fr;
 }
 
 
@@ -363,5 +381,43 @@ grid-template-rows: 4fr  554px;
   text-align: left;
   color: #9A999B;
   margin-top: 12px;
+}
+.dowpdown_body {
+  background: #FFFFFF52;
+  border: 1px solid #FFFFFF7A;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  gap: 7px;
+}
+
+.dowpdown_body button {
+  font-family: var(--regular);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+  color: #FFFFFF;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.drop-btn {
+  background: #FFFFFF52;
+  border: 1px solid #FFFFFF7A;
+  padding: 8px;
+  border-radius: 43px;
+  font-family: var(--regular);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+  color: #fff;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 </style>

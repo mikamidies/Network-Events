@@ -7,7 +7,7 @@ export default {
 <template>
   <div class="category-select-block">
     <div>
-      <h4 class="title">Sohangizni belgilang</h4>
+      <h4 class="title">{{ $store.state.translations['main.spec_title'] }}</h4>
       <div class="list">
         <button>
           Правительство и политика
