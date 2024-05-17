@@ -372,7 +372,7 @@ export default {
           payload: {
             params: {
               ...this.$route.query,
-              page_size: this.$route.query?.page_size || 10,
+              page_size: this.$route.query?.page_size || 30,
             },
           },
         });

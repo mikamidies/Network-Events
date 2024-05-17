@@ -1,15 +1,34 @@
 <script>
+import specilficationsApi from "@/api/specilficationsApi";
+
 export default {
   name: "category-select-block",
+  props: ['categories'],
   data() {
     return {
-      actives: []
+      activeCategory: null,
+      specList: []
     }
   },
   methods: {
     toActive(id) {
-      this.actives.push(id)
-    }
+      this.activeCategory = id
+      this.__GET_SPEC(id)
+    },
+    selectSpecs(id) {
+      console.log(id)
+    },
+    async __GET_SPEC(id) {
+      try {
+        const data = await specilficationsApi.getSpecList({
+          params: {
+            category: id
+          }
+        });
+        this.specList = data?.data?.results
+      } catch (e) {
+      }
+    },
   }
 }
 </script>
@@ -20,26 +39,17 @@ export default {
       <h4 class="title">{{ $store.state.translations['main.spec_title'] }}</h4>
       <h6 class="subtitle">{{ $store.state.translations['main.spec_title'] }}</h6>
       <div class="list list-bottom">
-        <button class="active">
-          Правительство и политика
+        <button @click="toActive(category?.id)" :class="{active: activeCategory === category?.id, selected: false}"
+                v-for="category in categories"
+                :key="category?.id">
+          {{ category.title }}
         </button>
-        <button class="selected">
-          <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="3" cy="3.5" r="3" fill="#1878F3"/>
-          </svg>
-          Бизнесмен
-        </button>
-        <button>Развлечение</button>
-        <button>Образование</button>
       </div>
     </div>
     <div>
       <h6 class="subtitle">{{ $store.state.translations['main.spec_title'] }}</h6>
       <div class="list">
-        <button>Правительство и политика</button>
-        <button>Бизнесмен</button>
-        <button>Развлечение</button>
-        <button>Образование</button>
+        <button @click="selectSpecs(spec.id)" v-for="spec in specList" :key="spec?.id">{{ spec?.title }}</button>
       </div>
     </div>
   </div>

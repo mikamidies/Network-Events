@@ -207,7 +207,7 @@
             </a-form-model-item>
           </div>
           <div class="category-container">
-<!--            <CategorySelectBlock></CategorySelectBlock>-->
+            <CategorySelectBlock :categories="categories"></CategorySelectBlock>
           </div>
         </a-form-model>
         <div class="btns">
@@ -225,6 +225,7 @@
 <script>
 import authApi from "@/api/authApi";
 import EditTop from "../../components/EditTop.vue";
+import specilficationsApi from "@/api/specilficationsApi";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -241,6 +242,7 @@ export default {
       imgLoad: false,
       previewVisible: false,
       previewImage: "",
+      categories: [],
       form: {
         phone_number: "",
         sms_code: null,
@@ -304,6 +306,7 @@ export default {
   },
   mounted() {
     this.__GET_INFO();
+    this.__GET_CATEGORIES()
   },
   methods: {
     onChange(e, name) {
@@ -335,7 +338,15 @@ export default {
       this.image = "";
       this.form.client_data.image = "";
     },
-
+    async __GET_CATEGORIES() {
+      try {
+        const data = await specilficationsApi.getSpecCategories();
+        console.log(data)
+        this.categories = data?.data?.results;
+        console.log(this.categories)
+      } catch (e) {
+      }
+    },
     async __PUT_PROFILE(form) {
       try {
         const data = await authApi.putProfile(form);
