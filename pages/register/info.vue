@@ -310,6 +310,9 @@ export default {
     if (number) this.form.phone_number = number
   },
   methods: {
+    selectSpec(specs) {
+      this.form.client_data.specifications = specs
+    },
     submit() {
       this.form.sms_code = localStorage.getItem("accessCode");
       this.form.phone_number = localStorage.getItem("phone_number");

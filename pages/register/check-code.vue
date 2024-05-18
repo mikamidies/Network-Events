@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="master">
     <div class="image-info">
-      <a-dropdown :trigger="['click']">
+      <!-- <a-dropdown :trigger="['click']">
         <button class="drop-btn">
           <LangRuIcon />
 
@@ -17,7 +17,7 @@
            <button> <LangRuIcon/>English</button>
          </div>
         </a-menu>
-      </a-dropdown>
+      </a-dropdown> -->
       <div class="image-texts">
         <h4>{{ $store.state.translations["login.sms_title"] }}</h4>
         <p>{{ $store.state.translations["login.sms_subtitle"] }}</p>

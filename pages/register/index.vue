@@ -2,7 +2,7 @@
   <div class="master">
     <!--    <div class="block">-->
   <div class="image-info">
-    <a-dropdown :trigger="['click']">
+    <!-- <a-dropdown :trigger="['click']">
       <button class="drop-btn">
         <LangRuIcon />
 
@@ -18,7 +18,7 @@
           <button> <LangRuIcon/>English</button>
         </div>
       </a-menu>
-    </a-dropdown>
+    </a-dropdown> -->
     <RegisterLogo/>
     <div class="image-texts">
       <h4>{{ $store.state.translations["login.welcome"] }}</h4>

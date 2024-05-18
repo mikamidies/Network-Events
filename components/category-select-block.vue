@@ -16,7 +16,8 @@ export default {
       this.__GET_SPEC(id)
     },
     selectSpecs(id) {
-      console.log(id)
+      this.specList.includes(id) ? this.specList = this.specList.filter(item => item.id !== id):this.specList.push(id)
+      this.$emit('selectSpec',this.specList)
     },
     async __GET_SPEC(id) {
       try {

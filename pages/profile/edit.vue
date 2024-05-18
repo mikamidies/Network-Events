@@ -207,7 +207,7 @@
             </a-form-model-item>
           </div>
           <div class="category-container">
-            <CategorySelectBlock :categories="categories"></CategorySelectBlock>
+            <CategorySelectBlock :categories="categories" @selectSpec="selectSpec"></CategorySelectBlock>
           </div>
         </a-form-model>
         <div class="btns">
@@ -309,6 +309,9 @@ export default {
     this.__GET_CATEGORIES()
   },
   methods: {
+    selectSpec(specs) {
+      this.form.client_data.specifications = specs
+    },
     onChange(e, name) {
       this.form.client_data[name] = e
     },
