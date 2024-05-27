@@ -228,3 +228,6 @@ button {
 .justify-content-between {
   justify-content: space-between;
 }
+.rotate180 {
+  transform: rotate(180deg);
+}
