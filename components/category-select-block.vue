@@ -7,17 +7,34 @@ export default {
   data() {
     return {
       activeCategory: null,
-      specList: []
+      specList: [],
+      activeSpecs: [],
+      activeCategories: []
     }
   },
+
   methods: {
+    myActiveSpecs(specs) {
+      console.log(specs)
+      this.activeSpecs = specs.map((elem) => elem.id);
+      this.activeCategories = specs.map((elem) => elem.category)
+    },
     toActive(id) {
       this.activeCategory = id
       this.__GET_SPEC(id)
     },
-    selectSpecs(id) {
-      this.specList.includes(id) ? this.specList = this.specList.filter(item => item.id !== id):this.specList.push(id)
-      this.$emit('selectSpec',this.specList)
+    selectSpecs(spec) {
+      if (this.activeSpecs.includes(spec.id)) {
+        this.activeSpecs = this.activeSpecs.filter(item => item !== spec.id);
+        let index = this.activeCategories.indexOf(spec.category);
+        if (index !== -1) {
+          this.activeCategories.splice(index, 1);
+        }
+      } else {
+        this.activeSpecs.push(spec.id);
+        this.activeCategories.push(spec.category)
+      }
+      this.$emit('selectSpec', this.activeSpecs)
     },
     async __GET_SPEC(id) {
       try {
@@ -30,6 +47,11 @@ export default {
       } catch (e) {
       }
     },
+  },
+  watch: {
+    '$store.state.profile.id'() {
+      this.activeSpecs
+    }
   }
 }
 </script>
@@ -40,7 +62,8 @@ export default {
       <h4 class="title">{{ $store.state.translations['main.spec_title'] }}</h4>
       <h6 class="subtitle">{{ $store.state.translations['main.spec_title'] }}</h6>
       <div class="list list-bottom">
-        <button @click="toActive(category?.id)" :class="{active: activeCategory === category?.id, selected: false}"
+        <button @click="toActive(category?.id)"
+                :class="{active: activeCategory === category?.id, selected: activeCategories.includes(category?.id)}"
                 v-for="category in categories"
                 :key="category?.id">
           {{ category.title }}
@@ -49,8 +72,13 @@ export default {
     </div>
     <div>
       <h6 class="subtitle">{{ $store.state.translations['main.spec_title'] }}</h6>
-      <div class="list">
-        <button @click="selectSpecs(spec.id)" v-for="spec in specList" :key="spec?.id">{{ spec?.title }}</button>
+      <div class="list" v-if="specList.length > 0">
+        <button :class="{active: activeSpecs.includes(spec.id)}" @click="selectSpecs(spec)" v-for="spec in specList"
+                :key="spec?.id">{{ spec?.title }}
+        </button>
+      </div>
+      <div v-else>
+        <a-empty size="small"/>
       </div>
     </div>
   </div>

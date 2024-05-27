@@ -25,6 +25,11 @@ export default {
       loader: false,
     };
   },
+  computed: {
+    targetLang() {
+      return this.$i18n.locale;
+    },
+  },
   async fetch() {
     const translationsData = await translationsApi.getTranslations(this.$axios);
     this.$store.commit("handleTranslations", translationsData?.data);
@@ -82,6 +87,12 @@ export default {
       }
     },
   },
+  watch: {
+    async targetLang(val) {
+      const translationsData = await translationsApi.getTranslations(this.$axios);
+      this.$store.commit("handleTranslations", translationsData?.data);
+    }
+  }
 };
 </script>
 

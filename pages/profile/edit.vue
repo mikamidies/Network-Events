@@ -139,7 +139,8 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["profile.phone_number"] }}</p>
                 <p class="sub">
-                  <a-switch size="small" :checked="form.client_data.show_phone_number" @change="e => form.client_data.show_phone_number = e"/>
+                  <a-switch size="small" :checked="form.client_data.show_phone_number"
+                            @change="e => form.client_data.show_phone_number = e"/>
                   {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
@@ -153,8 +154,9 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.site_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small" :checked="form.client_data.show_site" @change="e => form.client_data.show_site = e"/>
-                   {{ $store.state.translations["profile.show"] }}
+                  <a-switch size="small" :checked="form.client_data.show_site"
+                            @change="e => form.client_data.show_site = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -167,8 +169,9 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.instagram_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small" :checked="form.client_data.show_instagram" @change="e => form.client_data.show_instagram = e"/>
-                   {{ $store.state.translations["profile.show"] }}
+                  <a-switch size="small" :checked="form.client_data.show_instagram"
+                            @change="e => form.client_data.show_instagram = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -181,8 +184,9 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.tg_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small" :checked="form.client_data.show_telegram" @change="e => form.client_data.show_telegram = e"/>
-                   {{ $store.state.translations["profile.show"] }}
+                  <a-switch size="small" :checked="form.client_data.show_telegram"
+                            @change="e => form.client_data.show_telegram = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -195,8 +199,9 @@
               <div class="d-flex justify-content-between">
                 <p class="sub">{{ $store.state.translations["login.linkedin_title"] }}</p>
                 <p class="sub">
-                  <a-switch size="small" :checked="form.client_data.show_linkedIn" @change="e => form.client_data.show_linkedIn = e"/>
-                {{ $store.state.translations["profile.show"] }}
+                  <a-switch size="small" :checked="form.client_data.show_linkedIn"
+                            @change="e => form.client_data.show_linkedIn = e"/>
+                  {{ $store.state.translations["profile.show"] }}
                 </p>
               </div>
               <input
@@ -207,7 +212,8 @@
             </a-form-model-item>
           </div>
           <div class="category-container">
-            <CategorySelectBlock :categories="categories" @selectSpec="selectSpec"></CategorySelectBlock>
+            <CategorySelectBlock ref="categorySelect" :categories="categories"
+                                 @selectSpec="selectSpec"></CategorySelectBlock>
           </div>
         </a-form-model>
         <div class="btns">
@@ -248,7 +254,7 @@ export default {
         sms_code: null,
         full_name: "",
         client_data: {
-          specifications: [1,2],
+          specifications: [],
           image: "",
           company_name: "",
           job_title: "",
@@ -322,7 +328,7 @@ export default {
           ...this.form.client_data,
           telegram: this.form.client_data.telegram,
           instagram: this.form.client_data.instagram,
-          specifications: [1,2],
+          specifications: this.form.client_data.specifications,
         },
       };
       if (data.client_data.linkedIn) {
@@ -333,8 +339,14 @@ export default {
           ? `${data.client_data.linkedIn}.ru`
           : data.client_data.linkedIn;
       }
-      console.log(data)
-      this.$refs.ruleForm.validate((valid) => valid && this.__PUT_PROFILE(data));
+      this.$refs.ruleForm.validate((valid) => {
+        if(valid) {
+          data.client_data.specifications.length > 0 ? this.__PUT_PROFILE(data) : this.$notification["error"]({
+            message: "Invaid",
+            description: 'Specialization is required',
+          });
+        }
+      });
     },
     handleRemove() {
       this.fileList = [];
@@ -344,9 +356,7 @@ export default {
     async __GET_CATEGORIES() {
       try {
         const data = await specilficationsApi.getSpecCategories();
-        console.log(data)
         this.categories = data?.data?.results;
-        console.log(this.categories)
       } catch (e) {
       }
     },
@@ -397,7 +407,11 @@ export default {
             },
           ];
         }
+        console.log(data)
+        this.$refs.categorySelect.myActiveSpecs(data?.data?.client?.specifications);
+
       } catch (e) {
+        console.log(e)
         if (e.response.status == 401) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");

@@ -32,8 +32,29 @@ export default {
   components: true,
   buildModules: [],
 
-  modules: ["@nuxtjs/axios", "@nuxtjs/dotenv", "nuxt-leaflet"],
-
+  modules: ["@nuxtjs/axios", "@nuxtjs/dotenv", "nuxt-leaflet", "@nuxtjs/i18n",],
+  i18n: {
+    locales: [
+      {
+        code: "en",
+        iso: "en",
+      },
+      {
+        code: "uz",
+        iso: "uz",
+      },
+      {
+        code: "ru",
+        iso: "ru",
+      },
+    ],
+    baseURL: process.env.BASE_URL,
+    seo: true,
+    defaultLocale: "ru",
+    vueI18n: {
+      fallbackLocale: "ru",
+    },
+  },
   axios: {
     baseURL: process.env.BASE_URL,
   },

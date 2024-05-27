@@ -1,10 +1,11 @@
-export default function ({ $axios, redirect, error }, inject) {
+export default function ({$axios, redirect, error, i18n}, inject) {
   const axios = $axios.create({
     baseURL:
-      process.env.BASE_URL 
+    process.env.BASE_URL
   });
   axios.setHeader("Content-Type", "application/json");
   axios.onRequest((config) => {
+    config.headers.common["language"] = i18n.locale;
     return config;
   });
   axios.onResponse((response) => {

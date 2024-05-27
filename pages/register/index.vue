@@ -1,30 +1,36 @@
 <template lang="html">
   <div class="master">
     <!--    <div class="block">-->
-  <div class="image-info">
-    <!-- <a-dropdown :trigger="['click']">
-      <button class="drop-btn">
-        <LangRuIcon />
+    <div class="image-info">
+      <a-dropdown :trigger="['click']">
+        <button class="drop-btn">
+          <LangRuIcon/>
+          {{ locales.find(item => item.code == $i18n.locale).name }}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
 
-        Русский <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-
-      </button>
-      <a-menu slot="overlay">
-        <div class="dowpdown_body">
-          <button> <LangRuIcon/>Русский</button>
-          <button> <LangRuIcon/>Uzbek</button>
-          <button> <LangRuIcon/>English</button>
-        </div>
-      </a-menu>
-    </a-dropdown> -->
-    <RegisterLogo/>
-    <div class="image-texts">
-      <h4>{{ $store.state.translations["login.welcome"] }}</h4>
-      <p>{{ $store.state.translations["login.title"] }}</p>
+        </button>
+        <a-menu slot="overlay">
+          <div class="dowpdown_body">
+            <button v-for="locale in locales"
+                    :class="{ active: $i18n.locale === locale.code }"
+                    :key="locale.id"
+                    @click="changeLang(locale)">
+              <LangRuIcon v-if="locale.code === 'ru'"/>
+              <LangUzIcon v-if="locale.code === 'uz'"/>
+              {{ locale.name }}
+            </button>
+          </div>
+        </a-menu>
+      </a-dropdown>
+      <RegisterLogo/>
+      <div class="image-texts">
+        <h4>{{ $store.state.translations["login.welcome"] }}</h4>
+        <p>{{ $store.state.translations["login.title"] }}</p>
+      </div>
     </div>
-  </div>
     <div class="bg-image">
       <img src="../../assets/img/register-bg.png" alt="">
     </div>
@@ -71,11 +77,25 @@ import moment from "moment";
 import LoaderBtn from "../../components/loader-btn.vue";
 import RegisterLogo from "~/components/icons/register-logo.vue";
 import LangRuIcon from "@/components/icons/lang-ru-icon.vue";
+import LangUzIcon from "@/components/icons/lang-uz-icon.vue";
 
 export default {
   layout: "empty",
   data() {
     return {
+      locales: [
+        {id: 1, code: "uz", name: "Uzbek"},
+        // {
+        //   id: 2,
+        //   code: "en",
+        //   name: "English",
+        // },
+        {
+          id: 3,
+          code: "ru",
+          name: "Русский",
+        },
+      ],
       loading: false,
       phone_number_length: true,
       form: {
@@ -101,7 +121,7 @@ export default {
   mounted() {
     // const current_date = new Date();
     // const real_min = moment(current_date).format("HH:mm");
-    if (localStorage.getItem("accessToken")) this.$router.push("/");
+    if (localStorage.getItem("accessToken")) this.$router.push(this.localePath('/'));
     // const timer_time = JSON.parse(localStorage.getItem("timer_time"));
     // if (timer_time) {
     //   console.log("real_min", real_min, real_min.split(":")[0]);
@@ -125,6 +145,9 @@ export default {
     // }
   },
   methods: {
+    changeLang(locale) {
+      this.$router.push(this.switchLocalePath(locale.code))
+    },
     submit() {
       const data = {
         phone_number: `998${this.form.phone_number}`.replaceAll(" ", ""),
@@ -146,15 +169,13 @@ export default {
           "timer_time",
           JSON.stringify({real_min: real_min, timer_min: data?.data?.expiration_date})
         );
-        await this.$router.push("/register/check-code");
+        await this.$router.push(this.localePath("/register/check-code"));
       } catch (e) {
-        // if (e.response.status == 403) {
         if (e.response.data.wait) {
-          await this.$router.push("/register/check-code");
+          await this.$router.push(this.localePath("/register/check-code"));
         } else {
           this.$notification["error"]({
             message: "Error",
-            // description: "Код для этого телефона уже отправлен",
             description: e.response.data.messae,
           });
         }
@@ -174,6 +195,7 @@ export default {
     },
   },
   components: {
+    LangUzIcon,
     LangRuIcon,
     RegisterLogo,
     LoaderBtn,
@@ -207,7 +229,7 @@ export default {
 .master {
   height: 100vh;
   display: grid;
-grid-template-rows: 4fr 7fr;
+  grid-template-rows: 4fr 7fr;
 }
 
 
@@ -277,10 +299,12 @@ grid-template-rows: 4fr 7fr;
   position: relative;
   display: inline;
 }
-.btns{
+
+.btns {
   padding-top: 28px;
   padding-bottom: 28px;
 }
+
 .btns button {
   border-radius: 52px;
   background: #1878F3;
@@ -297,7 +321,6 @@ grid-template-rows: 4fr 7fr;
   align-items: center;
   border: none;
 }
-
 
 
 .info-block {
@@ -328,12 +351,14 @@ grid-template-rows: 4fr 7fr;
   text-align: center;
 
 }
+
 .image-texts {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
 }
+
 .image-texts p {
   font-family: var(--regular);
   font-size: 14px;
@@ -343,6 +368,7 @@ grid-template-rows: 4fr 7fr;
   color: #fff;
   max-width: 80%;
 }
+
 .image-texts h4 {
   font-family: var(--decor-bd);
   font-size: 28px;
@@ -364,6 +390,7 @@ grid-template-rows: 4fr 7fr;
   color: #5D5D5F;
 
 }
+
 .image-info {
   display: flex;
   flex-direction: column;
@@ -373,6 +400,7 @@ grid-template-rows: 4fr 7fr;
   height: 100%;
   gap: 16px;
 }
+
 .input-btext {
   font-family: var(--regular);
   font-size: 14px;
@@ -382,6 +410,7 @@ grid-template-rows: 4fr 7fr;
   color: #9A999B;
   margin-top: 12px;
 }
+
 .dowpdown_body {
   background: #FFFFFF52;
   border: 1px solid #FFFFFF7A;
@@ -405,6 +434,7 @@ grid-template-rows: 4fr 7fr;
   align-items: center;
   gap: 8px;
 }
+
 .drop-btn {
   background: #FFFFFF52;
   border: 1px solid #FFFFFF7A;

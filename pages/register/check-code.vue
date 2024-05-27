@@ -1,23 +1,29 @@
 <template lang="html">
   <div class="master">
     <div class="image-info">
-      <!-- <a-dropdown :trigger="['click']">
+      <a-dropdown :trigger="['click']">
         <button class="drop-btn">
-          <LangRuIcon />
-
-          Русский <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+          <LangRuIcon/>
+          {{locales.find(item => item.code == $i18n.locale).name}}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
 
         </button>
         <a-menu slot="overlay">
-         <div class="dowpdown_body">
-           <button> <LangRuIcon/>Русский</button>
-           <button> <LangRuIcon/>Uzbek</button>
-           <button> <LangRuIcon/>English</button>
-         </div>
+          <div class="dowpdown_body">
+            <button v-for="locale in locales"
+                    :class="{ active: $i18n.locale === locale.code }"
+                    :key="locale.id"
+                    @click="changeLang(locale)">
+              <LangRuIcon v-if="locale.code === 'ru'"/>
+              <LangUzIcon v-if="locale.code === 'uz'"/>
+              {{ locale.name }}
+            </button>
+          </div>
         </a-menu>
-      </a-dropdown> -->
+      </a-dropdown>
       <div class="image-texts">
         <h4>{{ $store.state.translations["login.sms_title"] }}</h4>
         <p>{{ $store.state.translations["login.sms_subtitle"] }}</p>
@@ -100,12 +106,26 @@
 import sendNUmberApi from "@/api/authApi";
 import RegisterLogo from "~/components/icons/register-logo.vue";
 import LangRuIcon from "~/components/icons/lang-ru-icon.vue";
+import LangUzIcon from "@/components/icons/lang-uz-icon.vue";
 
 export default {
-  components: {LangRuIcon, RegisterLogo},
+  components: {LangUzIcon, LangRuIcon, RegisterLogo},
   layout: "empty",
   data() {
     return {
+      locales: [
+        {id: 1, code: "uz", name: "Uzbek"},
+        // {
+        //   id: 2,
+        //   code: "en",
+        //   name: "English",
+        // },
+        {
+          id: 3,
+          code: "ru",
+          name: "Русский",
+        },
+      ],
       loading: false,
       code_length: true,
       form: {
@@ -151,6 +171,9 @@ export default {
     }, 1000);
   },
   methods: {
+    changeLang(locale) {
+      this.$router.push(this.switchLocalePath(locale.code))
+    },
     submit() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -169,10 +192,10 @@ export default {
         const data = await sendNUmberApi.sendCode(this.$axios, form);
 
         if (data?.data?.code_valid) {
-          this.$router.push("/register/info");
+          this.$router.push(this.localePath("/register/info"));
           localStorage.setItem("accessCode", this.form.sms_code);
         } else {
-          this.$router.push("/");
+          this.$router.push(this.localePath("/"));
           localStorage.setItem("accessToken", data?.data?.access);
           localStorage.setItem("refreshToken", data?.data?.refresh);
           localStorage.removeItem("phone_number");
@@ -191,7 +214,7 @@ export default {
     async __SEND_NUMBER(form) {
       try {
         const data = await sendNUmberApi.sendNumber(this.$axios, form);
-        await this.$router.push("/register/check-code");
+        await this.$router.push(this.localePath("/register/check-code"));
       } catch (e) {
         if (e.response.status == 403) {
           this.$notification["error"]({

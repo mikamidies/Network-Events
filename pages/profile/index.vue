@@ -23,7 +23,7 @@
           </p>
         </div>
         <SocialBlock :profile="$store.state.profile"/>
-<!--        <UserCategories/>-->
+        <UserCategories/>
         <div class="edit">
           <button class="edit-btn" @click="$router.push('/profile/edit')">
             {{ $store.state.translations['profile.edit'] }}
@@ -35,22 +35,6 @@
 
           </button>
         </div>
-
-        <!-- <div class="tags">
-          <h4 class="about-title">Mutahasisliklar</h4>
-          <div class="list-tags">
-            <ul>
-              <li>Tarjimon</li>
-              <li>AI developer</li>
-              <li>Motivatsia</li>
-              <li>Biznes</li>
-              <li>Tarjimon</li>
-              <li>AI developer</li>
-              <li>Motivatsia</li>
-              <li>Biznes</li>
-            </ul>
-          </div>
-        </div> -->
       </div>
     </div>
     <loader v-if="loader"/>
@@ -217,6 +201,9 @@ export default {
 
 .tags {
   margin-top: 32px;
+  background: #F9F9F9;
+  padding: 12px 16px;
+  border-radius: 16px;
 }
 
 .list-tags ul {
@@ -224,14 +211,15 @@ export default {
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 12px;
+  padding-left: 0
 }
 
 .list-tags ul li {
   padding: 8px 12px;
   border-radius: 57px;
-  background: #f5f5f7;
+  background: #fff;
   color: #353437;
-  font-family: var(--regular);
+  font-family: var(--medium);
   font-size: 14px;
   font-style: normal;
   line-height: 140%;

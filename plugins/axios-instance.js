@@ -1,4 +1,4 @@
-export default ({ $axios, redirect, error }, inject) => {
+export default ({ $axios, redirect, error,i18n }, inject) => {
   const axiosInstance = $axios.create({
     baseURL: process.env.BASE_URL,
   });
@@ -6,6 +6,7 @@ export default ({ $axios, redirect, error }, inject) => {
 
   axiosInstance.onRequest((config) => {
     const ACCESS_TOKEN = localStorage.getItem("accessToken");
+    config.headers.common["language"] = i18n.locale;
     if (ACCESS_TOKEN) {
       config.headers.common["Authorization"] = `Bearer ${ACCESS_TOKEN}`;
     }

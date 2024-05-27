@@ -9,14 +9,7 @@ export default {
     <div>
       <h4 class="title">{{ $store.state.translations['main.spec_title'] }}</h4>
       <div class="list">
-        <button>
-          Правительство и политика
-        </button>
-        <button>
-          Бизнесмен
-        </button>
-        <button>Развлечение</button>
-        <button>Образование</button>
+        <button v-for="spec in $store.state.profile?.client?.specifications">{{ spec?.title }}</button>
       </div>
     </div>
   </div>
