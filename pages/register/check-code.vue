@@ -3,7 +3,8 @@
     <div class="image-info">
       <a-dropdown :trigger="['click']">
         <button class="drop-btn">
-          <LangRuIcon/>
+          <LangRuIcon v-if="$i18n.locale === 'ru'"/>
+          <LangUzIcon v-if="$i18n.locale === 'uz'"/>
           {{locales.find(item => item.code == $i18n.locale).name}}
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5"
