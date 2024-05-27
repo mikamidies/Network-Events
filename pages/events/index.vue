@@ -2,7 +2,7 @@
   <div class="master">
     <div class="top-bar">
       <div class="container">
-        <h4>Tadbirlar</h4>
+        <h4>{{ $store.state.translations['main.events'] }}</h4>
         <button @click="open">
           <svg
             width="24"
@@ -155,7 +155,7 @@
     >
       <div class="bd_container">
         <div class="head">
-          <h4>Filter</h4>
+          <h4>{{ $store.state.translations['main.filter'] }}</h4>
           <button @click="close">
             <svg
               width="24"
@@ -189,21 +189,22 @@
 <!--              </div>-->
 <!--            </a-form-model-item>-->
 
-            <a-form-model-item class="form-item mb-0 w-100" label="Sana">
+            <a-form-model-item class="form-item mb-0 w-100" :label="$store.state.translations['main.date']">
               <a-range-picker
                 :default-value="[
                   filterForm.date_from ? moment(filterForm.date_from, dateFormat1) : '',
                   filterForm.date_to ? moment(filterForm.date_to, dateFormat1) : '',
                 ]"
                 class="date-pic"
+                :placeholder="[$store.state.translations['main.start-date'], $store.state.translations['main.end-date']]"
                 @change="onChangeDate"
               >
               </a-range-picker>
             </a-form-model-item>
-            <a-form-model-item class="form-item mb-0" label="Suhbat turi">
+            <a-form-model-item class="form-item mb-0" :label="$store.state.translations['main.filter-type']">
               <a-select
                 v-model="filterForm.category"
-                placeholder="Suhbat turini tanlang"
+                :placeholder="$store.state.translations['main.filter-type-place']"
                 class="select-item"
               >
                 <a-select-option
@@ -252,7 +253,7 @@
     >
       <div class="all-categories">
         <div class="head">
-          <h4>Bo’limlar</h4>
+          <h4>{{$store.state.translations['main.sections']}}</h4>
           <button @click="visible = false">
             <svg
               width="24"

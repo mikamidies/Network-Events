@@ -141,7 +141,7 @@
     >
       <div class="all-categories">
         <div class="head">
-          <h4>Bo’limlar</h4>
+          <h4>{{$store.state.translations['main.sections']}}</h4>
           <button @click="visible = false">
             <svg
               width="24"
