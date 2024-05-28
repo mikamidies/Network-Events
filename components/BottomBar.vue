@@ -115,7 +115,7 @@
           </svg>
           <p>{{$store.state.translations['main.message']}}</p>
         </NuxtLink> -->
-        <NuxtLink  :to="$store.state.profile?.id ? '/profile':'/register'" :class="{ active: $route.name.includes('profile') }">
+        <NuxtLink  :to="$store.state.profile?.id ? localePath('/profile'):localePath('/register')" :class="{ active: $route.name.includes('profile') }">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"

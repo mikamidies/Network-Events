@@ -87,7 +87,7 @@
           </div>
           <div class="items" v-if="!loading">
             <div class="item" v-for="event in events" :key="event?.id">
-              <NuxtLink :to="`/community/${event?.id}`">
+              <NuxtLink :to="localePath(`/community/${event?.id}`)">
                 <div class="img">
                   <span class="tag"
                     >{{ $store.state.translations["community.community1"] }} -

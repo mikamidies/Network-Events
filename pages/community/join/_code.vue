@@ -18,14 +18,14 @@ export default {
     try {
       const code = this.$route.params.code || localStorage.getItem("qr_code");
       const data = await communityApi.postEvent({ id: code, payload: {} });
-      this.$router.push(`/community/${data?.data?.id}`);
+      this.$router.push(this.localePath(`/community/${data?.data?.id}`));
     } catch (e) {
       const PARAMS_CODE = this.paramsObj?.code;
       if (PARAMS_CODE) {
         localStorage.setItem("qr_code", PARAMS_CODE);
         localStorage.setItem("page", "community");
       }
-      if (e.response.status == AUTH_STATUS) this.$router.push("/register");
+      if (e.response.status == AUTH_STATUS) this.$router.push(this.localePath("/register"));
     }
   },
   components: {

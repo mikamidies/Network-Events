@@ -2,6 +2,7 @@ export default {
   async getCommunity(config = {}) {
     const ACCESS_TOKEN = localStorage.getItem('accessToken')
     if (ACCESS_TOKEN) {
+      config.payload = {}
       config.payload['headers'] = {}
       config['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     }
@@ -11,6 +12,7 @@ export default {
   async getCommunityById(config = {}) {
     const ACCESS_TOKEN = localStorage.getItem('accessToken')
     if (ACCESS_TOKEN) {
+      config.payload = {}
       config.payload['headers'] = {}
       config.payload['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     }
@@ -28,6 +30,7 @@ export default {
   async getMembers(config = {}) {
     const ACCESS_TOKEN = localStorage.getItem('accessToken')
     if (ACCESS_TOKEN) {
+      config.payload = {}
       config.payload['headers'] = {}
       config.payload['headers']['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     }

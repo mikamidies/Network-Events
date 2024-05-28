@@ -359,7 +359,7 @@ export default {
         localStorage.setItem("refreshToken", data?.data?.refresh);
         localStorage.removeItem("phone_number");
         localStorage.removeItem("accessCode");
-        await this.$router.push("/");
+        await this.$router.push(this.localePath("/"));
       } catch (e) {
       }
     },

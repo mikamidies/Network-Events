@@ -16,7 +16,7 @@
             alt=""
             class="pic"
           />
-          <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
+          <img v-else src="@/assets/img/empty.jpg" alt="" class="pic"/>
         </div>
         <div class="info">
           <!-- <p>{{ moment(event?.start_date).format(dateFormat) }}</p> -->
@@ -343,7 +343,7 @@ export default {
 
     },
     toMember(id) {
-      this.$router.push(`/community/join/${id}`);
+      this.$router.push(this.localePath(`/community/join/${id}`));
     },
     async __GET_COMMUNITY() {
       try {

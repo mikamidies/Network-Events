@@ -4,7 +4,7 @@
       <h4 class="title">{{ $store.state.translations["main.live-event-title"] }}</h4>
       <div class="items">
         <div class="item" v-for="event in myEvents" :key="event?.id">
-          <NuxtLink :to="`/event/${event?.id}`">
+          <NuxtLink :to="localePath(`/event/${event?.id}`)">
             <img
               loading="lazy"
               v-if="event?.image"
@@ -12,7 +12,7 @@
               alt=""
               class="pic"
             />
-            <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+            <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
             <div class="content">
               <div class="badge">
                 {{
@@ -26,7 +26,7 @@
           </NuxtLink>
         </div>
         <div class="item" v-for="event in myCommunity" :key="event?.id">
-          <NuxtLink :to="`/community/${event?.id}`">
+          <NuxtLink :to="localePath(`/community/${event?.id}`)">
             <img
               loading="lazy"
               v-if="event?.image"
@@ -34,7 +34,7 @@
               alt=""
               class="pic"
             />
-            <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+            <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
             <div class="content">
               <div class="badge">
                 {{
@@ -49,14 +49,14 @@
         </div>
       </div>
       <div v-if="!loading && myEvents.length == 0 && myCommunity.length == 0">
-        <a-empty />
+        <a-empty/>
       </div>
     </div>
 
     <div class="others">
       <div class="header">
         <h4 class="title">{{ $store.state.translations["main.other_events"] }}</h4>
-        <NuxtLink to="/events">
+        <NuxtLink :to="localePath(`/events`)">
           {{ $store.state.translations["main.all"] }}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@
       </div>
       <div class="items" v-if="!loading">
         <div class="item" v-for="event in events" :key="event?.id">
-          <NuxtLink :to="`/event/${event?.id}`">
+          <NuxtLink :to="localePath(`/event/${event?.id}`)">
             <div class="img">
               <p class="date">
                 {{ moment(event?.start_date).format(dateFormat) }}
@@ -89,7 +89,7 @@
                 alt=""
                 class="pic"
               />
-              <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+              <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
             </div>
             <p class="name">
               {{ event?.title }}
@@ -106,13 +106,13 @@
         />
       </div>
       <div v-if="!loading && events.length == 0">
-        <a-empty />
+        <a-empty/>
       </div>
     </div>
     <div class="others">
       <div class="header">
         <h4 class="title">{{ $store.state.translations["community.community"] }}</h4>
-        <NuxtLink to="/community">
+        <NuxtLink :to="localePath(`/community`)">
           {{ $store.state.translations["main.all"] }}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -133,10 +133,10 @@
       </div>
       <div class="items" v-if="!loading">
         <div class="item" v-for="event in community" :key="event?.id">
-          <NuxtLink :to="`/community/${event?.id}`">
+          <NuxtLink :to="localePath(`/community/${event?.id}`)">
             <div class="img">
               <span class="tag"
-                >{{ $store.state.translations["community.community1"] }} -
+              >{{ $store.state.translations["community.community1"] }} -
                 {{ event?.category?.title }}</span
               >
               <img
@@ -146,7 +146,7 @@
                 alt=""
                 class="pic"
               />
-              <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+              <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
             </div>
             <p class="name">
               {{ event?.title }}
@@ -163,7 +163,7 @@
         />
       </div>
       <div v-if="!loading && community.length == 0">
-        <a-empty />
+        <a-empty/>
       </div>
     </div>
   </div>
@@ -171,6 +171,7 @@
 
 <script>
 import moment from "moment";
+
 const DATE_FORMAT = "DD MMM YYYY, HH:mm";
 
 export default {
@@ -198,6 +199,7 @@ export default {
 .current {
   padding-top: 24px;
 }
+
 .title {
   color: var(--Black, #020105);
   font-family: var(--decor-bd);
@@ -208,6 +210,7 @@ export default {
   letter-spacing: -0.4px;
   margin-bottom: 12px;
 }
+
 .current .item {
   position: relative;
   border-radius: 16px;
@@ -217,6 +220,7 @@ export default {
   -moz-box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
 }
+
 .current .item::after {
   border-radius: 0px 0px 16px 16px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 100%);
@@ -228,6 +232,7 @@ export default {
   width: 100%;
   z-index: 8;
 }
+
 .current .pic {
   position: absolute;
   top: 0;
@@ -236,6 +241,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .current .name {
   color: var(--White, #fff);
   font-family: var(--decor-md);
@@ -246,6 +252,7 @@ export default {
   letter-spacing: -0.36px;
   padding-left: 6px;
 }
+
 .current .content {
   position: relative;
   display: flex;
@@ -256,6 +263,7 @@ export default {
   padding: 12px 8px;
   align-items: flex-start;
 }
+
 .current .badge {
   display: inline-flex;
   justify-content: center;
@@ -278,16 +286,19 @@ export default {
 .others {
   padding: 34px 0 0 0;
 }
+
 .others .title {
   margin: 0;
   font-family: var(--decor-bd);
 }
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
 }
+
 .header a {
   display: flex;
   align-items: center;
@@ -303,22 +314,26 @@ export default {
   font-weight: 500;
   line-height: 130%; /* 15.6px */
 }
+
 .items {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
+
 .img {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 12px;
 }
+
 .others .pic {
   width: 100%;
   height: 192px;
   object-fit: cover;
 }
+
 .date {
   position: absolute;
   top: 8px;
@@ -335,6 +350,7 @@ export default {
   font-weight: 500;
   line-height: 130%; /* 15.6px */
 }
+
 .others .name {
   color: var(--Black, #020105);
   font-family: var(--medium);
@@ -343,12 +359,14 @@ export default {
   font-weight: 500;
   line-height: 140%; /* 22.4px */
 }
+
 .loading-card :deep(.ant-skeleton-title) {
   height: 230px;
   border-radius: 30px;
   margin-bottom: 0;
   margin-top: 0;
 }
+
 .img .tag {
   color: var(--black);
   font-family: var(--medium);

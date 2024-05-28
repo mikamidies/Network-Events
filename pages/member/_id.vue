@@ -30,7 +30,7 @@
             client: { ...client, client: { ...client, ...client?.user } },
           }"
         />
-        <!-- <div class="tags">
+        <div class="tags">
           <h4 class="about-title">Mutahasisliklar</h4>
           <div class="list-tags">
             <ul>
@@ -44,7 +44,7 @@
               <li>Biznes</li>
             </ul>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -67,6 +67,7 @@ export default {
     const clientData = await eventsApi.getClientById({
       id: this.$route.params.id,
     });
+    console.log(clientData)
     this.client = clientData?.data;
   },
 };

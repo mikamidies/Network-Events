@@ -5,7 +5,7 @@
         <h4 class="title">{{ $store.state.translations["profile.cabinet"] }}</h4>
       </div>
       <div class="right">
-        <button class="share" @click="$router.push('/profile/edit')">
+        <button class="share" @click="$router.push(localePath('/profile/edit'))">
           <svg
             width="24"
             height="24"
@@ -73,7 +73,7 @@ export default {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       this.$store.commit("getProfile", {});
-      this.$router.push("/");
+      this.$router.push(this.localePath("/"));
     },
   },
 };

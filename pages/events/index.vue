@@ -106,7 +106,7 @@
           </div>
           <div class="items" v-if="!loading">
             <div class="item" v-for="event in events" :key="event?.id">
-              <NuxtLink :to="`/event/${event?.id}`">
+              <NuxtLink :to="localePath(`/event/${event?.id}`)">
                 <div class="img">
                   <p class="date">
                     {{ moment(event?.start_date).format(dateFormat) }}

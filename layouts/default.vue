@@ -59,7 +59,7 @@ export default {
         location.reload()
       } catch (e) {
         this.removeTokens();
-        await this.$router.push("/");
+        await this.$router.push(this.localePath("/"));
       }
     },
     async getProfileInfo() {
@@ -73,14 +73,14 @@ export default {
         const data = await authApi.getInfo(this.$axios);
         this.$store.commit("getProfile", data?.data);
         if (QR_CODE && CURRENT_PAGE)
-          await this.$router.push(`/${CURRENT_PAGE}/join/${QR_CODE}`);
+          await this.$router.push(this.localePath(`/${CURRENT_PAGE}/join/${QR_CODE}`));
       } catch (e) {
         if (PARAMS_CODE) localStorage.setItem("qr_code", PARAMS_CODE);
         if (e.response.status === AUTH_STATUS && REFRESH_TOKEN) {
           await this.refreshToken();
         } else {
           this.removeTokens();
-          await this.$router.push("/");
+          await this.$router.push(this.localePath("/"));
         }
       } finally {
 

@@ -29,7 +29,7 @@
           class="item"
           v-for="member in members"
           :key="member?.id"
-          @click="$router.push(`/member/${member?.id}`)"
+          @click="$router.push(localePath(`/member/${member?.id}`))"
         >
           <div class="person">
             <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />

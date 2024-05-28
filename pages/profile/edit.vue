@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="wrap">
-    <EditTop @back="$router.push('/profile')"/>
+    <EditTop @back="$router.push(localePath('/profile'))"/>
     <div class="container">
       <div class="edit-page">
         <h4 class="page-title">{{ $store.state.translations["login.info"] }}</h4>
@@ -220,7 +220,7 @@
           <button class="send" @click="submit">
             {{ $store.state.translations["login.save"] }}
           </button>
-          <button class="cancel" @click="$router.push('/profile')">
+          <button class="cancel" @click="$router.push(localePath('/profile'))">
             {{ $store.state.translations["login.cancel"] }}
           </button>
         </div>
@@ -364,7 +364,7 @@ export default {
       try {
         const data = await authApi.putProfile(form);
         this.$nuxt.refresh();
-        this.$router.push("/profile");
+        this.$router.push(this.localePath("/profile"));
       } catch (e) {
       }
     },
@@ -415,7 +415,7 @@ export default {
         if (e.response.status == 401) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
-          this.$router.push("/register");
+          this.$router.push(this.localePath("/register"));
         }
       }
     },

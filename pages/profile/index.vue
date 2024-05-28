@@ -25,7 +25,7 @@
         <SocialBlock :profile="$store.state.profile"/>
         <UserCategories/>
         <div class="edit">
-          <button class="edit-btn" @click="$router.push('/profile/edit')">
+          <button class="edit-btn" @click="$router.push(localePath('/profile/edit'))">
             {{ $store.state.translations['profile.edit'] }}
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
@@ -61,13 +61,13 @@ export default {
     this.redirectQrCode();
     localStorage.getItem('accessToken') ?
       this.__GET_INFO():
-      this.$router.push('/register')
+      this.$router.push(this.localePath('/register'))
   },
   methods: {
     redirectQrCode() {
       if (localStorage.getItem("qr_code")) {
         let code = localStorage.getItem("qr_code");
-        this.$router.push(`/event/${code}`);
+        this.$router.push(this.localePath(`/event/${code}`));
       }
     },
     async __GET_INFO() {
@@ -80,7 +80,7 @@ export default {
         if (e.response.status === AUTH_STATUS) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
-          this.$router.push("/register");
+          this.$router.push(this.localePath("/register"));
         }
       }
     },
