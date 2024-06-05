@@ -71,7 +71,7 @@ export default {
       </div>
     </div>
     <div>
-      <h6 class="subtitle">{{ $store.state.translations['main.spec_title'] }}</h6>
+      <h6 class="subtitle">{{ $store.state.translations['main.spec_title2'] }}</h6>
       <div class="list" v-if="specList.length > 0">
         <button :class="{active: activeSpecs.includes(spec.id)}" @click="selectSpecs(spec)" v-for="spec in specList"
                 :key="spec?.id">{{ spec?.title }}

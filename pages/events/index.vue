@@ -87,7 +87,7 @@
                   alt=""
                   class="pic"
                 />
-                <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+                <img v-else src="@/assets/img/empty.jpg" alt="" class="pic" />
                 <div class="content">
                   <div class="badge">Siz ishtirokdasz</div>
                   <p class="name">{{ event?.title }}</p>
@@ -118,7 +118,7 @@
                     alt=""
                     class="pic"
                   />
-                  <img v-else src="@/assets/img/image.png" alt="" class="pic"/>
+                  <img v-else src="@/assets/img/empty.jpg" alt="" class="pic"/>
                 </div>
                 <p class="name">
                   {{ event?.title }}

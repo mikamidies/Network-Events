@@ -103,7 +103,7 @@
                     alt=""
                     class="pic"
                   />
-                  <img v-else src="@/assets/img/image.png" alt="" class="pic" />
+                  <img v-else src="@/assets/img/empty.jpg" alt="" class="pic" />
                 </div>
                 <p class="name">
                   {{ event?.title }}
@@ -238,6 +238,8 @@ export default {
       await this.__GET_COMMUNITIES()
     },
     async __GET_COMMUNITIES() {
+
+      console.log("com")
       const MAX_PAGE_SIZE = 10;
 
       try {
@@ -251,6 +253,7 @@ export default {
         });
         this.events = communityData?.data?.results;
         this.totalPage = communityData?.data?.count;
+        console.log(events)
       } catch (e) {}
     },
     async __GET_CATEGORIES() {
