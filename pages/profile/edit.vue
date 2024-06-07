@@ -338,10 +338,7 @@ export default {
       }
       this.$refs.ruleForm.validate((valid) => {
         if(valid) {
-          data.client_data.specifications.length > 0 ? this.__PUT_PROFILE(data) : this.$notification["error"]({
-            message: "Invaid",
-            description: 'Specialization is required',
-          });
+          this.__PUT_PROFILE(data)
         }
       });
     },
