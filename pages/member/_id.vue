@@ -7,7 +7,7 @@
         <div
           class="personal-card"
           :style="{
-            backgroundImage: `url(${client?.image})`,
+           backgroundImage: `url(${client?.image ? client?.image:'/empty-avatar.jpg'})`,
           }"
         >
           <div class="bottom-shadow"></div>
@@ -30,21 +30,8 @@
             client: { ...client, client: { ...client, ...client?.user } },
           }"
         />
-        <div class="tags">
-          <h4 class="about-title">Mutahasisliklar</h4>
-          <div class="list-tags">
-            <ul>
-              <li>Tarjimon</li>
-              <li>AI developer</li>
-              <li>Motivatsia</li>
-              <li>Biznes</li>
-              <li>Tarjimon</li>
-              <li>AI developer</li>
-              <li>Motivatsia</li>
-              <li>Biznes</li>
-            </ul>
-          </div>
-        </div>
+        <UserCategories :categories="client?.specifications"/>
+
       </div>
     </div>
   </div>
@@ -53,8 +40,10 @@
 import SiteTop from "../../components/SiteTop.vue";
 import SocialBlock from "../../components/profile/SocialBlock.vue";
 import eventsApi from "@/api/eventsApi";
+import UserCategories from "@/components/profile/user-categories.vue";
 export default {
   components: {
+    UserCategories,
     SiteTop,
     SocialBlock,
   },

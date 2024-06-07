@@ -15,7 +15,6 @@ export default {
 
   methods: {
     myActiveSpecs(specs) {
-      console.log(specs)
       this.activeSpecs = specs.map((elem) => elem.id);
       this.activeCategories = specs.map((elem) => elem.category)
     },
@@ -30,10 +29,13 @@ export default {
         if (index !== -1) {
           this.activeCategories.splice(index, 1);
         }
+        console.log("1")
       } else {
         this.activeSpecs.push(spec.id);
         this.activeCategories.push(spec.category)
+        console.log("2")
       }
+      console.log(this.activeSpecs)
       this.$emit('selectSpec', this.activeSpecs)
     },
     async __GET_SPEC(id) {

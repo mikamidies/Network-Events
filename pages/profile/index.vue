@@ -23,7 +23,7 @@
           </p>
         </div>
         <SocialBlock :profile="$store.state.profile"/>
-        <UserCategories/>
+        <UserCategories :categories="$store.state.profile?.client?.specifications"/>
         <div class="edit">
           <button class="edit-btn" @click="$router.push(localePath('/profile/edit'))">
             {{ $store.state.translations['profile.edit'] }}

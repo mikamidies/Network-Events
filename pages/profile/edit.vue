@@ -318,9 +318,6 @@ export default {
     selectSpec(specs) {
       this.form.client_data.specifications = specs
     },
-    onChange(e, name) {
-      this.form.client_data[name] = e
-    },
     submit() {
       const data = {
         ...this.form,
@@ -392,6 +389,7 @@ export default {
           full_name: data?.data.full_name,
           client_data: {
             ...data?.data.client,
+            specifications: data?.data.client.specifications.map(item => item.id)
           },
         };
         this.form.client_data.image = null;
@@ -407,7 +405,6 @@ export default {
             },
           ];
         }
-        console.log(data)
         this.$refs.categorySelect.myActiveSpecs(data?.data?.client?.specifications);
 
       } catch (e) {

@@ -1,6 +1,7 @@
 <script>
 export default {
-  name: "user-categories"
+  name: "user-categories",
+  props: ['categories']
 }
 </script>
 
@@ -8,8 +9,11 @@ export default {
   <div class="category-select-block">
     <div>
       <h4 class="title">{{ $store.state.translations['main.spec_title'] }}</h4>
-      <div class="list">
-        <button v-for="spec in $store.state.profile?.client?.specifications">{{ spec?.title }}</button>
+      <div class="list" v-if="categories?.length > 0">
+        <button v-for="spec in categories">{{ spec?.title }}</button>
+      </div>
+      <div v-else>
+        <a-empty />
       </div>
     </div>
   </div>
