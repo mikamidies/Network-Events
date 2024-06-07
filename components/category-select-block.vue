@@ -62,7 +62,7 @@ export default {
   <div class="category-select-block">
     <div>
       <h4 class="title">{{ $store.state.translations['main.spec_title'] }}</h4>
-      <h6 class="subtitle">{{ $store.state.translations['main.spec_title'] }}</h6>
+      <h6 class="subtitle">{{ $store.state.translations['main.spec_subtitle'] }}</h6>
       <div class="list list-bottom">
         <button @click="toActive(category?.id)"
                 :class="{active: activeCategory === category?.id, selected: activeCategories.includes(category?.id)}"
