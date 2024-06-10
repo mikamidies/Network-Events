@@ -297,13 +297,13 @@ export default {
               trigger: "change",
             },
           ],
-          info: [
-            {
-              required: true,
-              message: "This field is required",
-              trigger: "change",
-            },
-          ],
+          // info: [
+          //   {
+          //     required: true,
+          //     message: "This field is required",
+          //     trigger: "change",
+          //   },
+          // ],
         },
       },
       base_url: process.env.BASE_URL,
