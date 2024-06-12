@@ -107,7 +107,7 @@ export default {
   props: ["members", "event", "totalPage"],
   data() {
     return {
-      pageSize: 30
+      pageSize: 40
     };
   },
   components: { VPagination },
