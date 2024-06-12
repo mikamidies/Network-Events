@@ -238,10 +238,7 @@ export default {
       await this.__GET_COMMUNITIES()
     },
     async __GET_COMMUNITIES() {
-
-      console.log("com")
       const MAX_PAGE_SIZE = 10;
-
       try {
         const communityData = await communityApi.getCommunity({
           params: {
@@ -253,7 +250,6 @@ export default {
         });
         this.events = communityData?.data?.results;
         this.totalPage = communityData?.data?.count;
-        console.log(events)
       } catch (e) {}
     },
     async __GET_CATEGORIES() {
