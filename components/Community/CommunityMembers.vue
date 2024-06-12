@@ -2,24 +2,33 @@
   <div class="wrap">
     <div class="header">
       <h4>{{ $store.state.translations["event.members"] }}</h4>
-      <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="25"
-          viewBox="0 0 24 25"
-          fill="none"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M2.75 12C2.75 16.8325 6.66751 20.75 11.5 20.75C16.3325 20.75 20.25 16.8325 20.25 12C20.25 7.16751 16.3325 3.25 11.5 3.25C6.66751 3.25 2.75 7.16751 2.75 12ZM11.5 22.25C5.83908 22.25 1.25 17.6609 1.25 12C1.25 6.33908 5.83908 1.75 11.5 1.75C17.1609 1.75 21.75 6.33908 21.75 12C21.75 14.5605 20.8111 16.9017 19.2589 18.6982L22.5303 21.9697C22.8232 22.2626 22.8232 22.7374 22.5303 23.0303C22.2374 23.3232 21.7626 23.3232 21.4697 23.0303L18.1982 19.7589C16.4017 21.3111 14.0605 22.25 11.5 22.25Z"
-            fill="#020105"
-          />
+      <!--      <button>-->
+      <!--        <svg-->
+      <!--          xmlns="http://www.w3.org/2000/svg"-->
+      <!--          width="24"-->
+      <!--          height="25"-->
+      <!--          viewBox="0 0 24 25"-->
+      <!--          fill="none"-->
+      <!--        >-->
+      <!--          <path-->
+      <!--            fill-rule="evenodd"-->
+      <!--            clip-rule="evenodd"-->
+      <!--            d="M2.75 12C2.75 16.8325 6.66751 20.75 11.5 20.75C16.3325 20.75 20.25 16.8325 20.25 12C20.25 7.16751 16.3325 3.25 11.5 3.25C6.66751 3.25 2.75 7.16751 2.75 12ZM11.5 22.25C5.83908 22.25 1.25 17.6609 1.25 12C1.25 6.33908 5.83908 1.75 11.5 1.75C17.1609 1.75 21.75 6.33908 21.75 12C21.75 14.5605 20.8111 16.9017 19.2589 18.6982L22.5303 21.9697C22.8232 22.2626 22.8232 22.7374 22.5303 23.0303C22.2374 23.3232 21.7626 23.3232 21.4697 23.0303L18.1982 19.7589C16.4017 21.3111 14.0605 22.25 11.5 22.25Z"-->
+      <!--            fill="#020105"-->
+      <!--          />-->
+      <!--        </svg>-->
+      <!--      </button>-->
+
+      <div class="search">
+        <input type="text" v-model="searchQuery" @input="handleInput" :placeholder="$store.state.translations['main.search_text']"/>
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.75 12C2.75 16.8325 6.66751 20.75 11.5 20.75C16.3325 20.75 20.25 16.8325 20.25 12C20.25 7.16751 16.3325 3.25 11.5 3.25C6.66751 3.25 2.75 7.16751 2.75 12ZM11.5 22.25C5.83908 22.25 1.25 17.6609 1.25 12C1.25 6.33908 5.83908 1.75 11.5 1.75C17.1609 1.75 21.75 6.33908 21.75 12C21.75 14.5605 20.8111 16.9017 19.2589 18.6982L22.5303 21.9697C22.8232 22.2626 22.8232 22.7374 22.5303 23.0303C22.2374 23.3232 21.7626 23.3232 21.4697 23.0303L18.1982 19.7589C16.4017 21.3111 14.0605 22.25 11.5 22.25Z" fill="#020105"/>
         </svg>
-      </button>
+
+      </div>
     </div>
-    <div class="items" v-if="event.public || event.is_member">
+    <div  v-if="event.public || event.is_member">
+    <div v-if="members.length > 0" class="items">
       <div
         class="item"
         v-for="member in members"
@@ -27,8 +36,8 @@
         @click="$router.push(localePath(`/member/${member?.id}`))"
       >
         <div class="person">
-          <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
-          <img v-else src="@/assets/img/user.png" alt="" />
+          <img loading="lazy" v-if="member?.image" :src="member?.image" alt=""/>
+          <img v-else src="@/assets/img/user.png" alt=""/>
         </div>
         <div class="content">
           <p class="name">{{ member?.user?.full_name }}</p>
@@ -57,6 +66,10 @@
             fill="#1878F3"
           />
         </svg>
+      </div>
+    </div>
+      <div v-else class="mt-1">
+        <a-empty />
       </div>
     </div>
     <div v-else class="members-locked">
@@ -103,14 +116,60 @@
 <script>
 import VPagination from "../VPagination.vue";
 
+function debounce(func, wait) {
+  let timeout;
+
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+}
+
 export default {
   props: ["members", "event", "totalPage"],
   data() {
     return {
-      pageSize: 40
+      pageSize: 40,
+      searchQuery: '',
     };
   },
-  components: { VPagination },
+  mounted() {
+    if(this.$route.query?.search) this.searchQuery = this.$route.query?.search
+  },
+  methods: {
+    async onSearch(text) {
+      const MIN_TEXT_LENGTH = 2;
+      if (
+        this.$route.query?.search !== text &&
+        text.length > MIN_TEXT_LENGTH
+      ) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: {...this.$route.query, page: 1, search: text},
+        });
+        this.$emit('getData')
+      } else if (text.length === 0) {
+        let query = {...this.$route.query, page: 1}
+        delete query['search']
+        await this.$router.replace({
+          path: this.$route.path,
+          query: {...query},
+        });
+        this.$emit('getData')
+
+      }
+    },
+    handleInput: debounce(function (event) {
+      this.searchQuery = event.target.value;
+      this.performSearch();
+    }, 300),
+    performSearch() {
+      this.onSearch(this.searchQuery)
+
+    },
+  },
+  components: {VPagination},
 };
 </script>
 
@@ -124,6 +183,7 @@ export default {
   align-items: center;
   gap: 8px;
 }
+
 .members-locked p {
   color: #020105;
   text-align: center;
@@ -133,6 +193,7 @@ export default {
   font-weight: 400;
   line-height: 140%;
 }
+
 .members-locked h5 {
   color: #020105;
   text-align: center;
@@ -145,6 +206,7 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .wrap .header h4 {
   color: var(--Black, #020105);
   font-family: var(--decor-bd);
@@ -154,26 +216,31 @@ export default {
   line-height: 150%; /* 27px */
   letter-spacing: -0.36px;
 }
+
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  gap: 8px;
+  flex-direction: column;
+  margin-bottom: 8px;
 }
+
 .header button {
   background: transparent;
   border: 0;
 }
+
 .items {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 20px;
 }
+
 .link {
   display: flex;
   justify-content: center;
 }
+
 .link a {
   display: flex;
   align-items: center;
@@ -190,6 +257,7 @@ export default {
   min-width: 182px;
   padding: 12px;
 }
+
 .guests .name {
   color: var(--Black, #020105);
   font-family: var(--decor-bd);
@@ -200,6 +268,7 @@ export default {
   letter-spacing: -0.28px;
   margin-bottom: 4px;
 }
+
 .status {
   color: var(--Facebook-blue, #1878f3);
   font-family: var(--medium);
@@ -209,6 +278,7 @@ export default {
   line-height: 140%; /* 19.6px */
   margin-bottom: 2px;
 }
+
 .company {
   color: var(--grey-40, #9a999b);
   font-family: var(--medium);
@@ -224,6 +294,7 @@ export default {
   text-overflow: ellipsis;
   max-width: 98%;
 }
+
 .item {
   border-radius: 12px;
   border: 1px solid var(--grey-8, #ebebeb);
@@ -234,15 +305,37 @@ export default {
   cursor: pointer;
   position: relative;
 }
+
 .link_icon {
   position: absolute;
   bottom: 8px;
   right: 8px;
 }
+
 .person img {
   width: 72px;
   height: 72px;
   object-fit: cover;
   border-radius: 8px;
+}
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search input {
+  width: 100%;
+  height: 55px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid #F5F5F7;
+  padding-right: 45px;
+}
+.search input:focus {
+  outline: #1878f3;
+}
+.search svg {
+  position: absolute;
+  right: 16px;
 }
 </style>
