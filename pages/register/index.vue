@@ -2,31 +2,33 @@
   <div class="master">
     <!--    <div class="block">-->
     <div class="image-info">
-      <a-dropdown :trigger="['click']">
-        <button class="drop-btn">
-          <LangRuIcon v-if="$i18n.locale === 'ru'"/>
-          <LangUzIcon v-if="$i18n.locale === 'uz'"/>
-          {{ locales.find(item => item.code == $i18n.locale).name }}
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+      <div class="register-navbar">
+        <img src="@/assets/img/logo_light.svg" alt="Justlink logo">
 
-        </button>
-        <a-menu slot="overlay">
-          <div class="dowpdown_body">
-            <button v-for="locale in locales"
-                    :class="{ active: $i18n.locale === locale.code }"
-                    :key="locale.id"
-                    @click="changeLang(locale)">
-              <LangRuIcon v-if="locale.code === 'ru'"/>
-              <LangUzIcon v-if="locale.code === 'uz'"/>
-              {{ locale.name }}
-            </button>
-          </div>
-        </a-menu>
-      </a-dropdown>
-      <RegisterLogo/>
+        <a-dropdown :trigger="['click']">
+          <button class="drop-btn">
+            <LangRuIcon v-if="$i18n.locale === 'ru'" />
+            <LangUzIcon v-if="$i18n.locale === 'uz'" />
+            {{ locales.find(item => item.code == $i18n.locale).name }}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.8335 8.33337L10.0002 11.6667L14.1668 8.33337" stroke="white" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+          </button>
+          <a-menu slot="overlay">
+            <div class="dowpdown_body">
+              <button v-for="locale in locales" :class="{ active: $i18n.locale === locale.code }" :key="locale.id"
+                @click="changeLang(locale)">
+                <LangRuIcon v-if="locale.code === 'ru'" />
+                <LangUzIcon v-if="locale.code === 'uz'" />
+                {{ locale.name }}
+              </button>
+            </div>
+          </a-menu>
+        </a-dropdown>
+      </div>
+
       <div class="image-texts">
         <h4>{{ $store.state.translations["login.welcome"] }}</h4>
         <p>{{ $store.state.translations["login.title"] }}</p>
@@ -46,26 +48,17 @@
             <p class="sub">{{ $store.state.translations["login.enter-phone"] }}</p>
             <div class="input-context">
               <span>+998</span>
-              <input
-                type="text"
-                v-mask="'## ### ## ##'"
-                v-model="form.phone_number"
-                @keyup.enter="submit"
-                placeholder="(__) ___ __ __"
-              />
+              <input type="text" v-mask="'## ### ## ##'" v-model="form.phone_number" @keyup.enter="submit" />
             </div>
-            <p class="input-btext">{{ $store.state.translations["login.bottom_text"] }}</p>
-          </a-form-model-item
-          >
+            <p class="input-btext">Регистрируясь, Вы принимаете наши <a href="#">Договор оферты, Условия, Политику
+                конфиденциальности и Политику в отношении файлов cookie.</a></p>
+          </a-form-model-item>
         </a-form-model>
       </div>
       <div class="btns">
-        <button
-          @click="submit"
-          :class="{ disabled: loading, disabled: phone_number_length }"
-        >
+        <button @click="submit" :class="{ disabled: loading, disabled: phone_number_length }">
           <span v-if="!loading">{{ $store.state.translations["login.continue"] }}</span>
-          <LoaderBtn v-else/>
+          <LoaderBtn v-else />
         </button>
       </div>
       <!--      </div>-->
@@ -76,7 +69,6 @@
 import sendNUmberApi from "@/api/authApi";
 import moment from "moment";
 import LoaderBtn from "../../components/loader-btn.vue";
-import RegisterLogo from "~/components/icons/register-logo.vue";
 import LangRuIcon from "@/components/icons/lang-ru-icon.vue";
 import LangUzIcon from "@/components/icons/lang-uz-icon.vue";
 
@@ -85,7 +77,7 @@ export default {
   data() {
     return {
       locales: [
-        {id: 1, code: "uz", name: "Uzbek"},
+        { id: 1, code: "uz", name: "Uzbek" },
         // {
         //   id: 2,
         //   code: "en",
@@ -168,7 +160,7 @@ export default {
         const real_min = moment(current_date).format("HH:mm");
         localStorage.setItem(
           "timer_time",
-          JSON.stringify({real_min: real_min, timer_min: data?.data?.expiration_date})
+          JSON.stringify({ real_min: real_min, timer_min: data?.data?.expiration_date })
         );
         await this.$router.push(this.localePath("/register/check-code"));
       } catch (e) {
@@ -198,12 +190,19 @@ export default {
   components: {
     LangUzIcon,
     LangRuIcon,
-    RegisterLogo,
     LoaderBtn,
   },
 };
 </script>
 <style lang="css" scoped>
+.register-navbar {
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .bg-image {
   width: 100%;
   height: 50%;
@@ -346,6 +345,7 @@ export default {
 
 .info-texts h4 {
   font-family: var(--decor-bd);
+  text-transform: uppercase;
   font-size: 24px;
   font-weight: 700;
   line-height: 28.8px;
@@ -358,6 +358,7 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  margin-bottom: 60px;
 }
 
 .image-texts p {
@@ -373,6 +374,7 @@ export default {
 .image-texts h4 {
   font-family: var(--decor-bd);
   font-size: 28px;
+  text-transform: uppercase;
   font-weight: 700;
   line-height: 33.6px;
   text-align: center;
@@ -395,11 +397,10 @@ export default {
 .image-info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
   z-index: 1;
   height: 100%;
-  gap: 16px;
 }
 
 .input-btext {
@@ -410,6 +411,11 @@ export default {
   text-align: left;
   color: #9A999B;
   margin-top: 12px;
+}
+
+.input-btext a {
+  color: #1878F3;
+  border-bottom: 1px solid #1878F3;
 }
 
 .dowpdown_body {

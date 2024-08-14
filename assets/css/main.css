@@ -6,10 +6,12 @@
   font-family: "Interfaces";
   src: url(../fonts/TTINTERFACES-REGULAR.TTF);
 }
+
 @font-face {
   font-family: "Interfaces-medium";
   src: url(../fonts/TTINTERFACES-MEDIUM.TTF);
 }
+
 @font-face {
   font-family: "Interfaces-semi";
   src: url(../fonts/TTINTERFACES-SEMIBOLD.TTF);
@@ -45,12 +47,30 @@
   --grey-80: #353437;
   --grey-light: #e7edfb;
   --bg-grey: #f8f9ff;
-  --blue: #5c46e5;
+  --blue: #1878F3;
+  --blue-dark: #3C4BDC;
   --black: #020105;
 }
 
 body {
   font-family: var(--regular) !important;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+.title {
+  color: var(--Black, #020105);
+  font-family: var(--decor-bd);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  /* 30px */
+  letter-spacing: -0.4px;
+  margin-bottom: 12px;
 }
 
 html,
@@ -141,6 +161,7 @@ video {
   font: inherit;
   vertical-align: baseline; */
 }
+
 article,
 aside,
 details,
@@ -154,6 +175,7 @@ nav,
 section {
   display: block;
 }
+
 h1,
 h2,
 h3,
@@ -163,17 +185,21 @@ h6,
 p {
   margin: 0;
 }
+
 body {
   line-height: 1;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -181,53 +207,68 @@ q:after {
   content: "";
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 .container {
   width: 100%;
   margin: 0 auto;
   max-width: 500px;
   padding: 0 16px;
 }
+
 ::-webkit-scrollbar {
   width: 7px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #7b7dff;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #3c4bdc;
 }
+
 button {
   cursor: pointer;
 }
+
 .ant-select-dropdown-placement-bottomLeft {
   z-index: 99999 !important;
 }
+
 .ant-calendar-picker-container {
   z-index: 99999 !important;
 }
+
 .ant-select-dropdown-menu {
   max-height: 180px !important;
 }
+
 .ant-calendar-range {
   width: 100% !important;
   max-width: 552px !important;
 }
+
 .ant-modal-footer {
   display: none;
 }
+
 .d-flex {
   display: flex;
 }
+
 .justify-content-between {
   justify-content: space-between;
 }
+
 .rotate180 {
   transform: rotate(180deg);
 }

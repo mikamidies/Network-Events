@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="wrap">
-    <div class="current">
+    <!-- <div class="current">
       <h4 class="title">{{ $store.state.translations["main.live-event-title"] }}</h4>
       <div class="items">
         <div class="item" v-for="event in myEvents" :key="event?.id">
@@ -51,9 +51,9 @@
       <div v-if="!loading && myEvents.length == 0 && myCommunity.length == 0">
         <a-empty/>
       </div>
-    </div>
+    </div> -->
 
-    <div class="others">
+    <!-- <div class="others">
       <div class="header">
         <h4 class="title">{{ $store.state.translations["main.other_events"] }}</h4>
         <NuxtLink :to="localePath(`/events`)">
@@ -108,7 +108,7 @@
       <div v-if="!loading && events.length == 0">
         <a-empty/>
       </div>
-    </div>
+    </div> -->
     <div class="others">
       <div class="header">
         <h4 class="title">{{ $store.state.translations["community.community"] }}</h4>
@@ -198,17 +198,6 @@ export default {
 <style lang="css" scoped>
 .current {
   padding-top: 24px;
-}
-
-.title {
-  color: var(--Black, #020105);
-  font-family: var(--decor-bd);
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 30px */
-  letter-spacing: -0.4px;
-  margin-bottom: 12px;
 }
 
 .current .item {
@@ -316,9 +305,18 @@ export default {
 }
 
 .items {
+  overflow-x: auto;
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  gap: 12px;
+  margin-bottom: 100px;
+}
+
+.items::-webkit-scrollbar{
+  display: none;
+}
+
+.items .item{
+  min-width: 250px;
 }
 
 .img {
@@ -330,7 +328,7 @@ export default {
 
 .others .pic {
   width: 100%;
-  height: 192px;
+  height: 150px;
   object-fit: cover;
 }
 

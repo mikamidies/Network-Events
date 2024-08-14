@@ -1,16 +1,12 @@
 <template lang="html">
   <div class="master">
     <SiteTop />
-
     <div class="container">
       <div class="participant-profile">
-        <div
-          class="personal-card"
-          :style="{
-           backgroundImage: `url(${client?.image ? client?.image:'/empty-avatar.jpg'})`,
-          }"
-        >
-          <div class="bottom-shadow"></div>
+        <div class="personal-card">
+          <img class="bg" src="@/assets/img/profile-bg.svg" alt="bg">
+
+          <img class="avatar" :src="client?.image ? client?.image : '/empty-avatar.jpg'" alt="avatar">
           <h4 class="name">{{ client?.user?.full_name }}</h4>
           <p class="position">{{ client?.job_title }}</p>
           <span class="company">{{ client?.company_name }}</span>
@@ -23,14 +19,12 @@
             {{ client?.info }}
           </p>
         </div>
-        <SocialBlock
-          :profile="{
-            ...client,
-            ...client?.user,
-            client: { ...client, client: { ...client, ...client?.user } },
-          }"
-        />
-        <UserCategories :categories="client?.specifications"/>
+        <SocialBlock :profile="{
+          ...client,
+          ...client?.user,
+          client: { ...client, client: { ...client, ...client?.user } },
+        }" />
+        <UserCategories :categories="client?.specifications" />
 
       </div>
     </div>
@@ -66,44 +60,39 @@ export default {
   padding: 16px 16px 0 16px;
   overflow: hidden;
 }
+
 .personal-card {
+  text-align: center;
   padding: 22px 16px 24px 16px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   border-radius: 24px;
   background: #f5f5f7;
-  height: 391px;
+  /* background-image: url('@/assets/img/profile-bg.svg');
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-size: 100%; */
+  height: 391px;
   position: relative;
   overflow: hidden;
 }
-.bottom-shadow {
-  height: 141px;
-  width: 100%;
+
+.personal-card .bg {
   position: absolute;
-  bottom: 0;
   left: 0;
-  background: linear-gradient(180deg, rgba(60, 75, 220, 0) 0%, #3c4bdc 59.13%);
-}
-.image {
-  width: 122px;
-  height: 122px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.image img {
+  bottom: 0;
+  right: 0;
+  top: 0;
   width: 100%;
-  height: 100%;
   object-fit: cover;
+  height: 100%;
 }
+
 .personal-card .name {
   color: #fff;
   font-family: var(--decor-md);
-  font-size: 18px;
+  font-size: 25px;
   font-style: normal;
   line-height: 120%;
   letter-spacing: -0.36px;
@@ -111,6 +100,16 @@ export default {
   position: relative;
   z-index: 10;
 }
+
+.personal-card .avatar {
+  z-index: 10;
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+
 .personal-card .position {
   color: #fff;
   text-align: center;
@@ -122,27 +121,25 @@ export default {
   position: relative;
   z-index: 10;
 }
+
 .personal-card .company {
-  padding-left: 12px;
-  padding-right: 12px;
-  border-radius: 2px;
-  background: #fff;
-  color: #020105;
+  color: #fff;
   font-family: var(--medium);
   font-size: 16px;
-  font-style: normal;
+  font-weight: 500;
   line-height: 150%;
-  margin-top: 4px;
+  margin-top: 35px;
   position: relative;
   z-index: 10;
-  border-radius: 6px;
 }
+
 .about {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
 .about-title {
   color: #020105;
   font-family: var(--decor-md);
@@ -151,6 +148,7 @@ export default {
   line-height: 120%;
   letter-spacing: -0.36px;
 }
+
 .about-desc {
   color: #020105;
   font-family: var(--medium);
@@ -160,15 +158,18 @@ export default {
   padding-bottom: 16px;
   border-bottom: 1px solid #ebebeb;
 }
+
 .tags {
   margin-top: 32px;
 }
+
 .list-tags ul {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 12px;
 }
+
 .list-tags ul li {
   padding: 8px 12px;
   border-radius: 57px;

@@ -1,10 +1,10 @@
 <template lang="html">
   <div>
     <main class="main">
-      <nuxt/>
+      <nuxt />
     </main>
-    <loader v-if="loader"/>
-    <BottomBar/>
+    <loader v-if="loader" />
+    <BottomBar />
   </div>
 </template>
 
@@ -38,6 +38,8 @@ export default {
     const ACCESS_TOKEN = localStorage.getItem("accessToken");
     if (ACCESS_TOKEN) {
       this.getProfileInfo();
+    } else {
+      this.$router.replace('/welecome');
     }
   },
   methods: {

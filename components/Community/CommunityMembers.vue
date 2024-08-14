@@ -270,6 +270,7 @@ export default {
 }
 
 .status {
+  margin-top: 4px;
   color: var(--Facebook-blue, #1878f3);
   font-family: var(--medium);
   font-size: 14px;

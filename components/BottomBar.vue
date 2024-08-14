@@ -1,106 +1,67 @@
 <template lang="html">
-  <div class="wrap">
-    <div class="container">
-      <div class="links">
-        <NuxtLink to="/" :class="{ active: $route.name.includes('index') }">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M21.5 10.1503V17.9668C21.5 20.1943 19.7091 22 17.5 22H7.5C5.29086 22 3.5 20.1943 3.5 17.9668V10.1503C3.5 8.93937 4.03964 7.7925 4.96986 7.02652L9.96986 2.90935C11.4423 1.69689 13.5577 1.69688 15.0301 2.90935L20.0301 7.02652C20.9604 7.7925 21.5 8.93937 21.5 10.1503ZM10.5 17.25C10.0858 17.25 9.75 17.5858 9.75 18C9.75 18.4142 10.0858 18.75 10.5 18.75H14.5C14.9142 18.75 15.25 18.4142 15.25 18C15.25 17.5858 14.9142 17.25 14.5 17.25H10.5Z"
-              stroke="#5D5D5F"
-            />
-          </svg>
-          <p>{{ $store.state.translations["main.home"] }}</p>
-        </NuxtLink>
-        <NuxtLink to="/events" :class="{ active: $route.name.includes('events') }">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-          >
-            <ellipse
-              cx="12.5"
-              cy="16.5"
-              rx="6"
-              ry="2.5"
-              stroke="#5D5D5F"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-            <circle
-              cx="12.5"
-              cy="8"
-              r="3"
-              stroke="#5D5D5F"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M6.94547 13.2615C5.70689 13.313 4.56913 13.5361 3.68592 13.8894C3.18122 14.0913 2.72245 14.3505 2.37759 14.6766C2.03115 15.0042 1.75 15.4512 1.75 16C1.75 16.5488 2.03115 16.9958 2.37759 17.3234C2.72245 17.6495 3.18122 17.9087 3.68592 18.1106C4.18571 18.3105 4.76701 18.4687 5.40197 18.5778C4.90834 18.0453 4.59852 17.4503 4.51985 16.8195C4.42341 16.787 4.33104 16.7531 4.24301 16.7179C3.84289 16.5578 3.56943 16.386 3.40826 16.2336C3.2498 16.0837 3.24999 16.0046 3.25 16.0001L3.25 16L3.25 15.9999C3.24999 15.9954 3.2498 15.9163 3.40826 15.7664C3.56943 15.614 3.84289 15.4422 4.24301 15.2821C4.44597 15.201 4.67201 15.1266 4.91787 15.0608C5.33157 14.371 6.03447 13.756 6.94547 13.2615Z"
-              fill="#5D5D5F"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M20.4803 16.8195C20.4016 17.4503 20.0918 18.0453 19.5982 18.5778C20.2331 18.4687 20.8144 18.3105 21.3142 18.1106C21.8189 17.9087 22.2777 17.6495 22.6226 17.3234C22.969 16.9958 23.2502 16.5488 23.2502 16C23.2502 15.4512 22.969 15.0042 22.6226 14.6766C22.2777 14.3505 21.8189 14.0913 21.3142 13.8894C20.431 13.5361 19.2933 13.313 18.0547 13.2615C18.9657 13.756 19.6686 14.371 20.0823 15.0608C20.3281 15.1266 20.5542 15.201 20.7571 15.2821C21.1573 15.4422 21.4307 15.614 21.5919 15.7664C21.7504 15.9163 21.7502 15.9954 21.7502 15.9999V16V16.0001C21.7502 16.0046 21.7504 16.0837 21.5919 16.2336C21.4307 16.386 21.1573 16.5578 20.7571 16.7179C20.6691 16.7531 20.5767 16.787 20.4803 16.8195Z"
-              fill="#5D5D5F"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.0142 10.1522C16.7943 10.6126 16.5061 11.0341 16.1626 11.4036C16.5584 11.6243 17.0144 11.75 17.4998 11.75C19.0186 11.75 20.2498 10.5188 20.2498 9C20.2498 7.48122 19.0186 6.25 17.4998 6.25C17.3955 6.25 17.2926 6.2558 17.1914 6.26711C17.3634 6.73272 17.4681 7.23096 17.4937 7.75001C17.4957 7.75 17.4978 7.75 17.4998 7.75C18.1902 7.75 18.7498 8.30964 18.7498 9C18.7498 9.69036 18.1902 10.25 17.4998 10.25C17.3276 10.25 17.1635 10.2152 17.0142 10.1522Z"
-              fill="#5D5D5F"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M7.80845 6.26711C7.70719 6.2558 7.60427 6.25 7.5 6.25C5.98122 6.25 4.75 7.48122 4.75 9C4.75 10.5188 5.98122 11.75 7.5 11.75C7.98537 11.75 8.44138 11.6243 8.83721 11.4036C8.49374 11.0341 8.20549 10.6126 7.9856 10.1522C7.83631 10.2152 7.67222 10.25 7.5 10.25C6.80964 10.25 6.25 9.69036 6.25 9C6.25 8.30964 6.80964 7.75 7.5 7.75C7.50205 7.75 7.50409 7.75 7.50614 7.75001C7.5317 7.23096 7.63641 6.73272 7.80845 6.26711Z"
-              fill="#5D5D5F"
-            />
-          </svg>
-          <p>{{ $store.state.translations["main.events"] }}</p>
-        </NuxtLink>
-        <NuxtLink to="/community" :class="{ active: $route.name.includes('community') }">
-          <svg
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="6.5" cy="4" r="2" stroke="#5D5D5F" stroke-width="1.5" />
-            <ellipse cx="6.5" cy="8" rx="3" ry="2" stroke="#5D5D5F" stroke-width="1.5" />
-            <circle cx="18.5" cy="16" r="2" stroke="#5D5D5F" stroke-width="1.5" />
-            <path
-              d="M22.5 12C22.5 6.47715 18.0228 2 12.5 2M12.5 22C6.97715 22 2.5 17.5228 2.5 12"
-              stroke="#5D5D5F"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <ellipse
-              cx="18.5"
-              cy="20"
-              rx="3"
-              ry="2"
-              stroke="#5D5D5F"
-              stroke-width="1.5"
-            />
-          </svg>
+  <div>
+    <!-- ${!$route.name.includes('welecome') ? '68px' || 0} -->
+    <div :style="dynamicStyles"
+      v-if="this.$route.path === '/' || this.$route.path === '/uz' || $route.name.includes('welecome')" class="sponsor">
+      <div class="imgs">
+        <img src="@/assets/img/sponsor1.svg" alt="trend systems" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M11 1.24391L6.125 5.99999M6.125 5.99999L1 11M6.125 5.99999L1.00003 1M6.125 5.99999L11 10.7561"
+            stroke="black" stroke-width="0.5" />
+        </svg>
+        <img src="@/assets/img/sponsor2.svg" alt="ndc.uz" />
+      </div>
 
-          <p>{{$store.state.translations['community.community']}}</p>
-        </NuxtLink>
-        <!-- <NuxtLink to="/">
+      <p>
+        {{ $store.state.translations["main.sponsor-text"] }} <br>
+        <a href="#">{{ $store.state.translations["main.sponsor-link"] }}</a>
+      </p>
+    </div>
+
+    <div v-if="!$route.name.includes('welecome')" class="wrap">
+      <div class="container">
+        <div class="links">
+          <NuxtLink to="/" :class="{ active: $route.name.includes('index') }">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M21.5 10.1503V17.9668C21.5 20.1943 19.7091 22 17.5 22H7.5C5.29086 22 3.5 20.1943 3.5 17.9668V10.1503C3.5 8.93937 4.03964 7.7925 4.96986 7.02652L9.96986 2.90935C11.4423 1.69689 13.5577 1.69688 15.0301 2.90935L20.0301 7.02652C20.9604 7.7925 21.5 8.93937 21.5 10.1503ZM10.5 17.25C10.0858 17.25 9.75 17.5858 9.75 18C9.75 18.4142 10.0858 18.75 10.5 18.75H14.5C14.9142 18.75 15.25 18.4142 15.25 18C15.25 17.5858 14.9142 17.25 14.5 17.25H10.5Z"
+                stroke="#5D5D5F" />
+            </svg>
+            <p>{{ $store.state.translations["main.home"] }}</p>
+          </NuxtLink>
+          <NuxtLink to="/events" :class="{ active: $route.name.includes('events') }">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+              <ellipse cx="12.5" cy="16.5" rx="6" ry="2.5" stroke="#5D5D5F" stroke-width="1.5"
+                stroke-linejoin="round" />
+              <circle cx="12.5" cy="8" r="3" stroke="#5D5D5F" stroke-width="1.5" stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M6.94547 13.2615C5.70689 13.313 4.56913 13.5361 3.68592 13.8894C3.18122 14.0913 2.72245 14.3505 2.37759 14.6766C2.03115 15.0042 1.75 15.4512 1.75 16C1.75 16.5488 2.03115 16.9958 2.37759 17.3234C2.72245 17.6495 3.18122 17.9087 3.68592 18.1106C4.18571 18.3105 4.76701 18.4687 5.40197 18.5778C4.90834 18.0453 4.59852 17.4503 4.51985 16.8195C4.42341 16.787 4.33104 16.7531 4.24301 16.7179C3.84289 16.5578 3.56943 16.386 3.40826 16.2336C3.2498 16.0837 3.24999 16.0046 3.25 16.0001L3.25 16L3.25 15.9999C3.24999 15.9954 3.2498 15.9163 3.40826 15.7664C3.56943 15.614 3.84289 15.4422 4.24301 15.2821C4.44597 15.201 4.67201 15.1266 4.91787 15.0608C5.33157 14.371 6.03447 13.756 6.94547 13.2615Z"
+                fill="#5D5D5F" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M20.4803 16.8195C20.4016 17.4503 20.0918 18.0453 19.5982 18.5778C20.2331 18.4687 20.8144 18.3105 21.3142 18.1106C21.8189 17.9087 22.2777 17.6495 22.6226 17.3234C22.969 16.9958 23.2502 16.5488 23.2502 16C23.2502 15.4512 22.969 15.0042 22.6226 14.6766C22.2777 14.3505 21.8189 14.0913 21.3142 13.8894C20.431 13.5361 19.2933 13.313 18.0547 13.2615C18.9657 13.756 19.6686 14.371 20.0823 15.0608C20.3281 15.1266 20.5542 15.201 20.7571 15.2821C21.1573 15.4422 21.4307 15.614 21.5919 15.7664C21.7504 15.9163 21.7502 15.9954 21.7502 15.9999V16V16.0001C21.7502 16.0046 21.7504 16.0837 21.5919 16.2336C21.4307 16.386 21.1573 16.5578 20.7571 16.7179C20.6691 16.7531 20.5767 16.787 20.4803 16.8195Z"
+                fill="#5D5D5F" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M17.0142 10.1522C16.7943 10.6126 16.5061 11.0341 16.1626 11.4036C16.5584 11.6243 17.0144 11.75 17.4998 11.75C19.0186 11.75 20.2498 10.5188 20.2498 9C20.2498 7.48122 19.0186 6.25 17.4998 6.25C17.3955 6.25 17.2926 6.2558 17.1914 6.26711C17.3634 6.73272 17.4681 7.23096 17.4937 7.75001C17.4957 7.75 17.4978 7.75 17.4998 7.75C18.1902 7.75 18.7498 8.30964 18.7498 9C18.7498 9.69036 18.1902 10.25 17.4998 10.25C17.3276 10.25 17.1635 10.2152 17.0142 10.1522Z"
+                fill="#5D5D5F" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M7.80845 6.26711C7.70719 6.2558 7.60427 6.25 7.5 6.25C5.98122 6.25 4.75 7.48122 4.75 9C4.75 10.5188 5.98122 11.75 7.5 11.75C7.98537 11.75 8.44138 11.6243 8.83721 11.4036C8.49374 11.0341 8.20549 10.6126 7.9856 10.1522C7.83631 10.2152 7.67222 10.25 7.5 10.25C6.80964 10.25 6.25 9.69036 6.25 9C6.25 8.30964 6.80964 7.75 7.5 7.75C7.50205 7.75 7.50409 7.75 7.50614 7.75001C7.5317 7.23096 7.63641 6.73272 7.80845 6.26711Z"
+                fill="#5D5D5F" />
+            </svg>
+            <p>{{ $store.state.translations["main.events"] }}</p>
+          </NuxtLink>
+          <NuxtLink to="/community" :class="{ active: $route.name.includes('community') }">
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6.5" cy="4" r="2" stroke="#5D5D5F" stroke-width="1.5" />
+              <ellipse cx="6.5" cy="8" rx="3" ry="2" stroke="#5D5D5F" stroke-width="1.5" />
+              <circle cx="18.5" cy="16" r="2" stroke="#5D5D5F" stroke-width="1.5" />
+              <path d="M22.5 12C22.5 6.47715 18.0228 2 12.5 2M12.5 22C6.97715 22 2.5 17.5228 2.5 12" stroke="#5D5D5F"
+                stroke-width="1.5" stroke-linecap="round" />
+              <ellipse cx="18.5" cy="20" rx="3" ry="2" stroke="#5D5D5F" stroke-width="1.5" />
+            </svg>
+
+            <p>{{ $store.state.translations['community.community'] }}</p>
+          </NuxtLink>
+          <!-- <NuxtLink to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -115,42 +76,68 @@
           </svg>
           <p>{{$store.state.translations['main.message']}}</p>
         </NuxtLink> -->
-        <NuxtLink  :to="$store.state.profile?.id ? localePath('/profile'):localePath('/register')" :class="{ active: $route.name.includes('profile') }">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-          >
-            <path
-              d="M19.0588 19.5488C18.0654 16.8918 15.5036 15 12.5 15C9.49638 15 6.9346 16.8918 5.94117 19.5488M19.0588 19.5488C21.1672 17.7154 22.5 15.0134 22.5 12C22.5 6.47715 18.0228 2 12.5 2C6.97715 2 2.5 6.47715 2.5 12C2.5 15.0134 3.83285 17.7154 5.94117 19.5488M19.0588 19.5488C17.3031 21.0756 15.0095 22 12.5 22C9.99052 22 7.69694 21.0756 5.94117 19.5488"
-              stroke="#5D5D5F"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-            <circle
-              cx="3"
-              cy="3"
-              r="3"
-              transform="matrix(1 0 0 -1 9.5 12)"
-              stroke="#5D5D5F"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <p>{{$store.state.translations['main.profile']}}</p>
-        </NuxtLink>
+          <NuxtLink :to="$store.state.profile?.id ? localePath('/profile') : localePath('/register')"
+            :class="{ active: $route.name.includes('profile') }">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+              <path
+                d="M19.0588 19.5488C18.0654 16.8918 15.5036 15 12.5 15C9.49638 15 6.9346 16.8918 5.94117 19.5488M19.0588 19.5488C21.1672 17.7154 22.5 15.0134 22.5 12C22.5 6.47715 18.0228 2 12.5 2C6.97715 2 2.5 6.47715 2.5 12C2.5 15.0134 3.83285 17.7154 5.94117 19.5488M19.0588 19.5488C17.3031 21.0756 15.0095 22 12.5 22C9.99052 22 7.69694 21.0756 5.94117 19.5488"
+                stroke="#5D5D5F" stroke-width="1.5" stroke-linejoin="round" />
+              <circle cx="3" cy="3" r="3" transform="matrix(1 0 0 -1 9.5 12)" stroke="#5D5D5F" stroke-width="1.5"
+                stroke-linejoin="round" />
+            </svg>
+            <p>{{ $store.state.translations['main.profile'] }}</p>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      bottom: 0,
+    }
+  },
+  computed: {
+    dynamicStyles() {
+      return {
+        bottom: !this.$route.name.includes('welecome') ? '68px' : "0px",
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
+.sponsor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  padding: 8px 16px;
+  background-color: #F5F5F7;
+}
+
+.sponsor p {
+  text-align: center;
+  color: #5D5D5F;
+  line-height: 150%;
+}
+
+.sponsor .imgs {
+  margin-top: 8px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
 .wrap {
   border-radius: 16px 16px 0px 0px;
   border: 1px solid var(--grey-8, #ebebeb);
@@ -162,11 +149,13 @@ export default {};
   width: 100%;
   z-index: 1000;
 }
+
 .links {
   display: grid;
   align-items: center;
   grid-template-columns: repeat(4, 1fr);
 }
+
 .links a {
   color: var(--grey-64, #5d5d5f);
   text-align: center;
@@ -174,16 +163,19 @@ export default {};
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 15.6px */
+  line-height: 130%;
+  /* 15.6px */
   display: flex;
   flex-direction: column;
   gap: 4px;
   align-items: center;
 }
+
 .active {
   color: #1878f3 !important;
   stroke: #1878f3 !important;
 }
+
 .active svg ellipse,
 .active svg path,
 .active svg circle {
