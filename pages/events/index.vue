@@ -4,19 +4,10 @@
       <div class="container">
         <h4>{{ $store.state.translations['main.events'] }}</h4>
         <button @click="open">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M3 5H10M10 5C10 6.10457 10.8954 7 12 7C13.1046 7 14 6.10457 14 5M10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5M3 12H12M19 12H21M19 12C19 13.1046 18.1046 14 17 14C15.8954 14 15 13.1046 15 12C15 10.8954 15.8954 10 17 10C18.1046 10 19 10.8954 19 12ZM14 5H21M12 19H21M3 19H5M5 19C5 20.1046 5.89543 21 7 21C8.10457 21 9 20.1046 9 19C9 17.8954 8.10457 17 7 17C5.89543 17 5 17.8954 5 19Z"
-              stroke="#020105"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
+              stroke="#020105" stroke-width="1.5" stroke-linecap="round" />
           </svg>
         </button>
       </div>
@@ -25,53 +16,36 @@
       <div class="search__wrap">
         <div class="search">
           <label for="search"></label>
-          <input
-            type="text"
-            id="search"
-            v-model="search"
-            @input="onSearch"
-            :placeholder="$store.state.translations['main.search-event']"
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+          <input type="text" id="search" v-model="search" @input="onSearch"
+            :placeholder="$store.state.translations['main.search-event']" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
               d="M2.75 11.5C2.75 16.3325 6.66751 20.25 11.5 20.25C16.3325 20.25 20.25 16.3325 20.25 11.5C20.25 6.66751 16.3325 2.75 11.5 2.75C6.66751 2.75 2.75 6.66751 2.75 11.5ZM11.5 21.75C5.83908 21.75 1.25 17.1609 1.25 11.5C1.25 5.83908 5.83908 1.25 11.5 1.25C17.1609 1.25 21.75 5.83908 21.75 11.5C21.75 14.0605 20.8111 16.4017 19.2589 18.1982L22.5303 21.4697C22.8232 21.7626 22.8232 22.2374 22.5303 22.5303C22.2374 22.8232 21.7626 22.8232 21.4697 22.5303L18.1982 19.2589C16.4017 20.8111 14.0605 21.75 11.5 21.75Z"
-              fill="#020105"
-            />
+              fill="#020105" />
           </svg>
         </div>
         <div class="categories">
           <ul>
             <button v-if="categories.slice(0, -3).length > 0" @click="visible = true">+{{
-                categories.slice(0, -3).length
-              }}
+              categories.slice(0, -3).length
+            }}
             </button>
             <li @click="allEvents" :class="{ active: !filterForm.category && !filterForm.my }">
               {{ $store.state.translations['main.all'] }}
             </li>
-            <li
-              v-for="category in categories.slice(-3)"
-              :key="category?.id"
-              @click="filterCategory(category?.id)"
-              :class="{ active: filterForm.category == category?.id }"
-            >
+            <li v-for="category in categories.slice(-3)" :key="category?.id" @click="filterCategory(category?.id)"
+              :class="{ active: filterForm.category == category?.id }">
               {{ category?.title }}
             </li>
           </ul>
         </div>
       </div>
       <div class="my-events" v-if="$store.state.profile?.id">
-        <button :class="{active: $route.query?.my}" @click="myEvetsFilter(true)">
+        <button :class="{ active: $route.query?.my }" @click="myEvetsFilter(true)">
           {{ $store.state.translations['main.is_members'] }}
         </button>
-        <button :class="{active: !$route.query?.my}" @click="myEvetsFilter(false)">   {{ $store.state.translations['main.all'] }}</button>
+        <button :class="{ active: !$route.query?.my }" @click="myEvetsFilter(false)"> {{
+          $store.state.translations['main.all'] }}</button>
       </div>
 
       <div class="wrap">
@@ -111,14 +85,8 @@
                   <p class="date">
                     {{ moment(event?.start_date).format(dateFormat) }}
                   </p>
-                  <img
-                    loading="lazy"
-                    v-if="event?.image"
-                    :src="event?.image"
-                    alt=""
-                    class="pic"
-                  />
-                  <img v-else src="@/assets/img/empty.jpg" alt="" class="pic"/>
+                  <img loading="lazy" v-if="event?.image" :src="event?.image" alt="" class="pic" />
+                  <img v-else src="@/assets/img/empty.jpg" alt="" class="pic" />
                 </div>
                 <p class="name">
                   {{ event?.title }}
@@ -127,92 +95,59 @@
             </div>
           </div>
           <div class="items" v-if="loading">
-            <a-skeleton
-              :paragraph="false"
-              class="loading-card"
-              v-for="elem in emptyList"
-              :key="elem"
-            />
+            <a-skeleton :paragraph="false" class="loading-card" v-for="elem in emptyList" :key="elem" />
           </div>
           <div v-if="!loading && events.length == 0">
-            <a-empty/>
+            <a-empty />
           </div>
         </div>
       </div>
       <div class="pag-block">
-        <VPagination
-          :load="true"
-          class="xl:hidden"
-          :totalPage="totalPage"
-          @getData="__GET_EVENTS"
-        />
+        <VPagination :load="true" class="xl:hidden" :totalPage="totalPage" @getData="__GET_EVENTS" />
       </div>
     </div>
-    <vue-bottom-sheet-vue2
-      ref="open"
-      class="bottom-drawer spicial-drawer h-full"
-      :init-sheet-height="690"
-    >
+    <vue-bottom-sheet-vue2 ref="open" class="bottom-drawer spicial-drawer h-full" :init-sheet-height="690">
       <div class="bd_container">
         <div class="head">
           <h4>{{ $store.state.translations['main.filter'] }}</h4>
           <button @click="close">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M15.7123 16.7729C16.0052 17.0658 16.4801 17.0658 16.7729 16.7729C17.0658 16.48 17.0658 16.0052 16.7729 15.7123L13.0607 12L16.7729 8.2877C17.0658 7.99481 17.0658 7.51993 16.7729 7.22704C16.48 6.93415 16.0052 6.93415 15.7123 7.22704L12 10.9393L8.28766 7.22699C7.99477 6.9341 7.5199 6.9341 7.227 7.22699C6.93411 7.51989 6.93411 7.99476 7.227 8.28765L10.9393 12L7.22699 15.7123C6.9341 16.0052 6.9341 16.4801 7.22699 16.773C7.51989 17.0659 7.99476 17.0659 8.28765 16.773L12 13.0606L15.7123 16.7729Z"
-                fill="#020105"
-              />
+                fill="#020105" />
             </svg>
           </button>
         </div>
         <div class="form">
           <a-form-model class="" :model="form" ref="ruleForm" :rules="rules">
-<!--            <a-form-model-item class="form-item mb-0" label="Holati">-->
-<!--              <div class="bottom_tab">-->
-<!--                <button-->
-<!--                  @click="filterForm.my = false"-->
-<!--                  :class="{ active: !filterForm.my }"-->
-<!--                >-->
-<!--                  {{ $store.state.translations['main.all'] }}-->
-<!--                </button>-->
-<!--                <button @click="filterForm.my = true" :class="{ active: filterForm.my }">-->
-<!--                  Men qatnashganlarim-->
-<!--                </button>-->
-<!--              </div>-->
-<!--            </a-form-model-item>-->
+            <!--            <a-form-model-item class="form-item mb-0" label="Holati">-->
+            <!--              <div class="bottom_tab">-->
+            <!--                <button-->
+            <!--                  @click="filterForm.my = false"-->
+            <!--                  :class="{ active: !filterForm.my }"-->
+            <!--                >-->
+            <!--                  {{ $store.state.translations['main.all'] }}-->
+            <!--                </button>-->
+            <!--                <button @click="filterForm.my = true" :class="{ active: filterForm.my }">-->
+            <!--                  Men qatnashganlarim-->
+            <!--                </button>-->
+            <!--              </div>-->
+            <!--            </a-form-model-item>-->
 
             <a-form-model-item class="form-item mb-0 w-100" :label="$store.state.translations['main.date']">
-              <a-range-picker
-                :default-value="[
-                  filterForm.date_from ? moment(filterForm.date_from, dateFormat1) : '',
-                  filterForm.date_to ? moment(filterForm.date_to, dateFormat1) : '',
-                ]"
-                class="date-pic"
+              <a-range-picker :default-value="[
+                filterForm.date_from ? moment(filterForm.date_from, dateFormat1) : '',
+                filterForm.date_to ? moment(filterForm.date_to, dateFormat1) : '',
+              ]" class="date-pic"
                 :placeholder="[$store.state.translations['main.start-date'], $store.state.translations['main.end-date']]"
-                @change="onChangeDate"
-              >
+                @change="onChangeDate">
               </a-range-picker>
             </a-form-model-item>
             <a-form-model-item class="form-item mb-0" :label="$store.state.translations['main.filter-type']">
-              <a-select
-                v-model="filterForm.category"
-                :placeholder="$store.state.translations['main.filter-type-place']"
-                class="select-item"
-              >
-                <a-select-option
-                  class="select-options"
-                  :value="category?.id"
-                  v-for="category in categories"
-                  :key="category?.id"
-                >
+              <a-select v-model="filterForm.category" :placeholder="$store.state.translations['main.filter-type-place']"
+                class="select-item">
+                <a-select-option class="select-options" :value="category?.id" v-for="category in categories"
+                  :key="category?.id">
                   {{ category?.title }}
                 </a-select-option>
               </a-select>
@@ -233,53 +168,31 @@
             </a-form-model-item> -->
           </a-form-model>
           <div class="btn-fixed">
-            <button
-              @click="sendFilter"
-              class="send-btn"
-              :class="{ disabledBtn: areObjectsEqual($route.query, filterForm) }"
-            >
+            <button @click="sendFilter" class="send-btn"
+              :class="{ disabledBtn: areObjectsEqual($route.query, filterForm) }">
               Kodni jo’natish
             </button>
           </div>
         </div>
       </div>
     </vue-bottom-sheet-vue2>
-    <a-modal
-      v-model="visible"
-      :closable="false"
-      centered
-      @ok="() => (visible = false)"
-      :width="524"
-    >
+    <a-modal v-model="visible" :closable="false" centered @ok="() => (visible = false)" :width="524">
       <div class="all-categories">
         <div class="head">
-          <h4>{{$store.state.translations['main.sections']}}</h4>
+          <h4>{{ $store.state.translations['main.sections'] }}</h4>
           <button @click="visible = false">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M15.7123 16.7729C16.0052 17.0658 16.4801 17.0658 16.7729 16.7729C17.0658 16.48 17.0658 16.0052 16.7729 15.7123L13.0607 12L16.7729 8.2877C17.0658 7.99481 17.0658 7.51993 16.7729 7.22704C16.48 6.93415 16.0052 6.93415 15.7123 7.22704L12 10.9393L8.28766 7.22699C7.99477 6.9341 7.5199 6.9341 7.227 7.22699C6.93411 7.51989 6.93411 7.99476 7.227 8.28765L10.9393 12L7.22699 15.7123C6.9341 16.0052 6.9341 16.4801 7.22699 16.773C7.51989 17.0659 7.99476 17.0659 8.28765 16.773L12 13.0606L15.7123 16.7729Z"
-                fill="#020105"
-              />
+                fill="#020105" />
             </svg>
           </button>
         </div>
 
         <div class="body">
           <ul class="categories-list">
-            <li
-              v-for="category in categories.slice(0, -3)"
-              :key="category?.id"
-              @click="filterCategory(category?.id)"
-              :class="{ active: filterForm.category == category?.id }"
-            >
+            <li v-for="category in categories.slice(0, -3)" :key="category?.id" @click="filterCategory(category?.id)"
+              :class="{ active: filterForm.category == category?.id }">
               {{ category?.title }}
             </li>
           </ul>
@@ -329,7 +242,7 @@ export default {
       totalPage: 0,
     };
   },
-  async asyncData({$axios, query}) {
+  async asyncData({ $axios, query }) {
     // const MAX_PAGE_SIZE = 10;
     const filterForm = {
       date_from: "",
@@ -361,7 +274,13 @@ export default {
       Object.entries(this.$route.query).forEach(([name, value]) => {
         this.filterForm[name] = value;
       });
-    if (localStorage.getItem("accessToken")) this.__GET_MY_EVENTS();
+
+    if (localStorage.getItem("accessToken")) {
+      this.__GET_MY_EVENTS()
+    } else {
+      this.$router.replace('/welecome');
+    }
+
     this.search = this.$route.query?.search ? this.$route.query?.search : "";
     this.__GET_CATEGORIES();
     Promise.all([this.__GET_EVENTS(), this.__GET_CATEGORIES()]);
@@ -373,10 +292,10 @@ export default {
   },
   methods: {
     async myEvetsFilter(my) {
-      let query = {...this.$route.query}
+      let query = { ...this.$route.query }
       my ? query.my = my : delete query['my']
-      await this.$router.replace({path: this.$route.path, query: query})
-     await this.__GET_EVENTS()
+      await this.$router.replace({ path: this.$route.path, query: query })
+      await this.__GET_EVENTS()
     },
     onChangeDate(e) {
       this.filterForm.date_from = moment(e[0]).format(this.dateFormat1);
@@ -431,13 +350,13 @@ export default {
       ) {
         await this.$router.replace({
           path: this.$route.path,
-          query: {...this.$route.query, page: 1, search: e.target.value},
+          query: { ...this.$route.query, page: 1, search: e.target.value },
         });
         this.__GET_EVENTS();
       }
     },
     async sendFilter() {
-      let query = {...this.$route.query};
+      let query = { ...this.$route.query };
       Object.entries(this.filterForm).forEach(([name, value]) =>
         value ? (query[name] = `${value}`) : delete query[name]
       );
@@ -448,21 +367,21 @@ export default {
       ) {
         await this.$router.replace({
           path: this.$route.path,
-          query: {...query},
+          query: { ...query },
         });
         this.__GET_EVENTS();
         this.close();
       }
     },
     async allEvents() {
-      let query = {...this.$route.query};
+      let query = { ...this.$route.query };
       if (Object.keys(query).length > 2) {
         this.filterForm.category = null;
         this.filterForm.my = null;
-        query = {page: 1, page_size: 10};
+        query = { page: 1, page_size: 10 };
         await this.$router.replace({
           path: this.$route.path,
-          query: {...query},
+          query: { ...query },
         });
         this.__GET_EVENTS();
       }
@@ -494,10 +413,10 @@ export default {
     },
     async search(val) {
       if (val.length == 0 && this.$route.query?.search) {
-        const {search, ...query} = this.$route.query;
+        const { search, ...query } = this.$route.query;
         await this.$router.replace({
           path: this.$route.path,
-          query: {...query},
+          query: { ...query },
         });
         this.__GET_EVENTS();
       }
@@ -511,7 +430,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
 .my-events {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -575,7 +493,8 @@ export default {
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 21.6px */
+  line-height: 120%;
+  /* 21.6px */
   letter-spacing: -0.36px;
 }
 
@@ -685,7 +604,8 @@ export default {
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%;
+  /* 19.6px */
   border: 1px solid transparent;
 }
 
@@ -710,7 +630,8 @@ export default {
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%; /* 24px */
+  line-height: 150%;
+  /* 24px */
   height: 56px;
   display: flex;
   justify-content: center;
@@ -732,7 +653,8 @@ export default {
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%; /* 24px */
+  line-height: 150%;
+  /* 24px */
 }
 
 :deep(.form-item label::before) {
@@ -780,7 +702,8 @@ export default {
   font-family: var(--decor-md);
   font-size: 18px;
   font-style: normal;
-  line-height: 120%; /* 21.6px */
+  line-height: 120%;
+  /* 21.6px */
   letter-spacing: -0.36px;
 }
 
@@ -799,7 +722,7 @@ export default {
   background: var(--White, #fff);
 }
 
-.top-bar > div {
+.top-bar>div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -810,7 +733,8 @@ export default {
   font-family: var(--decor-md);
   font-size: 18px;
   font-style: normal;
-  line-height: 120%; /* 21.6px */
+  line-height: 120%;
+  /* 21.6px */
   letter-spacing: -0.36px;
 }
 
@@ -825,7 +749,9 @@ export default {
 
 .search__wrap {
   padding: 12px 0;
-//border-bottom: 1px solid var(--grey-8, #ebebeb); background: var(--White, #fff); margin: 0 -16px;
+  border-bottom: 1px solid var(--grey-8, #ebebeb);
+  background: var(--White, #fff);
+  margin: 0 -16px;
 }
 
 .search {
@@ -853,7 +779,8 @@ export default {
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 24px */
+  line-height: 150%;
+  /* 24px */
   border: 0;
   background: transparent;
   width: 90%;
@@ -873,7 +800,8 @@ export default {
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: 150%; /* 30px */
+  line-height: 150%;
+  /* 30px */
   letter-spacing: -0.4px;
   margin-bottom: 12px;
 }
@@ -944,7 +872,8 @@ export default {
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 15.6px */
+  line-height: 130%;
+  /* 15.6px */
 }
 
 /* =========================================================================================================== */
@@ -978,7 +907,8 @@ export default {
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 15.6px */
+  line-height: 130%;
+  /* 15.6px */
 }
 
 .items {
@@ -1014,7 +944,8 @@ export default {
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 15.6px */
+  line-height: 130%;
+  /* 15.6px */
 }
 
 .others .name {
@@ -1023,7 +954,8 @@ export default {
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 140%; /* 22.4px */
+  line-height: 140%;
+  /* 22.4px */
 }
 
 .loading-card :deep(.ant-skeleton-title) {

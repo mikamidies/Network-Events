@@ -3,29 +3,16 @@
     <div class="header">
       <h4>{{ $store.state.translations["event.members"] }}</h4>
       <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="25"
-          viewBox="0 0 24 25"
-          fill="none"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd"
             d="M2.75 12C2.75 16.8325 6.66751 20.75 11.5 20.75C16.3325 20.75 20.25 16.8325 20.25 12C20.25 7.16751 16.3325 3.25 11.5 3.25C6.66751 3.25 2.75 7.16751 2.75 12ZM11.5 22.25C5.83908 22.25 1.25 17.6609 1.25 12C1.25 6.33908 5.83908 1.75 11.5 1.75C17.1609 1.75 21.75 6.33908 21.75 12C21.75 14.5605 20.8111 16.9017 19.2589 18.6982L22.5303 21.9697C22.8232 22.2626 22.8232 22.7374 22.5303 23.0303C22.2374 23.3232 21.7626 23.3232 21.4697 23.0303L18.1982 19.7589C16.4017 21.3111 14.0605 22.25 11.5 22.25Z"
-            fill="#020105"
-          />
+            fill="#020105" />
         </svg>
       </button>
     </div>
     <div class="items" v-if="event.is_member">
-      <div
-        class="item"
-        v-for="member in members"
-        :key="member?.id"
-        @click="$router.push(localePath(`/member/${member?.id}`))"
-      >
+      <div class="item" v-for="member in members" :key="member?.id"
+        @click="$router.push(localePath(`/${member?.user?.slug}`))">
         <div class="person">
           <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
           <img v-else src="@/assets/img/user.png" alt="" />
@@ -39,40 +26,23 @@
     </div>
     <div v-else class="members-locked">
       <h5>
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
             d="M8.75 7C8.75 5.20507 10.2051 3.75 12 3.75C13.7949 3.75 15.25 5.20507 15.25 7H16C16.2563 7 16.5071 7.02411 16.75 7.0702V7C16.75 4.37665 14.6234 2.25 12 2.25C9.37665 2.25 7.25 4.37665 7.25 7V7.0702C7.49294 7.02411 7.74365 7 8 7H8.75Z"
-            fill="#28303F"
-          />
-          <path
-            opacity="0.4"
+            fill="#28303F" />
+          <path opacity="0.4"
             d="M4 11C4 8.79086 5.79086 7 8 7L16 7C18.2091 7 20 8.79086 20 11V17C20 19.2091 18.2091 21 16 21H8C5.79086 21 4 19.2091 4 17V11Z"
-            fill="#28303F"
-          />
+            fill="#28303F" />
           <path
             d="M14 14C14 15.1046 13.1046 16 12 16C10.8954 16 10 15.1046 10 14C10 12.8954 10.8954 12 12 12C13.1046 12 14 12.8954 14 14Z"
-            fill="#28303F"
-          />
+            fill="#28303F" />
         </svg>
         {{ $store.state.translations["event.closed"] }}
       </h5>
       <!-- <p>{{ $store.state.translations["event.show_members"] }}</p> -->
     </div>
     <div class="pag-block" v-if="event.is_member">
-      <VPagination
-        :load="true"
-        class="xl:hidden"
-        :totalPage="totalPage"
-        @getData="$emit('getData')"
-      />
+      <VPagination :load="true" class="xl:hidden" :totalPage="totalPage" @getData="$emit('getData')" />
     </div>
   </div>
 </template>
@@ -100,6 +70,7 @@ export default {
   align-items: center;
   gap: 8px;
 }
+
 .members-locked p {
   color: #020105;
   text-align: center;
@@ -109,6 +80,7 @@ export default {
   font-weight: 400;
   line-height: 140%;
 }
+
 .members-locked h5 {
   color: #020105;
   text-align: center;
@@ -116,40 +88,48 @@ export default {
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%; /* 21px */
+  line-height: 150%;
+  /* 21px */
   letter-spacing: -0.28px;
   display: flex;
   align-items: center;
 }
+
 .wrap .header h4 {
   color: var(--Black, #020105);
   font-family: var(--decor-bd);
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%; /* 27px */
+  line-height: 150%;
+  /* 27px */
   letter-spacing: -0.36px;
 }
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 16px;
 }
+
 .header button {
   background: transparent;
   border: 0;
 }
+
 .items {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 20px;
 }
+
 .link {
   display: flex;
   justify-content: center;
 }
+
 .link a {
   display: flex;
   align-items: center;
@@ -160,39 +140,47 @@ export default {
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%;
+  /* 19.6px */
   border-radius: 500px;
   background: var(--Apple-Grey, #f5f5f7);
   min-width: 182px;
   padding: 12px;
 }
+
 .guests .name {
   color: var(--Black, #020105);
   font-family: var(--decor-bd);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%; /* 21px */
+  line-height: 150%;
+  /* 21px */
   letter-spacing: -0.28px;
   margin-bottom: 4px;
 }
+
 .status {
   color: var(--Facebook-blue, #1878f3);
   font-family: var(--medium);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%;
+  /* 19.6px */
   margin-bottom: 2px;
 }
+
 .company {
   color: var(--grey-40, #9a999b);
   font-family: var(--medium);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%;
+  /* 19.6px */
 }
+
 .item {
   border-radius: 12px;
   border: 1px solid var(--grey-8, #ebebeb);
@@ -202,6 +190,7 @@ export default {
   gap: 16px;
   cursor: pointer;
 }
+
 .person img {
   width: 72px;
   height: 72px;

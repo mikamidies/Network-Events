@@ -14,6 +14,10 @@ export default {
     };
   },
   async mounted() {
+    if (!localStorage.getItem("accessToken")) {
+      this.$router.replace('/welecome');
+    }
+
     const AUTH_STATUS = 401;
     try {
       const code = this.$route.params.code || localStorage.getItem("qr_code");

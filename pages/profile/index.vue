@@ -3,15 +3,10 @@
     <ProfileTop />
     <div class="container">
       <div class="participant-profile">
-        <div class="personal-card">
-          <div class="border"></div>
-
-          <img class="bg" src="@/assets/img/profile-bg.svg" alt="bg">
-
-          <img class="avatar"
-            :src="$store.state.profile?.client?.image ? $store.state.profile?.client?.image : '/empty-avatar.jpg'"
-            alt="avatar">
-
+        <div class="personal-card" :style="{
+          backgroundImage: `url(${$store.state.profile?.client?.image ? $store.state.profile?.client?.image : '/empty-avatar.jpg'})`,
+        }">
+          <div class="bottom-shadow"></div>
           <h4 class="name">{{ $store.state.profile["full_name"] }}</h4>
           <p class="position">{{ $store.state.profile?.client?.job_title }}</p>
           <p class="company">{{ $store.state.profile?.client?.company_name }}</p>
@@ -84,8 +79,8 @@ export default {
       this.$router.push(this.localePath('/welecome'))
   },
   computed: {
-    fullUrl() {
-      return `https://justlink.uz/member/${this.$store.state.profile?.client?.id}`;
+    fullUrl() {      
+      return `https://justlink.uz/${this.$store.state.profile?.slug}`;
     }
   },
   methods: {
@@ -144,44 +139,81 @@ export default {
 }
 
 .personal-card {
-  text-align: center;
   padding: 22px 16px 24px 16px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   border-radius: 24px;
-  /* background: #f5f5f7; */
-  /* background-image: url('@/assets/img/profile-bg.svg');
-  background-repeat: no-repeat;
-  background-size: 100%; */
+  background: #f5f5f7;
   height: 391px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   position: relative;
   overflow: hidden;
 }
 
-.personal-card .border{
+.bottom-shadow {
+  height: 141px;
+  width: 100%;
   position: absolute;
-  left: 50%;
-  top: 50%; 
-  transform: translate(-50%,-50%);
-  border-radius: 24px;
-  width: 95%;
-  height: 95%;
-  background: transparent;
-  border: 1px solid #fff;
-  z-index: 20;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(180deg, rgba(60, 75, 220, 0) 0%, #3c4bdc 59.13%);
 }
 
-.personal-card .bg {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
+.image {
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.image img {
   width: 100%;
-  object-fit: cover;
   height: 100%;
+  object-fit: cover;
+}
+
+.personal-card .name {
+  color: #fff;
+  font-family: var(--decor-md);
+  font-size: 18px;
+  font-style: normal;
+  line-height: 120%;
+  letter-spacing: -0.36px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 10;
+}
+
+.personal-card .position {
+  color: #fff;
+  text-align: center;
+  font-family: var(--medium);
+  font-size: 16px;
+  font-style: normal;
+  line-height: 150%;
+  margin-top: 6px;
+  position: relative;
+  z-index: 10;
+}
+
+.personal-card .company {
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 2px;
+  background: #fff;
+  color: #020105;
+  font-family: var(--medium);
+  font-size: 16px;
+  font-style: normal;
+  line-height: 150%;
+  margin-top: 4px;
+  position: relative;
+  z-index: 10;
+  border-radius: 6px;
 }
 
 .profile-link {
@@ -199,50 +231,6 @@ span {
   color: #000;
 }
 
-.personal-card .name {
-  color: #fff;
-  font-family: var(--decor-md);
-  font-size: 25px;
-  font-style: normal;
-  line-height: 120%;
-  letter-spacing: -0.36px;
-  margin-top: 16px;
-  position: relative;
-  z-index: 10;
-}
-
-.personal-card .avatar {
-  position: relative;
-  width: 164px;
-  height: 164px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  object-fit: cover;
-  z-index: 10;
-}
-
-.personal-card .position {
-  color: #fff;
-  text-align: center;
-  font-family: var(--medium);
-  font-size: 16px;
-  font-style: normal;
-  line-height: 150%;
-  margin-top: 6px;
-  position: relative;
-  z-index: 10;
-}
-
-.personal-card .company {
-  color: #fff;
-  font-family: var(--medium);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 150%;
-  margin-top: 35px;
-  position: relative;
-  z-index: 10;
-}
 
 .about {
   margin-top: 16px;

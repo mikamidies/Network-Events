@@ -1,27 +1,10 @@
 <template lang="html">
   <div>
     <!-- ${!$route.name.includes('welecome') ? '68px' || 0} -->
-    <div :style="dynamicStyles"
-      v-if="this.$route.path === '/' || this.$route.path === '/uz' || $route.name.includes('welecome')" class="sponsor">
-      <div class="imgs">
-        <img src="@/assets/img/sponsor1.svg" alt="trend systems" />
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M11 1.24391L6.125 5.99999M6.125 5.99999L1 11M6.125 5.99999L1.00003 1M6.125 5.99999L11 10.7561"
-            stroke="black" stroke-width="0.5" />
-        </svg>
-        <img src="@/assets/img/sponsor2.svg" alt="ndc.uz" />
-      </div>
-
-      <p>
-        {{ $store.state.translations["main.sponsor-text"] }} <br>
-        <a href="#">{{ $store.state.translations["main.sponsor-link"] }}</a>
-      </p>
-    </div>
-
     <div v-if="!$route.name.includes('welecome')" class="wrap">
       <div class="container">
         <div class="links">
-          <NuxtLink to="/" :class="{ active: $route.name.includes('index') }">
+          <NuxtLink :to="localePath('/')" :class="{ active: $route.name.includes('index') }">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
               <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M21.5 10.1503V17.9668C21.5 20.1943 19.7091 22 17.5 22H7.5C5.29086 22 3.5 20.1943 3.5 17.9668V10.1503C3.5 8.93937 4.03964 7.7925 4.96986 7.02652L9.96986 2.90935C11.4423 1.69689 13.5577 1.69688 15.0301 2.90935L20.0301 7.02652C20.9604 7.7925 21.5 8.93937 21.5 10.1503ZM10.5 17.25C10.0858 17.25 9.75 17.5858 9.75 18C9.75 18.4142 10.0858 18.75 10.5 18.75H14.5C14.9142 18.75 15.25 18.4142 15.25 18C15.25 17.5858 14.9142 17.25 14.5 17.25H10.5Z"
@@ -29,7 +12,7 @@
             </svg>
             <p>{{ $store.state.translations["main.home"] }}</p>
           </NuxtLink>
-          <NuxtLink to="/events" :class="{ active: $route.name.includes('events') }">
+          <NuxtLink :to="localePath('/events')" :class="{ active: $route.name.includes('events') }">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
               <ellipse cx="12.5" cy="16.5" rx="6" ry="2.5" stroke="#5D5D5F" stroke-width="1.5"
                 stroke-linejoin="round" />
@@ -49,7 +32,7 @@
             </svg>
             <p>{{ $store.state.translations["main.events"] }}</p>
           </NuxtLink>
-          <NuxtLink to="/community" :class="{ active: $route.name.includes('community') }">
+          <NuxtLink :to="localePath('/community')" :class="{ active: $route.name.includes('community') }">
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="6.5" cy="4" r="2" stroke="#5D5D5F" stroke-width="1.5" />
               <ellipse cx="6.5" cy="8" rx="3" ry="2" stroke="#5D5D5F" stroke-width="1.5" />
@@ -95,49 +78,11 @@
 
 <script>
 export default {
-  data() {
-    return {
-      bottom: 0,
-    }
-  },
-  computed: {
-    dynamicStyles() {
-      return {
-        bottom: !this.$route.name.includes('welecome') ? '68px' : "0px",
-      }
-    }
-  }
+
 };
 </script>
 
 <style scoped>
-.sponsor {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-direction: column;
-  position: fixed;
-  left: 0;
-  width: 100%;
-  z-index: 99;
-  padding: 8px 16px;
-  background-color: #F5F5F7;
-}
-
-.sponsor p {
-  text-align: center;
-  color: #5D5D5F;
-  line-height: 150%;
-}
-
-.sponsor .imgs {
-  margin-top: 8px;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
 .wrap {
   border-radius: 16px 16px 0px 0px;
   border: 1px solid var(--grey-8, #ebebeb);

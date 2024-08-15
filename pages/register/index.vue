@@ -50,8 +50,8 @@
               <span>+998</span>
               <input type="text" v-mask="'## ### ## ##'" v-model="form.phone_number" @keyup.enter="submit" />
             </div>
-            <p class="input-btext">Регистрируясь, Вы принимаете наши <a href="#">Договор оферты, Условия, Политику
-                конфиденциальности и Политику в отношении файлов cookie.</a></p>
+            <p class="input-btext">{{ $store.state.translations["login.register-confirm-1"] }} <a href="#">{{
+              $store.state.translations["login.register-confirm-2"] }}</a></p>
           </a-form-model-item>
         </a-form-model>
       </div>

@@ -43,7 +43,7 @@
         </div>
 
         <div class="welecome">
-            <img class="usersImg" src="@/assets/img/welecome-bg.svg" alt="user background">
+            <img class="usersImg" src="@/assets/img/welecome-bg.webp" alt="user background">
             <img class="logo" src="@/assets/img/welecome-logo.svg" alt="">
         </div>
 
@@ -56,6 +56,24 @@
 
                 <p>{{ $store.state.translations["login.welecome-auth"] }}</p>
             </div>
+
+        </div>
+
+        <div style="margin-top: 50px; margin-bottom: -200px;" class="sponsor">
+            <div class="imgs">
+                <img width="81px" src="@/assets/img/sponsor1.png" alt="trend systems" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path
+                        d="M11 1.24391L6.125 5.99999M6.125 5.99999L1 11M6.125 5.99999L1.00003 1M6.125 5.99999L11 10.7561"
+                        stroke="black" stroke-width="0.5" />
+                </svg>
+                <img width="81px" src="@/assets/img/sponsor2.svg" alt="ndc.uz" />
+            </div>
+
+            <p>
+                {{ $store.state.translations["main.sponsor-text"] }} <br>
+                <a href="#">{{ $store.state.translations["main.sponsor-link"] }}</a>
+            </p>
         </div>
     </div>
 </template>
@@ -118,7 +136,6 @@ export default {
 .welecome .usersImg {
     width: 100%;
     height: 100%;
-
 }
 
 .info {

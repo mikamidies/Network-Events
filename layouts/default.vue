@@ -36,10 +36,9 @@ export default {
   },
   mounted() {
     const ACCESS_TOKEN = localStorage.getItem("accessToken");
+    
     if (ACCESS_TOKEN) {
       this.getProfileInfo();
-    } else {
-      this.$router.replace('/welecome');
     }
   },
   methods: {

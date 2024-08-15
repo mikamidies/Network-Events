@@ -131,6 +131,7 @@
           </svg>
         </NuxtLink>
       </div>
+
       <div class="items" v-if="!loading">
         <div class="item" v-for="event in community" :key="event?.id">
           <NuxtLink :to="localePath(`/community/${event?.id}`)">
@@ -154,15 +155,16 @@
           </NuxtLink>
         </div>
       </div>
-      <div class="items" v-if="loading">
+      
+      <!-- <div class="items" v-if="loading">
         <a-skeleton
           :paragraph="false"
           class="loading-card"
           v-for="elem in emptyList"
           :key="elem"
         />
-      </div>
-      <div v-if="!loading && community.length == 0">
+      </div> -->
+      <div style="margin-bottom: 100px; margin-top: -100px;" v-if="!loading && community.length === 0">
         <a-empty/>
       </div>
     </div>

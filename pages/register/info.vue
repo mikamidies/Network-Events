@@ -16,9 +16,9 @@
               <input type="text" v-model.trim="form.full_name"
                 :placeholder="$store.state.translations['login.full_name_place']" />
             </a-form-model-item>
-            <a-form-model-item prop="profile_url" class="form-item mb-0 required">
+            <a-form-model-item prop="slug" class="form-item mb-0 required">
               <p class="sub">{{ $store.state.translations["login.profile-url"] }}</p>
-              <input type="text" v-model.trim="form.profile_url" placeholder="username" />
+              <input type="text" v-model.trim="form.slug" placeholder="username" />
             </a-form-model-item>
             <a-form-model-item prop="client_data.company_name" class="form-item required mb-0">
               <p class="sub">{{ $store.state.translations["login.company_name"] }}</p>
@@ -30,13 +30,13 @@
               <input type="text" v-model="form.client_data.job_title"
                 :placeholder="$store.state.translations['login.position_place']" />
             </a-form-model-item>
-            <a-form-model-item prop="birth_date" class="form-item required mb-0">
+            <a-form-model-item prop="client_data.birth_date" class="form-item required mb-0">
               <p class="sub">{{ $store.state.translations["login.birthday"] }}</p>
-              <input type="text" v-mask="'##/##/####'" v-model="form.birth_date" placeholder="01/01/2000" />
+              <input type="text" v-mask="'####.##.##'" v-model="form.client_data.birth_date" placeholder="2000.01.01" />
             </a-form-model-item>
-            <a-form-model-item prop="birth_place" class="form-item required mb-0">
+            <a-form-model-item prop="client_data.birth_place" class="form-item required mb-0">
               <p class="sub">{{ $store.state.translations["login.birth-place"] }}</p>
-              <input type="text" v-model="form.birth_place"
+              <input type="text" v-model="form.client_data.birth_place"
                 :placeholder="$store.state.translations['login.birth-place-enter']" />
             </a-form-model-item>
           </div>
@@ -198,10 +198,10 @@ export default {
         phone_number: "",
         sms_code: null,
         full_name: "",
-        // profile_url: "",
-        birth_date: "",
-        birth_place: "",
+        slug: "",
         client_data: {
+          birth_date: "",
+          birth_place: "",
           specifications: [],
           image: "",
           company_name: "",
@@ -238,21 +238,7 @@ export default {
             trigger: "change",
           },
         ],
-        // profile_url: [
-        //   {
-        //     required: true,
-        //     message: "This field is required",
-        //     trigger: "change",
-        //   },
-        // ],
-        birth_date: [
-          {
-            required: true,
-            message: "This field is required",
-            trigger: "change",
-          },
-        ],
-        birth_place: [
+        slug: [
           {
             required: true,
             message: "This field is required",
@@ -260,6 +246,20 @@ export default {
           },
         ],
         client_data: {
+          birth_date: [
+            {
+              required: true,
+              message: "This field is required",
+              trigger: "change",
+            },
+          ],
+          birth_place: [
+            {
+              required: true,
+              message: "This field is required",
+              trigger: "change",
+            },
+          ],
           job_title: [
             {
               required: true,
@@ -502,10 +502,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
   margin-bottom: 16px;
   border-radius: 16px;
-
 }
 
 .info .info-desc {

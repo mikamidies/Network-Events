@@ -33,7 +33,7 @@
 
                     <div class="items">
                         <div class="item" v-for="member in members" :key="member?.id"
-                            @click="$router.push(localePath(`/member/${member?.id}`))">
+                            @click="$router.push(localePath(`/${member?.user?.slug}`))">
                             <div class="person">
                                 <img loading="lazy" v-if="member?.image" :src="member?.image" alt="" />
                                 <img v-else src="@/assets/img/user.png" alt="" />
@@ -58,7 +58,8 @@
 
                 <div v-else class="empty">
                     <img src="@/assets/img/search_empty.svg" alt="empty">
-                    <h5>{{ status ? $store.state.translations['members.not-searched'] : $store.state.translations['members.not-found'] }}</h5>
+                    <h5>{{ status ? $store.state.translations['members.not-searched'] :
+                        $store.state.translations['members.not-found'] }}</h5>
                 </div>
             </div>
         </div>
@@ -101,6 +102,10 @@ export default {
         },
     },
     mounted() {
+        if (!localStorage.getItem("accessToken")) {
+            this.$router.replace('/welecome');
+        };
+        
         this.$refs.searchInput.focus();
     }
 }
