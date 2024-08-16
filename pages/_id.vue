@@ -19,14 +19,6 @@
             {{ client?.info }}
           </p>
         </div>
-        <div class="about">
-          <h4 class="about-title">
-            {{ $store.state.translations["profile.personal_info"] }}
-          </h4>
-          <p class="about-desc">
-            {{ client?.info }}
-          </p>
-        </div>
         <SocialBlock :profile="{
           ...client,
           ...client?.user,
