@@ -211,11 +211,11 @@ export default {
           instagram: null,
           telegram: "",
           linkedIn: null,
-          show_site: false,
-          show_instagram: false,
-          show_telegram: false,
-          show_linkedIn: false,
-          show_phone_number: false
+          show_site: true,
+          show_instagram: true,
+          show_telegram: true,
+          show_linkedIn: true,
+          show_phone_number: true
         },
 
       },
