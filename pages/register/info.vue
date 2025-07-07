@@ -175,6 +175,7 @@
 import EditTop from "../../components/EditTop.vue";
 import sendNUmberApi from "@/api/authApi";
 import specilficationsApi from "@/api/specilficationsApi";
+import { message } from "ant-design-vue";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -285,12 +286,34 @@ export default {
       },
       base_url: process.env.BASE_URL,
       image: "",
+      timerStartedAt: null,
+      timeout: false,
     };
   },
   mounted() {
     const number = localStorage.getItem("phone_number");
     if (number) this.form.phone_number = number;
-    this.__GET_CATEGORIES()
+
+    const storedTime = localStorage.getItem("register_start_time");
+    if (storedTime) {
+      this.timerStartedAt = parseInt(storedTime);
+    } else {
+      const now = Date.now();
+      localStorage.setItem("register_start_time", now.toString());
+      this.timerStartedAt = now;
+    }
+
+    // ⏰ Har 1 sekundda tekshiradi vaqt tugadimi
+    this.checkTimerInterval = setInterval(() => {
+      const now = Date.now();
+      const passed = now - this.timerStartedAt;
+      if (passed > 5 * 60 * 1000) { // 5 daqiqa
+        this.timeout = true;
+        clearInterval(this.checkTimerInterval);
+      }
+    }, 1000);
+
+    this.__GET_CATEGORIES();
   },
   methods: {
     async __GET_CATEGORIES() {
@@ -304,6 +327,16 @@ export default {
       this.form.client_data.specifications = specs
     },
     submit() {
+      if (this.timeout) {
+        message.error({
+          content: this.$store.state.translations['main.alert-info'],
+          duration: 10,
+        });
+        localStorage.removeItem("register_start_time");
+        this.$router.push(this.localePath("/register"));
+        return;
+      }
+
       this.form.sms_code = localStorage.getItem("accessCode");
       this.form.phone_number = localStorage.getItem("phone_number");
       const data = {
